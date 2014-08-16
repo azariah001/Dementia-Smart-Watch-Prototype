@@ -45,14 +45,13 @@
             android:name=".GoogleMapping"
             android:label="@string/title_activity_google_mapping" >
         </activity>
-        <!-- Goolge Maps API Key -->
+        <!-- Google Maps API Key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCXqsOMKBrGIP8tdmlpM19c6cbSyEQ5SAM" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        
     </application>
 
 </manifest>
