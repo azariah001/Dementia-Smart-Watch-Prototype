@@ -45,7 +45,7 @@ public class GoogleMapping extends Activity {
 		}
 		
 		// Create Map
-        initilizeMap();
+		initilizeMap();
 	}
 	
 	/**
@@ -82,12 +82,15 @@ public class GoogleMapping extends Activity {
     	// use any location source
     	Criteria criteria = new Criteria();
 		String provider = locationManager.getBestProvider(criteria, false);
+		
 		// start by using last known location
+		//TODO: CRASHES if previous location hasn't been found yet. In future use the PASSIVE_PROVIDER from the main application/service.
 		Location location = locationManager.getLastKnownLocation(provider);
 		LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-		
+			
 		// position map and current location marker
 		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, INITIAL_ZOOM));
+		
 		// create custom icon for current position
 		myMarker = googleMap.addMarker(new MarkerOptions()
 		        .position(latLng)
