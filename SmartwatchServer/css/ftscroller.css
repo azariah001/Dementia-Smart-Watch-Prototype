@@ -1,0 +1,58 @@
+.ftscroller_scrolling { 
+	-webkit-user-select: none;
+ cursor: all-scroll !important
+}
+.ftscroller_container { 
+	overflow: hidden;
+ 	position: relative;
+ 	max-height: 100%;
+ 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+ 	-ms-touch-action: none;
+}
+.ftscroller_hwaccelerated { 
+	-webkit-transform: translateZ(0);
+}
+.ftscroller_x, .ftscroller_y { 
+	position: relative;
+	min-width: 100%;
+	min-height: 100%;
+	overflow: hidden
+}
+.ftscroller_x { 
+	display: inline-block
+}
+.ftscroller_scrollbar { 
+	pointer-events: none;
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	border: 1px solid rgba(51,181,229,.5);
+	background-color: rgba(51,181,229,1);
+	-webkit-border-radius: 0px;
+			border-radius: 0px;
+	opacity: 0;
+	-webkit-transition: opacity 350ms;
+	z-index: 10
+}
+.ftscroller_scrollbarx { 
+	bottom: 2px;
+	left: 2px
+}
+.ftscroller_scrollbary { 
+	right: 2px;
+	top: 2px
+}
+.ftscroller_scrollbarinner { 
+	height: 100%;
+	background: rgba(51,181,229,1);
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+.ftscroller_scrolling .ftscroller_scrollbar { 
+	opacity: 1;
+	-webkit-transition: none;
+	-o-transition: all 0 none
+}
+.ftscroller_scrolling .ftscroller_container .ftscroller_scrollbar { 
+	opacity: 0;
+}
