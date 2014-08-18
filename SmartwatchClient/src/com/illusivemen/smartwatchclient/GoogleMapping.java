@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -79,13 +78,9 @@ public class GoogleMapping extends Activity {
     }
     
     private void subscribeForLocation() {
-    	// use any location source
-    	Criteria criteria = new Criteria();
-		String provider = locationManager.getBestProvider(criteria, false);
-		
 		// start by using last known location
 		//TODO: CRASHES if previous location hasn't been found yet. In future use the PASSIVE_PROVIDER from the main application/service.
-		Location location = locationManager.getLastKnownLocation(provider);
+		Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 		LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 			
 		// position map and current location marker
@@ -97,9 +92,12 @@ public class GoogleMapping extends Activity {
 		        .title("Current Location")
 		        .icon(BitmapDescriptorFactory.fromResource(R.drawable.person)));
 		
-		// listen for location updates
+		// listen for location updates on all sources - should be LocationManager.PASSIVE_PROVIDER in future
 		locationManager.requestLocationUpdates(
-					provider, MIN_UPDATE_MILLISEC, MIN_UPDATE_METRES, locationListener);
+					LocationManager.GPS_PROVIDER, MIN_UPDATE_MILLISEC, MIN_UPDATE_METRES, locationListener);
+		locationManager.requestLocationUpdates(
+				LocationManager.NETWORK_PROVIDER, MIN_UPDATE_MILLISEC, MIN_UPDATE_METRES, locationListener);
+	
 		
     }
     
