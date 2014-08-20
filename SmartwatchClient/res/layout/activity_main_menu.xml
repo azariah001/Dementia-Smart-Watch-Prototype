@@ -17,4 +17,14 @@
         android:onClick="showLocation"
         android:text="@string/show_location" />
 
+    <Button
+        android:id="@+id/btnProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnMap"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:onClick="showProfile"
+        android:text="@string/show_profile" />
+
 </RelativeLayout>
