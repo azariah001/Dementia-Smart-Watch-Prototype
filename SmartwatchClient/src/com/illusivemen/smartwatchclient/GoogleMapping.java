@@ -1,5 +1,10 @@
 package com.illusivemen.smartwatchclient;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -13,7 +18,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Helpers;
 import android.widget.Toast;
 
 public class GoogleMapping extends Activity {
@@ -137,4 +144,53 @@ public class GoogleMapping extends Activity {
 			
 		}
 	};
+	
+	private void sendToServer(LatLng latlng) {
+		new SaveTask().execute(latlng);
+	}
+	
+	// Background thread to save the location in remote MySQL server
+	private class SaveTask extends AsyncTask<LatLng, Void, Void> {
+		@Override
+		protected Void doInBackground(LatLng... params) {
+			String lat = Double.toString(params[0].latitude);
+            String lng = Double.toString(params[0].longitude);
+            String strUrl = "http://agile.azarel-howard.me/";
+            URL url = null;
+            try {
+            	url = new URL(strUrl);
+            	
+            	HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            	connection.setRequestMethod("POST");
+            	connection.setDoOutput(true);
+            	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
+            	
+            	outputStreamWriter.write("lat=" + lat + "&lng="+lng);
+                outputStreamWriter.flush();
+                outputStreamWriter.close();
+                
+                InputStream iStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new
+                InputStreamReader(iStream));
+ 
+                StringBuffer sb = new StringBuffer();
+ 
+                String line = "";
+ 
+                while( (line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+ 
+                reader.close();
+                iStream.close();
+ 
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+			return null;			
+		}
+	}
 }
