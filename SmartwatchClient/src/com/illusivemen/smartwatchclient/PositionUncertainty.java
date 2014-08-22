@@ -1,5 +1,7 @@
 package com.illusivemen.smartwatchclient;
 
+import com.illusivemen.mapping.GoogleMapping;
+
 public class PositionUncertainty {
 
 	//TODO Private Fields
@@ -29,7 +31,7 @@ public class PositionUncertainty {
 		boolean certain;
 		
 		//Checks whether the position is within a radius of the old position
-		if() {
+		if(false) {
 			certain = true;
 		} else {
 			certain = false;

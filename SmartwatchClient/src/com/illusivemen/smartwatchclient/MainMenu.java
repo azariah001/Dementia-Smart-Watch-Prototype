@@ -1,5 +1,7 @@
 package com.illusivemen.smartwatchclient;
 
+import com.illusivemen.mapping.GoogleMapping;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

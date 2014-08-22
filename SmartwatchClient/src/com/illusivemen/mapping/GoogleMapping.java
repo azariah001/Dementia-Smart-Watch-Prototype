@@ -1,4 +1,4 @@
-package com.illusivemen.smartwatchclient;
+package com.illusivemen.mapping;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -12,6 +12,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.illusivemen.smartwatchclient.MainMenu;
+import com.illusivemen.smartwatchclient.R;
+import com.illusivemen.smartwatchclient.R.drawable;
+import com.illusivemen.smartwatchclient.R.id;
+import com.illusivemen.smartwatchclient.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;

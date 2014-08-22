@@ -1,4 +1,4 @@
-package com.illusivemen.smartwatchclient.tests;
+package com.illusivemen.smartwatchclienttests;
 
 import com.illusivemen.smartwatchclient.PositionUncertainty;
 

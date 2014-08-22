@@ -1,4 +1,7 @@
-package com.illusivemen.smartwatchclient;
+package com.illusivemen.smartwatchclienttests;
+
+import com.illusivemen.mapping.GoogleMapping;
+import com.illusivemen.smartwatchclient.*;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
