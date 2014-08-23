@@ -3,7 +3,6 @@ package com.illusivemen.smartwatchclient;
 import com.illusivemen.mapping.GoogleMapping;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 
 public class MainMenu extends Activity {
 
-	public final static String ACTIVITY_MESSAGE = "";
+	public final static String ACTIVITY_MESSAGE = "ClientStart";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +39,8 @@ public class MainMenu extends Activity {
 	}
 	
 	public void showLocation(View view) {
-		Intent map = new Intent(this, GoogleMapping.class);
-		map.putExtra(ACTIVITY_MESSAGE, "LIVE_MAP");
-		startActivity(map);
+		startActivity(GoogleMapping.makeIntent(MainMenu.this, ACTIVITY_MESSAGE));
+		finish();
 	}
 	
 	public void showProfile(View view) {

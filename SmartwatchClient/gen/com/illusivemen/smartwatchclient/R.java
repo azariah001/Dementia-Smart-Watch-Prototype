@@ -408,9 +408,10 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001f;
     }
     public static final class id {
-        public static final int action_settings=0x7f070016;
+        public static final int action_settings=0x7f070017;
         public static final int book_now=0x7f070010;
         public static final int btnMap=0x7f070015;
+        public static final int btnProfile=0x7f070016;
         public static final int buyButton=0x7f07000a;
         public static final int buy_now=0x7f07000f;
         public static final int buy_with_google=0x7f07000e;
@@ -537,6 +538,7 @@ containing a value of this type.
         public static final int common_signin_button_text_long=0x7f060018;
         public static final int hello_world=0x7f06001e;
         public static final int show_location=0x7f06001c;
+        public static final int show_profile=0x7f06001f;
         public static final int title_activity_google_mapping=0x7f06001d;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 

@@ -12,23 +12,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.illusivemen.smartwatchclient.MainMenu;
 import com.illusivemen.smartwatchclient.R;
-import com.illusivemen.smartwatchclient.R.drawable;
-import com.illusivemen.smartwatchclient.R.id;
-import com.illusivemen.smartwatchclient.R.layout;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.SyncStateContract.Helpers;
 import android.widget.Toast;
 
 public class GoogleMapping extends Activity {
+	
+	public final static String MAP_PURPOSE = "com.illusivemen.mapping.EXTRAS_PAYLOAD_KEY";
+	private String purpose;
 	
 	private GoogleMap googleMap;
 	private LocationManager locationManager;
@@ -36,7 +34,17 @@ public class GoogleMapping extends Activity {
 	private static final long MIN_UPDATE_MILLISEC = 250;
 	private static final float MIN_UPDATE_METRES = 1;
 	private static final float INITIAL_ZOOM= 18;
-	private String purpose;
+	
+	/**
+     * Factory method to create a launch Intent for this activity.
+     *
+     * @param context the context that intent should be bound to
+     * @param payload the payload data that should be added for this intent
+     * @return a configured intent to launch this activity with a String payload.
+     */
+    public static Intent makeIntent(Context context, String payload) {
+        return new Intent(context, GoogleMapping.class).putExtra(MAP_PURPOSE, payload);
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +52,15 @@ public class GoogleMapping extends Activity {
 		setContentView(R.layout.activity_google_mapping);
 		
 		// What is the Function of this Map?
-		Intent source = getIntent();
-		purpose = source.getStringExtra(MainMenu.ACTIVITY_MESSAGE);
+		purpose = getIntent().getStringExtra(MAP_PURPOSE);
 		
 		// Title by Function
 		switch (purpose) {
-		case "LIVE_MAP":
+		case "ClientStart":
 			this.setTitle("Current Location");
-			locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 			break;
 		}
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		
 		// Create Map
 		initilizeMap();
