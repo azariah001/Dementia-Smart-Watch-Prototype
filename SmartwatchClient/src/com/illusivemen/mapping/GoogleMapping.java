@@ -74,7 +74,7 @@ public class GoogleMapping extends Activity {
             googleMap = ((MapFragment) getFragmentManager().findFragmentById(
                     R.id.map)).getMap();
             // set type of map to use
-            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             // disable unnecessary gestures
             disableAdvancedUi();
             
