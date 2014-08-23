@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:onClick="showLocation"
+        android:onClick="showLocations"
         android:text="@string/patient_tracking" />
 
 </RelativeLayout>

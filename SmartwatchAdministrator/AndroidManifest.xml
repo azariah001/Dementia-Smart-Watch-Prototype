@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AdminGoogleMapping"
+            android:name="com.illusivemen.maps.AdminGoogleMapping"
             android:label="@string/title_activity_admin_google_mapping" >
         </activity>
         <!-- Google Maps -->

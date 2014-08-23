@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainMenu extends Activity {
 
-	public static final String TRACK_MESSAGE = "TrackPatients";
+	public final static String TRACK_MESSAGE = "TrackPatients";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainMenu extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void showLocation(View view) {
+	public void showLocations(View view) {
 		startActivity(AdminGoogleMapping.makeIntent(MainMenu.this, TRACK_MESSAGE));
 		finish();
 	}

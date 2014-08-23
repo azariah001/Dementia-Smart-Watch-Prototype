@@ -3,29 +3,23 @@ package com.illusivemen.maps;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.illusivemen.smartwatchadministrator.R;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
 public class AdminGoogleMapping extends Activity {
 	
-	public final static String MAP_PURPOSE = "com.illusivemen.mapping.EXTRAS_PAYLOAD_KEY";
+	public final static String MAP_PURPOSE = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
 	private String purpose;
 	
 	private GoogleMap googleMap;
-	private static final float INITIAL_ZOOM= 18;
+	private static final float INITIAL_ZOOM= 11;
+	private static final LatLng BRISBANE = new LatLng(-27.5,153);
 	
 	/**
      * Factory method to create a launch Intent for this activity.
@@ -44,17 +38,17 @@ public class AdminGoogleMapping extends Activity {
 		setContentView(R.layout.activity_admin_google_mapping);
 		
 		// What is the Function of this Map?
-		//purpose = getIntent().getStringExtra(MAP_PURPOSE);
+		purpose = getIntent().getStringExtra(MAP_PURPOSE);
 		
 		// Title by Function
-		//switch (purpose) {
-		//case "TrackPatients":
-		//	this.setTitle("Patients' Locations");
-		//	break;
-		//}
+		switch (purpose) {
+		case "TrackPatients":
+			this.setTitle("Patients' Locations");
+			break;
+		}
 		
 		// Create Map
-		//initilizeMap();
+		initilizeMap();
 	}
 	
 	/**
@@ -89,13 +83,18 @@ public class AdminGoogleMapping extends Activity {
     }
     
     /**
-     * Disable functions that manipulate the map other than the zoom levels.
+     * Change the interface of google maps.
      */
     private void setupUi() {
+    	// show location, explicitly allow advanced controls
+    	googleMap.setMyLocationEnabled(true);
     	googleMap.getUiSettings().setZoomGesturesEnabled(true);
         googleMap.getUiSettings().setRotateGesturesEnabled(true);
         googleMap.getUiSettings().setTiltGesturesEnabled(true);
         googleMap.getUiSettings().setScrollGesturesEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+        
+        // open map at Brisbane city by default
+     	googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BRISBANE, INITIAL_ZOOM));
     }
 }
