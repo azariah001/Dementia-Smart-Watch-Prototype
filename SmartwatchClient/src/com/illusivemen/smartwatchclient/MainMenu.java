@@ -3,6 +3,8 @@ package com.illusivemen.smartwatchclient;
 import com.illusivemen.mapping.GoogleMapping;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,10 @@ import android.widget.Toast;
 public class MainMenu extends Activity {
 
 	public final static String ACTIVITY_MESSAGE = "ClientStart";
+	
+	
+	//For SOS Beacon.//0 = not panicked.//1 = very panicked
+	private int panic = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +53,48 @@ public class MainMenu extends Activity {
 		Toast.makeText(this,
 				"You are John Smith",
 				Toast.LENGTH_SHORT).show();
+	}
+	
+	//Panic notification dialogbox, creates on click.
+	public void panicSOS (View view) {
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    builder.setTitle("SOS Beacon");
+	    builder.setMessage("Are you sure?");
+	    
+	    builder.setPositiveButton("ON", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) {            
+	        								
+	        								//Sets to panic mode
+	        								panic = 1;
+	        								dialog.dismiss(); } } );
+
+	    builder.setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	        	
+	        								//Sets to chill mode
+											panic = 0;
+											dialog.dismiss(); } } );
+
+	    AlertDialog alert = builder.create();
+	    alert.show();
+
+	}
+	
+	//Panic getter
+	public int getPanic() {
+		
+		return this.panic;
+	}
+	
+	//Panic sender
+	private void sendPanicServer(int panic) {
+		
+		panic = getPanic();
+		
+		//TODO update server db with current panic state;
+		
 	}
 }
