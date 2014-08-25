@@ -1,9 +1,13 @@
 package com.illusivemen.maps;
 
+import java.util.ArrayList;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.illusivemen.smartwatchadministrator.R;
 
 import android.app.Activity;
@@ -20,6 +24,7 @@ public class AdminGoogleMapping extends Activity {
 	private GoogleMap googleMap;
 	private static final float INITIAL_ZOOM= 11;
 	private static final LatLng BRISBANE = new LatLng(-27.5,153);
+	private Marker patient;
 	
 	/**
      * Factory method to create a launch Intent for this activity.
@@ -43,12 +48,19 @@ public class AdminGoogleMapping extends Activity {
 		// Title by Function
 		switch (purpose) {
 		case "TrackPatients":
-			this.setTitle("Patients' Locations");
+			this.setTitle("Patient's Location");
 			break;
 		}
 		
 		// Create Map
 		initilizeMap();
+		
+		// Extra functions
+		switch (purpose) {
+		case "TrackPatients":
+			trackPatient();
+			break;
+		}
 	}
 	
 	/**
@@ -97,4 +109,15 @@ public class AdminGoogleMapping extends Activity {
         // open map at Brisbane city by default
      	googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BRISBANE, INITIAL_ZOOM));
     }
+    
+    private void trackPatient() {
+    	Marker patient = googleMap.addMarker(new MarkerOptions()
+	       		.position(getLocation())
+	       		.title("Patient Location"));
+    }
+
+	private LatLng getLocation() {
+		// TODO actually retrieve from database
+		return new LatLng(-27.55, 153.1);
+	}
 }
