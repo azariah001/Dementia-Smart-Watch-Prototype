@@ -16,5 +16,14 @@
         android:layout_alignParentTop="true"
         android:onClick="showLocations"
         android:text="@string/patient_tracking" />
+    
+    <ToggleButton 
+        android:id="@+id/tglPanic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="changePanic"
+        android:text="Toggle Panic"/>
 
 </RelativeLayout>
