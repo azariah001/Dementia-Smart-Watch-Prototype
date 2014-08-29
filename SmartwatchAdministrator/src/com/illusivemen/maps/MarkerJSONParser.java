@@ -55,8 +55,7 @@ public class MarkerJSONParser {
             // Extracting latitude, if available
             if(!jMarker.isNull("lat")){
                 lat = jMarker.getString("lat");
-            }
- 
+            } 
             // Extracting longitude, if available
             if(!jMarker.isNull("lng")){
                 lng = jMarker.getString("lng");

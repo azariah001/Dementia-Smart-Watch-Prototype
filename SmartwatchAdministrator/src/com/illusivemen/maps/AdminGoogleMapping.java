@@ -128,6 +128,7 @@ public class AdminGoogleMapping extends Activity {
 	       		.title("Patient Location"));
     }
 	
+    //database retrieval
 	private class RetrieveTask extends AsyncTask<Void, Void, String>{
 		
 		@Override
