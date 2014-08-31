@@ -9,9 +9,9 @@ import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.widget.Button;
 
-public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
+public class AdminMainMenuTest extends ActivityUnitTestCase<MainMenu> {
 
-	public MainMenuTest() {
+	public AdminMainMenuTest() {
 		super(MainMenu.class);
 	}
 	
@@ -58,18 +58,39 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
         assertEquals(expected, actual);
     }
 	
+    
+    // -------------------------------- Map Activity Tests
+    
+    /**
+     * Test that the button opens the map activity.
+     */
     @MediumTest
-	public void testActivityLaunch_openMap() {
+    public void testActivityIntent_openMap() {
 	    btnTrack.performClick();
-
 	    final Intent launchIntent = getStartedActivityIntent();
 	    assertNotNull("MapActivity was null", launchIntent);
-	    // if finish() is called, this will exit the entire application, not just the activity
-	    assertFalse(isFinishCalled());
+	}
+    
+    /**
+     * Test that closing the map activity doesn't close the entire application.
+     */
+    @MediumTest
+	public void testActivityLaunchReturns_openMap() {
+	    btnTrack.performClick();
 	    
+	    // if finish() is called, this will exit the entire application, not just the map activity
+	    assertFalse(isFinishCalled());
+	}
+    
+    /**
+     * Test that the intent payload is as expected.
+     */
+    @MediumTest
+    public void testActivityLaunch_openMap() {
+	    btnTrack.performClick();
+	    final Intent launchIntent = getStartedActivityIntent();
 	    final String payload =
 	            launchIntent.getStringExtra(AdminGoogleMapping.MAP_PURPOSE);
 	    assertEquals("Payload is empty", MainMenu.TRACK_MESSAGE, payload);
 	}
-	
 }
