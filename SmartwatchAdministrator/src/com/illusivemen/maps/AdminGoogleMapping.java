@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -75,7 +78,7 @@ public class AdminGoogleMapping extends Activity {
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             // setup UI controls
             setupUi();
-             
+            
             // make sure map is created
             if (googleMap == null) {
                 Toast.makeText(getApplicationContext(),
@@ -94,7 +97,8 @@ public class AdminGoogleMapping extends Activity {
     
     private void subscribeForLocations() {
 		// retrieve patient location in loop
-    	new RetrieveLocation().execute();
+    	Timer timer = new Timer();
+    	timer.scheduleAtFixedRate(new RetrieveUpdateTask(), 2000, 2000);
     }
     
     /**
@@ -125,7 +129,11 @@ public class AdminGoogleMapping extends Activity {
 	       		.title("Patient's Location"));
     }
 	
-    
+    class RetrieveUpdateTask extends TimerTask {
+    	   public void run() {
+    	       new RetrieveLocation().execute();
+    	   }
+    	}
     
     private class RetrieveLocation extends AsyncTask<Void, Void, String>{
 		
@@ -162,7 +170,7 @@ public class AdminGoogleMapping extends Activity {
 			
 			String[] location = result.split(",");
 			LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-			
+			System.out.println("poaseuthaoneuao");
 			updateLocation(position);
 		}
 	}

@@ -138,6 +138,8 @@ public class GoogleMapping extends Activity {
 	        LatLng newPosition = new LatLng(location.getLatitude(), location.getLongitude());
 	        googleMap.animateCamera(CameraUpdateFactory.newLatLng(newPosition));
 	        myMarker.setPosition(newPosition);
+	        // comment to disable
+	        sendToServer(location);
 	    }
 
 		@Override
@@ -157,17 +159,15 @@ public class GoogleMapping extends Activity {
 		}
 	};
 	
-	private void sendToServer(LatLng latlng) {
-		new SaveTask().execute(latlng);
+	private void sendToServer(Location location) {
+		new SaveTask().execute(location);
 	}
 	
 	// Background thread to save the location in remote MySQL server
-	private class SaveTask extends AsyncTask<LatLng, Void, Void> {
+	private class SaveTask extends AsyncTask<Location, Void, Void> {
 		@Override
-		protected Void doInBackground(LatLng... params) {
-			String lat = Double.toString(params[0].latitude);
-            String lng = Double.toString(params[0].longitude);
-            String strUrl = "http://agile.azarel-howard.me/";
+		protected Void doInBackground(Location... params) {
+            String strUrl = "http://agile.azarel-howard.me/saveNewLocation.php";
             URL url = null;
             try {
             	url = new URL(strUrl);
@@ -177,7 +177,11 @@ public class GoogleMapping extends Activity {
             	connection.setDoOutput(true);
             	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
             	
-            	outputStreamWriter.write("lat=" + lat + "&lng="+lng);
+            	// TODO: set patient to current patient id
+            	outputStreamWriter.write("patient=0"
+            			+ "&lat=" + params[0].getLatitude() 
+            			+ "&lng=" + params[0].getLongitude()
+            			+ "&acc=" + params[0].getAccuracy());
                 outputStreamWriter.flush();
                 outputStreamWriter.close();
                 
