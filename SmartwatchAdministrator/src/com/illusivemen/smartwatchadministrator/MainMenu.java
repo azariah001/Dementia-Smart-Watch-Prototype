@@ -45,7 +45,6 @@ public class MainMenu extends Activity {
 	
 	public void showLocations(View view) {
 		startActivity(AdminGoogleMapping.makeIntent(MainMenu.this, TRACK_MESSAGE));
-		finish();
 	}
 	
 	

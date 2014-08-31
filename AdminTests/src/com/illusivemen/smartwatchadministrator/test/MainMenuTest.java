@@ -64,7 +64,8 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
 
 	    final Intent launchIntent = getStartedActivityIntent();
 	    assertNotNull("MapActivity was null", launchIntent);
-	    assertTrue(isFinishCalled());
+	    // if finish() is called, this will exit the entire application, not just the activity
+	    assertFalse(isFinishCalled());
 	    
 	    final String payload =
 	            launchIntent.getStringExtra(AdminGoogleMapping.MAP_PURPOSE);

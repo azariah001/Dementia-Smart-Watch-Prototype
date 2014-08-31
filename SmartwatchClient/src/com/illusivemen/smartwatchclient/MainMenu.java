@@ -46,7 +46,6 @@ public class MainMenu extends Activity {
 	
 	public void showLocation(View view) {
 		startActivity(GoogleMapping.makeIntent(MainMenu.this, ACTIVITY_MESSAGE));
-		finish();
 	}
 	
 	public void showProfile(View view) {
