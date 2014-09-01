@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class MainMenu extends Activity {
 
@@ -49,9 +48,7 @@ public class MainMenu extends Activity {
 	}
 	
 	public void showProfile(View view) {
-		Toast.makeText(this,
-				"You are John Smith",
-				Toast.LENGTH_SHORT).show();
+		startActivity(PatientProfile.makeIntent(MainMenu.this, ACTIVITY_MESSAGE));
 	}
 	
 	//Panic notification dialogbox, creates on click.
@@ -95,5 +92,5 @@ public class MainMenu extends Activity {
 		
 		//TODO update server db with current panic state;
 		
-	}
+	}	
 }
