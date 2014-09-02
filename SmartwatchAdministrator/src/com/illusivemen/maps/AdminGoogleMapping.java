@@ -136,30 +136,43 @@ public class AdminGoogleMapping extends Activity {
     	}
     
     private class RetrieveLocation extends AsyncTask<Void, Void, String>{
-		
+    	
 		@Override
 		protected String doInBackground(Void... params) {
 			String strUrl = "http://agile.azarel-howard.me/retrieveLastLocation.php";
-			URL url = null;
+	    	URL url;
+	    	BufferedReader reader = null;
+	    	InputStream iStream = null;
 			StringBuffer sb = new StringBuffer();
 			try {
 				url = new URL(strUrl);
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
-                InputStream iStream = connection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
+                iStream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(iStream));
                 String line = "";
                 while( (line = reader.readLine()) != null){
                     sb.append(line);
                 }
- 
-                reader.close();
-                iStream.close();
- 
+  
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+            	// thrown by URL constructor
+            	System.out.println("Patient Location Retrieve Internal Error");
             } catch (IOException e) {
-                e.printStackTrace();
+            	System.out.println("Patient Location Retrieve Network Error");
+            } finally {
+            	try {
+					reader.close();
+				} catch (Exception e) {
+					// reader was not opened
+					System.out.println("Patient Location Retrieve Read Error");
+				}
+            	try {
+					iStream.close();
+				} catch (Exception e) {
+					// iStream was not opened
+					System.out.println("Patient Location Retrieve Connection Error");
+				}
             }
             return sb.toString();
         }
@@ -168,10 +181,15 @@ public class AdminGoogleMapping extends Activity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			
-			String[] location = result.split(",");
-			LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-			System.out.println("poaseuthaoneuao");
-			updateLocation(position);
+			// network errors may result in a null result
+			// server errors may result in unexpected output
+			try {
+				String[] location = result.split(",");
+				LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+				updateLocation(position);
+			} catch (Exception e) {
+				System.out.println("Patient Location Retrieve Parse Error");
+			}
 		}
 	}
 }
