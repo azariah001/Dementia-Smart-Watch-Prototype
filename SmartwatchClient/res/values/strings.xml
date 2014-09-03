@@ -6,7 +6,12 @@
     <string name="show_location">Where Am I?</string>
     <string name="title_activity_google_mapping">Google Maps</string>
     <string name="hello_world">Hello world!</string>
-    <string name="show_profile">Who Am I?</string>
+    <string name="show_profile">Patient Profile</string>
     <string name="panic">Panic</string>
+    <string name="patientName">Name:</string>
+    <string name="patientAge">Age:</string>
+    <string name="patientAddress">Address:</string>
+    <string name="medicalInformation">Medical Information:</string>
+    <string name="emergencyContact">Emergency Contact:</string>
 
 </resources>

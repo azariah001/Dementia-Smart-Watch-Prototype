@@ -16,6 +16,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PatientProfile extends Activity {
@@ -28,6 +30,7 @@ public class PatientProfile extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_patient_profile);
 		new RetrieveProfile().execute();
 	}
 	
@@ -36,19 +39,28 @@ public class PatientProfile extends Activity {
 		String name = profile[0];
 		String age = profile[1];
 		String address = profile[2];
-		String medicalInfo = profile[3];
-		String emergencyContact = profile[4];
+		String medical = profile[3];
+		String contact= profile[4];		
 		
-		Context context = getApplicationContext();
-		CharSequence text = "Name: " + name +"\n"
-				+ "Age: " + age + "\n"
-						+ "Address: " + address + "\n"
-								+ "Medical: " + medicalInfo + "\n"
-										+ "Emergency Contact: " + emergencyContact;
-		int duration = Toast.LENGTH_LONG;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
+		EditText patientName = (EditText) findViewById(R.id.patientName);
+		patientName.setText(name);		
+		patientName.setKeyListener(null);
+		
+		EditText patientAge = (EditText) findViewById(R.id.patientAge);
+		patientAge.setText(age);		
+		patientAge.setKeyListener(null);
+		
+		EditText patientAddress = (EditText) findViewById(R.id.patientAddress);
+		patientAddress.setText(address);		
+		patientAddress.setKeyListener(null);
+		
+		EditText medicalInformation = (EditText) findViewById(R.id.medicalInformation);
+		medicalInformation.setText(medical);		
+		medicalInformation.setKeyListener(null);
+		
+		EditText emergencyContact = (EditText) findViewById(R.id.emergencyContact);
+		emergencyContact.setText(contact);		
+		emergencyContact.setKeyListener(null);
 	}
 	
 	
