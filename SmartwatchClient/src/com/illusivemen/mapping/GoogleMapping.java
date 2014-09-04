@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,14 +15,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.illusivemen.smartwatchclient.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GoogleMapping extends Activity {
@@ -29,6 +35,9 @@ public class GoogleMapping extends Activity {
 	private String purpose;
 	
 	private GoogleMap googleMap;
+	private Geocoder geocoder;
+	private List<Address> addresses;
+	private TextView address;
 	private LocationManager locationManager;
 	private Marker myMarker;
 	private static final long MIN_UPDATE_MILLISEC = 250;
@@ -60,7 +69,11 @@ public class GoogleMapping extends Activity {
 			this.setTitle("Current Location");
 			break;
 		}
+		// for receiving location
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		// for resolving address
+		geocoder = new Geocoder(this, Locale.getDefault());
+		address = (TextView) findViewById(R.id.address);
 		
 		// Create Map
 		initilizeMap();
@@ -138,6 +151,13 @@ public class GoogleMapping extends Activity {
 	        LatLng newPosition = new LatLng(location.getLatitude(), location.getLongitude());
 	        googleMap.animateCamera(CameraUpdateFactory.newLatLng(newPosition));
 	        myMarker.setPosition(newPosition);
+	        // resolve address
+	        try {
+				addresses = geocoder.getFromLocation(newPosition.latitude, newPosition.longitude, 1);
+				address.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getAddressLine(1));
+			} catch (IOException e) {
+				System.out.println("Download Address from Location Network Failiure");
+			}
 	        // comment to disable
 	        sendToServer(location);
 	    }

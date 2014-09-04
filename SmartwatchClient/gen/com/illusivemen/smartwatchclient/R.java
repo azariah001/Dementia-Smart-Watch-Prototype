@@ -412,42 +412,44 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001f;
     }
     public static final class id {
-        public static final int action_settings=0x7f080024;
+        public static final int action_settings=0x7f080025;
+        public static final int address=0x7f080015;
         public static final int book_now=0x7f080010;
-        public static final int btnBattery=0x7f080019;
-        public static final int btnMap=0x7f080016;
-        public static final int btnPanic=0x7f080018;
-        public static final int btnProfile=0x7f080017;
+        public static final int btnBattery=0x7f08001a;
+        public static final int btnMap=0x7f080017;
+        public static final int btnPanic=0x7f080019;
+        public static final int btnProfile=0x7f080018;
         public static final int buyButton=0x7f08000a;
         public static final int buy_now=0x7f08000f;
         public static final int buy_with_google=0x7f08000e;
         public static final int classic=0x7f080011;
-        public static final int emergencyContact=0x7f080020;
+        public static final int emergencyContact=0x7f080021;
         public static final int grayscale=0x7f080012;
         public static final int holo_dark=0x7f080005;
         public static final int holo_light=0x7f080006;
         public static final int hybrid=0x7f080004;
         public static final int map=0x7f080014;
         public static final int match_parent=0x7f08000c;
-        public static final int medicalInformation=0x7f080023;
+        public static final int medicalInformation=0x7f080024;
+        public static final int menu_settings=0x7f080026;
         public static final int monochrome=0x7f080013;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080001;
-        public static final int patientAddress=0x7f08001f;
-        public static final int patientAge=0x7f08001d;
-        public static final int patientName=0x7f08001c;
+        public static final int patientAddress=0x7f080020;
+        public static final int patientAge=0x7f08001e;
+        public static final int patientName=0x7f08001d;
         public static final int production=0x7f080007;
         public static final int sandbox=0x7f080008;
         public static final int satellite=0x7f080002;
         public static final int selectionDetails=0x7f08000b;
         public static final int strict_sandbox=0x7f080009;
         public static final int terrain=0x7f080003;
-        public static final int textUserSettings=0x7f080015;
-        public static final int text_view_emergencyContact=0x7f080021;
-        public static final int text_view_medicalInformation=0x7f080022;
-        public static final int text_view_patientAdress=0x7f08001e;
-        public static final int text_view_patientAge=0x7f08001b;
-        public static final int text_view_patientName=0x7f08001a;
+        public static final int textUserSettings=0x7f080016;
+        public static final int text_view_emergencyContact=0x7f080022;
+        public static final int text_view_medicalInformation=0x7f080023;
+        public static final int text_view_patientAdress=0x7f08001f;
+        public static final int text_view_patientAge=0x7f08001c;
+        public static final int text_view_patientName=0x7f08001b;
         public static final int wrap_content=0x7f08000d;
     }
     public static final class integer {
@@ -462,6 +464,7 @@ containing a value of this type.
     public static final class menu {
         public static final int google_mapping=0x7f0c0000;
         public static final int main_menu=0x7f0c0001;
+        public static final int settings=0x7f0c0002;
     }
     public static final class string {
         public static final int action_settings=0x7f07001b;

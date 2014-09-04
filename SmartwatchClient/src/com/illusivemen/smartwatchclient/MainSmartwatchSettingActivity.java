@@ -23,7 +23,7 @@ public class MainSmartwatchSettingActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.settings, menu);
+		//getMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
 	
