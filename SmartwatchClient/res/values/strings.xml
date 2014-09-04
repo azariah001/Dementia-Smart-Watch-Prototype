@@ -14,5 +14,6 @@
     <string name="medicalInformation">Medical Information:</string>
     <string name="emergencyContact">Emergency Contact:</string>
     <string name="battery">Battery Test</string>
+    <string name="locating">Locating...</string>
 
 </resources>

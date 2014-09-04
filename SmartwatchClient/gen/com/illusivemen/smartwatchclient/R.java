@@ -561,6 +561,7 @@ containing a value of this type.
         public static final int common_signin_button_text_long=0x7f070018;
         public static final int emergencyContact=0x7f070025;
         public static final int hello_world=0x7f07001e;
+        public static final int locating=0x7f070027;
         public static final int medicalInformation=0x7f070024;
         public static final int panic=0x7f070020;
         public static final int patientAddress=0x7f070023;

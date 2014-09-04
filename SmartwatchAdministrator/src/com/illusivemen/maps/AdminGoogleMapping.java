@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +22,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.illusivemen.smartwatchadministrator.R;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +36,13 @@ public class AdminGoogleMapping extends Activity {
 	private String purpose;
 	
 	private GoogleMap googleMap;
-	private static final float INITIAL_ZOOM= 11;
+	private static final float INITIAL_ZOOM = 11;
+	private static final float LOCATED_ZOOM = 17;
 	private static final LatLng BRISBANE = new LatLng(-27.5,153);
 	private Marker patient;
+	private SimpleDateFormat mySQLFormat;
+	private String positionTimestamp = null;
+	private String connectionTimestamp = null;
 	
 	/**
      * Factory method to create a launch Intent for this activity.
@@ -46,6 +55,7 @@ public class AdminGoogleMapping extends Activity {
         return new Intent(context, AdminGoogleMapping.class).putExtra(MAP_PURPOSE, payload);
     }
 	
+	@SuppressLint("SimpleDateFormat")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +70,10 @@ public class AdminGoogleMapping extends Activity {
 			this.setTitle("Patient's Location");
 			break;
 		}
+		
+		// used for parsing timestamps from mysql
+		mySQLFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		mySQLFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		// Create Map
 		initilizeMap();
@@ -117,18 +131,86 @@ public class AdminGoogleMapping extends Activity {
      	googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BRISBANE, INITIAL_ZOOM));
     }
     
-    private void updateLocation(LatLng latlng) {
-    	// remove previous location
-    	if (patient != null) {
-    		patient.remove();
-    	}
+    private void updateLocation(LatLng latlng, String positionAge) {
     	
-    	// add new location
-    	patient = googleMap.addMarker(new MarkerOptions()
-	       		.position(latlng)
-	       		.title("Patient's Location"));
+    	if (patient != null) {
+    		// update previous location
+    		patient.setPosition(latlng);
+    		patient.setSnippet(positionAge);
+    		
+    		// update information tooltip if open
+    		if (patient.isInfoWindowShown()) {
+    			patient.hideInfoWindow();
+    			patient.showInfoWindow();
+    		}
+    	} else {
+    		// add initial marker
+    		patient = googleMap.addMarker(new MarkerOptions()
+    				.position(latlng)
+    				.title("Patient's Location"));
+    		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, LOCATED_ZOOM));
+    	}
+    }
+    
+    /**
+     * Only updates location age, not location. Used when location cannot be updated
+     * due to network error.
+     * @param positionAge how long ago the position has been updated.
+     */
+    private void updateLocation(String positionAge) {
+    	if (patient != null) {
+    		// Update age of previously retrieved location.
+    		patient.setSnippet(positionAge);
+    		
+    		// update information tooltip if open
+    		if (patient.isInfoWindowShown()) {
+    			patient.hideInfoWindow();
+    			patient.showInfoWindow();
+    		}
+    	}
     }
 	
+    /**
+     * Returns how long ago previousTime was compared to now.
+     * 
+     * @param previousTime the time to determine the age of in format "YYYY-MM-DD HH:MM:SS"
+     * @return human readable difference in time
+     */
+	@SuppressLint("SimpleDateFormat")
+	private String getTimeAge(String previousTime) {
+    	String age;
+    	long difference = 0;
+    	try {
+			Date previousDate = mySQLFormat.parse(previousTime);
+			Date currentDate = new Date();
+			difference = currentDate.getTime()/1000 - previousDate.getTime()/1000;
+		} catch (ParseException e) {
+			System.out.println("Date Parse Error.");
+		}
+    	
+    	// negative, clocks aren't synchronized
+    	if (difference <= 0) {
+    		age = "0 seconds";
+    	} else if (difference < 60) {
+    		// under a minute, show in seconds
+    		age = String.valueOf(difference) + " second(s)";
+    	} else if (difference < 60*60) {
+    		// under an hour, show in minutes
+    		age = String.valueOf(difference/60) + " minutes(s)";
+    	} else if (difference < 24*60*60) {
+    		// under a day, show in hours
+    		age = String.valueOf(difference/60/60) + " hour(s)";
+    	} else {
+    		// more than a day, show in days
+    		age = String.valueOf(difference/60/60/24) + " day(s)";
+    	}
+    	
+    	return age;
+    }
+    
+	/**
+	 * TimerTask which updates patients' positions from each tick.
+	 */
     class RetrieveUpdateTask extends TimerTask {
     	   public void run() {
     	       new RetrieveLocation().execute();
@@ -137,9 +219,10 @@ public class AdminGoogleMapping extends Activity {
     
     private class RetrieveLocation extends AsyncTask<Void, Void, String>{
     	
+    	private static final String strUrl = "http://agile.azarel-howard.me/retrieveLastLocation.php";
+    	
 		@Override
 		protected String doInBackground(Void... params) {
-			String strUrl = "http://agile.azarel-howard.me/retrieveLastLocation.php";
 	    	URL url;
 	    	BufferedReader reader = null;
 	    	InputStream iStream = null;
@@ -186,9 +269,16 @@ public class AdminGoogleMapping extends Activity {
 			try {
 				String[] location = result.split(",");
 				LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-				updateLocation(position);
+				positionTimestamp = location[2];
+				connectionTimestamp = mySQLFormat.format(new Date());
+				updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
 			} catch (Exception e) {
 				System.out.println("Patient Location Retrieve Parse Error");
+				// only update age of the retrieved location
+				if (positionTimestamp != null) {
+					updateLocation("Location from " + getTimeAge(positionTimestamp)
+							+ " ago. Connection failed for " + getTimeAge(connectionTimestamp) + ".");
+				}
 			}
 		}
 	}
