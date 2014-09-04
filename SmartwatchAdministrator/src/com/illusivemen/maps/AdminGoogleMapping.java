@@ -9,7 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,12 +22,15 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.illusivemen.smartwatchadministrator.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -40,6 +45,7 @@ public class AdminGoogleMapping extends Activity {
 	private static final float LOCATED_ZOOM = 17;
 	private static final LatLng BRISBANE = new LatLng(-27.5,153);
 	private Marker patient;
+	private Polyline track;
 	private SimpleDateFormat mySQLFormat;
 	private String positionTimestamp = null;
 	private String connectionTimestamp = null;
@@ -169,6 +175,25 @@ public class AdminGoogleMapping extends Activity {
     		}
     	}
     }
+    
+    private void updateTrack(String[] pointSet) {
+    	List<LatLng> points = new ArrayList<LatLng>();
+    	for (int point = 0; point < pointSet.length; point++) {
+    		String[] latLng = pointSet[point].split(",");
+    		points.add(new LatLng(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1])));
+    	}
+    	
+    	if (track != null) {
+    		// update previous track
+    		track.setPoints(points);
+    	} else {
+    		// add initial polyline
+    		track = googleMap.addPolyline(new PolylineOptions()
+    	     		.width(5)
+    	     		.color(Color.RED));
+    		track.setPoints(points);
+    	}
+    }
 	
     /**
      * Returns how long ago previousTime was compared to now.
@@ -219,7 +244,7 @@ public class AdminGoogleMapping extends Activity {
     
     private class RetrieveLocation extends AsyncTask<Void, Void, String>{
     	
-    	private static final String strUrl = "http://agile.azarel-howard.me/retrieveLastLocation.php";
+    	private static final String strUrl = "http://agile.azarel-howard.me/retrieveLastLocations.php";
     	
 		@Override
 		protected String doInBackground(Void... params) {
@@ -267,11 +292,17 @@ public class AdminGoogleMapping extends Activity {
 			// network errors may result in a null result
 			// server errors may result in unexpected output
 			try {
-				String[] location = result.split(",");
+				// list of recent points
+				String[] latestPoints = result.split(";");
+				// first recent point is the latest position
+				String[] location = latestPoints[0].split(",");
+				// parsing
 				LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
 				positionTimestamp = location[2];
 				connectionTimestamp = mySQLFormat.format(new Date());
+				// processing
 				updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
+				updateTrack(latestPoints);
 			} catch (Exception e) {
 				System.out.println("Patient Location Retrieve Parse Error");
 				// only update age of the retrieved location
