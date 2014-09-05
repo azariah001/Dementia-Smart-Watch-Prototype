@@ -26,4 +26,14 @@
         android:onClick="changePanic"
         android:text="Toggle Panic"/>
 
+    <Button
+        android:id="@+id/callSmartWatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnTrack"
+        android:layout_below="@+id/btnTrack"
+        android:layout_marginTop="22dp"
+        android:onClick="callSmartWatch"
+        android:text="Call SmartWatch" />
+
 </RelativeLayout>

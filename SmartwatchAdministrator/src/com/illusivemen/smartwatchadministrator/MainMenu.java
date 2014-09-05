@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 public class MainMenu extends Activity {
 
 	public final static String TRACK_MESSAGE = "TrackPatients";
+	public final static String CALL_MESSAGE = "CallSmartWatch";
 	
 	private boolean patientPanic = false;
 
@@ -47,7 +48,6 @@ public class MainMenu extends Activity {
 		startActivity(AdminGoogleMapping.makeIntent(MainMenu.this, TRACK_MESSAGE));
 	}
 	
-	
 	//Dummy method, emulates the 
 	public void changePanic(View view) {
 		
@@ -63,6 +63,11 @@ public class MainMenu extends Activity {
 	        patientPanic = false;
 	    }
 		
+	}
+	
+	//IM-21 - Call SmartWatch
+	public void callSmartWatch(View view) {
+		startActivity(CallSmartWatch.makeIntent(MainMenu.this, CALL_MESSAGE));
 	}
 }
 	

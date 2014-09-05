@@ -21,6 +21,9 @@
     <!-- Required to show current location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
+    <!--  Required to Call SmartWatch -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
  
     <!-- Required OpenGL ES 2.0. for Maps V2 -->
     <uses-feature
@@ -44,6 +47,10 @@
         <activity
             android:name="com.illusivemen.maps.AdminGoogleMapping"
             android:label="@string/title_activity_admin_google_mapping" >
+        </activity>
+        <activity
+            android:name=".CallSmartWatch"
+            android:label="@string/call_smartwatch" > 
         </activity>
         <!-- Google Maps -->
         <meta-data
