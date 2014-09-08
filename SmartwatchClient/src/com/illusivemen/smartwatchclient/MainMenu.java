@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.illusivemen.mapping.GoogleMapping;
+import com.illusivemen.setting.ShowSettings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,12 +13,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainMenu extends Activity {
@@ -139,4 +143,10 @@ public class MainMenu extends Activity {
 			}			
 		}
 	};
+	
+	// Shows the Settings menu
+	public void showSettings(View view) {
+		Intent i = new Intent(this, ShowSettings.class);
+		startActivity(i);
+	}
 }

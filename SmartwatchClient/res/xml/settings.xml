@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
     
-
+	<PreferenceCategory 
+	    android:title="Patient Profile Settings">
+	
+    <CheckBoxPreference
+        android:key="hideName"
+        android:defaultValue="false"
+        android:title="Hide Name"
+        android:summary="Check this box to hide the Patient Name" />
+    
+    <CheckBoxPreference
+        android:key="hideAge"
+        android:defaultValue="false"
+        android:title="Hide Age"
+        android:summary="Check this box to hide the Patient Age" />
+    
+    <CheckBoxPreference
+        android:key="hideAddress"
+        android:defaultValue="false"
+        android:title="Hide Address"
+        android:summary="Check this box to hide the Patient Address" />
+    
+    <CheckBoxPreference
+        android:key="hideMedicalInfo"
+        android:defaultValue="false"
+        android:title="Hide Medical Information"
+        android:summary="Check this box to hide the Patient Medical Information" />
+    
+    <CheckBoxPreference
+        android:key="hideEmergencyContact"
+        android:defaultValue="false"
+        android:title="Hide Emergency Contacts"
+        android:summary="Check this box to hide the Patient Emergency Contacts" />
+	
+    </PreferenceCategory>
 </PreferenceScreen>

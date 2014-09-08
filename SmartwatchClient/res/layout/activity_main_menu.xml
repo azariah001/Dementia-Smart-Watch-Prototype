@@ -55,4 +55,15 @@
         android:onClick="panicSOS"
         android:text="@string/panic" />
 
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textClock1"
+        android:layout_alignLeft="@+id/btnMap"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="14dp"
+        android:onClick="showSettings"
+        android:text="Settings" />
+
 </RelativeLayout>

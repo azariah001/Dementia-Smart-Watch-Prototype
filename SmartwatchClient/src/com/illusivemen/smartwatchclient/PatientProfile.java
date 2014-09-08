@@ -14,8 +14,10 @@ import com.illusivemen.mapping.GoogleMapping;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,33 +36,55 @@ public class PatientProfile extends Activity {
 		new RetrieveProfile().execute();
 	}
 	
-	private void showProfile(String[] profile) {
+	private void showProfile(String[] profile) {	
 		
-		String name = profile[0];
-		String age = profile[1];
-		String address = profile[2];
-		String contact = profile[3];
-		String medical= profile[4];		
+		// Initialising intermediary variables
+		String name;
+		String age;
+		String address;
+		String contact;
+		String medical;
 		
+		// Getting previously saved Settings
+		SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences
+				(getBaseContext());
+		boolean prefProfileName    = getPrefs.getBoolean("hideName", true);
+		boolean prefProfileAge     = getPrefs.getBoolean("hideAge", true);
+		boolean prefProfileAddress = getPrefs.getBoolean("hideAddress", true);
+		boolean prefProfileMedical = getPrefs.getBoolean("hideMedicalInfo", true);
+		boolean prefProfileContact = getPrefs.getBoolean("hideEmergencyContact", true);
+		
+		// Value for hidden Profile fields
+		String hiddenInfo = "This information is hidden.";
+		
+		// Sets the intermediary variable to hidden or the actual Profile information
+		name 	= (prefProfileName    == true) ? hiddenInfo : profile[0];
+		age 	= (prefProfileAge     == true) ? hiddenInfo : profile[1];
+		address = (prefProfileAddress == true) ? hiddenInfo : profile[2];
+		contact = (prefProfileContact == true) ? hiddenInfo : profile[3];
+		medical = (prefProfileMedical == true) ? hiddenInfo : profile[4];
+		
+		// Sets the EditText field to the intermediary variable
 		EditText patientName = (EditText) findViewById(R.id.patientName);
 		patientName.setText(name);		
 		patientName.setKeyListener(null);
-		
+			
 		EditText patientAge = (EditText) findViewById(R.id.patientAge);
 		patientAge.setText(age);		
 		patientAge.setKeyListener(null);
-		
+			
 		EditText patientAddress = (EditText) findViewById(R.id.patientAddress);
 		patientAddress.setText(address);		
 		patientAddress.setKeyListener(null);
-		
+			
 		EditText medicalInformation = (EditText) findViewById(R.id.medicalInformation);
 		medicalInformation.setText(medical);		
 		medicalInformation.setKeyListener(null);
-		
+			
 		EditText emergencyContact = (EditText) findViewById(R.id.emergencyContact);
 		emergencyContact.setText(contact);		
 		emergencyContact.setKeyListener(null);
+		
 	}
 	
 	
