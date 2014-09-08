@@ -18,32 +18,46 @@ import java.util.TimerTask;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.location.Geofence;
 import com.illusivemen.smartwatchadministrator.R;
+import com.illusivemen.smartwatchadministrator.R.menu;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-public class AdminGoogleMapping extends Activity {
+public class AdminGoogleMapping extends Activity implements OnMapLongClickListener {
 	
 	public final static String MAP_PURPOSE = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
 	private String purpose;
 	
+	private Menu menu;
 	private GoogleMap googleMap;
+	private SimpleGeofence testFence;
+	private List<Geofence> geofenceList;
 	private static final float INITIAL_ZOOM = 11;
 	private static final float LOCATED_ZOOM = 17;
 	private static final LatLng BRISBANE = new LatLng(-27.5,153);
+	private static final long GEOFENCE_EXPIRATION_TIME = 0;
 	private Marker patient;
 	private Polyline track;
 	private SimpleDateFormat mySQLFormat;
@@ -81,10 +95,64 @@ public class AdminGoogleMapping extends Activity {
 		mySQLFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		mySQLFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
+		// local geofence store
+		geofenceList = new ArrayList<Geofence>();
+
+		
 		// Create Map
 		initilizeMap();
 		// Location Updater
 		subscribeForLocations();
+	}
+	
+	/**
+	 * Menu Creation
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		this.menu = menu;
+		getMenuInflater().inflate(R.menu.admin_google_mapping, this.menu);
+		return true;
+	}
+	
+	/**
+	 * Menu Selection Handling
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.map_map:
+	        	setMenuMapType(item);
+	            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+	            return true;
+	        case R.id.map_satellite:
+	        	setMenuMapType(item);
+	            googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+	            return true;
+	        case R.id.map_hybrid:
+	        	setMenuMapType(item);
+	        	googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+	        	return true;
+	        case R.id.map_terrain:
+	        	setMenuMapType(item);
+	        	googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	private void setMenuMapType(MenuItem selection) {
+		// first, un-check all options before selecting a new one
+		menu.findItem(R.id.map_map).setChecked(false);
+		menu.findItem(R.id.map_satellite).setChecked(false);
+		menu.findItem(R.id.map_hybrid).setChecked(false);
+		menu.findItem(R.id.map_terrain).setChecked(false);
+		
+		// check the selected option
+		selection.setChecked(true);
 	}
 	
 	/**
@@ -96,6 +164,8 @@ public class AdminGoogleMapping extends Activity {
                     R.id.map)).getMap();
             // set type of map to use
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            // act out on long clicks
+            googleMap.setOnMapLongClickListener(this);
             // setup UI controls
             setupUi();
             
@@ -111,8 +181,8 @@ public class AdminGoogleMapping extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        initilizeMap();
-        new RetrieveLocation().execute();
+        //initilizeMap();
+        //subscribeForLocations();
     }
     
     private void subscribeForLocations() {
@@ -313,4 +383,82 @@ public class AdminGoogleMapping extends Activity {
 			}
 		}
 	}
+
+    /**
+     * This method runs when the map is pressed for a longer time.
+     * @param point The point where the user pressed.
+     */
+	@Override
+	public void onMapLongClick(LatLng point) {
+		// TODO Auto-generated method stub
+		System.out.println(point.latitude + ", " + point.longitude);
+		setGeofence(point);
+		
+	}
+	
+	public void setGeofence(LatLng point) {
+		testFence = new SimpleGeofence(
+                "1",
+                Double.valueOf(point.latitude),
+                Double.valueOf(point.longitude),
+                Float.valueOf("25"),
+                Geofence.NEVER_EXPIRE,
+                // This geofence records only entry transitions
+                // to have enter/exit try adding?
+                Geofence.GEOFENCE_TRANSITION_ENTER);
+
+		geofenceList.add(testFence.toGeofence());
+		// display visually
+		addMarkerForFence(testFence);
+
+	}
+	
+	public void addMarkerForFence(SimpleGeofence fence){
+		if(fence == null){
+		    // display an error message and return
+		   return;
+		}
+		
+		// TODO: modify geofence when you click on the marker details
+		googleMap.addMarker( new MarkerOptions()
+		  .position( new LatLng(fence.getLatitude(), fence.getLongitude()) )
+		  .title("Fence " + fence.getId())
+		  .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+		  .snippet("Radius: " + fence.getRadius()) ).showInfoWindow();
+		 
+		// Instantiates a new CircleOptions object + center/radius
+		CircleOptions circleOptions = new CircleOptions()
+		  .center( new LatLng(fence.getLatitude(), fence.getLongitude()) )
+		  .radius( fence.getRadius() )
+		  // AARRGGBB
+		  .fillColor(0x40ff0000)
+		  .strokeColor(Color.TRANSPARENT)
+		  .strokeWidth(2);
+		 
+		// Get back the mutable Circle
+		Circle circle = googleMap.addCircle(circleOptions);
+		// more operations on the circle...
+		 
+	}
+	
+	
+	// TODO: this code should be on the client and should modify the database which then gets retrieved here
+	/*
+     * Create a PendingIntent that triggers an IntentService
+     * when a geofence transition occurs.
+     */
+    private PendingIntent getTransitionPendingIntent() {
+        // Create an explicit Intent
+        Intent intent = new Intent(this,
+                ReceiveTransitionsIntentService.class);
+        /*
+         * Return the PendingIntent
+         */
+        return PendingIntent.getService(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
 }

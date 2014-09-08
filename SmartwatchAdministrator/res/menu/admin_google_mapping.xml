@@ -6,6 +6,16 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_settings">
+    </item>
+    <item android:id="@+id/mapstyle" android:title="@string/mapstyle_select">
+        <menu>
+            <item android:id="@+id/map_map" android:title="@string/mapstyle_map" android:checked="false" android:checkable="true"/>
+            <item android:id="@+id/map_satellite" android:title="@string/mapstyle_satellite" android:checked="false" android:checkable="true"/>
+            <item android:id="@+id/map_hybrid" android:title="@string/mapstyle_hybrid" android:checked="true" android:checkable="true"/>
+            <item android:id="@+id/map_terrain" android:title="@string/mapstyle_terrain" android:checked="false" android:checkable="true"/>
+        </menu>
+    </item>
+    <item android:id="@+id/fences" android:title="@string/geofence_add"></item>
 
 </menu>
