@@ -11,9 +11,9 @@ public class ShowSettings extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(android.R.id.content, new Settings());
-		ft.commit();
+		FragmentManager settingsFragMan = getFragmentManager();
+		FragmentTransaction settingsFragTrans = settingsFragMan.beginTransaction();
+		settingsFragTrans.replace(android.R.id.content, new Settings());
+		settingsFragTrans.commit();
 	}
 }

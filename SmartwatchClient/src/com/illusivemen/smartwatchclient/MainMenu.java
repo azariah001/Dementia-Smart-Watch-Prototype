@@ -146,7 +146,7 @@ public class MainMenu extends Activity {
 	
 	// Shows the Settings menu
 	public void showSettings(View view) {
-		Intent i = new Intent(this, ShowSettings.class);
-		startActivity(i);
+		Intent showSettings = new Intent(this, ShowSettings.class);
+		startActivity(showSettings);
 	}
 }

@@ -5,37 +5,37 @@
     android:orientation="vertical" >
     
 	<PreferenceCategory 
-	    android:title="Patient Profile Settings">
+	    android:title="@string/title_patient_profile_settings">
 	
     <CheckBoxPreference
         android:key="hideName"
         android:defaultValue="false"
-        android:title="Hide Name"
-        android:summary="Check this box to hide the Patient Name" />
+        android:title="@string/title_hide_name"
+        android:summary="@string/summ_hide_name" />
     
     <CheckBoxPreference
         android:key="hideAge"
         android:defaultValue="false"
-        android:title="Hide Age"
-        android:summary="Check this box to hide the Patient Age" />
+        android:title="@string/title_hide_age"
+        android:summary="@string/summ_hide_age" />
     
     <CheckBoxPreference
         android:key="hideAddress"
         android:defaultValue="false"
-        android:title="Hide Address"
-        android:summary="Check this box to hide the Patient Address" />
+        android:title="@string/title_hide_address"
+        android:summary="@string/summ_hide_address" />
     
     <CheckBoxPreference
         android:key="hideMedicalInfo"
         android:defaultValue="false"
-        android:title="Hide Medical Information"
-        android:summary="Check this box to hide the Patient Medical Information" />
+        android:title="@string/title_hide_medical_info"
+        android:summary="@string/summ_hide_medical_info" />
     
     <CheckBoxPreference
         android:key="hideEmergencyContact"
         android:defaultValue="false"
-        android:title="Hide Emergency Contacts"
-        android:summary="Check this box to hide the Patient Emergency Contacts" />
+        android:title="@string/title_hide_emergency_contacts"
+        android:summary="@string/summ_hide_emergency_contacts" />
 	
     </PreferenceCategory>
 </PreferenceScreen>

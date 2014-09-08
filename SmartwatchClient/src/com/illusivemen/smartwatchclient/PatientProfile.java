@@ -45,7 +45,7 @@ public class PatientProfile extends Activity {
 		String contact;
 		String medical;
 		
-		// Getting previously saved Settings
+		// Getting previously saved Settings from SharedPreferences
 		SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences
 				(getBaseContext());
 		boolean prefProfileName    = getPrefs.getBoolean("hideName", true);
