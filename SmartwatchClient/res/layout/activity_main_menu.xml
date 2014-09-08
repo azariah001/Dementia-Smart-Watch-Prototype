@@ -46,4 +46,13 @@
         android:onClick="showBattery"
         android:text="@string/battery" />
 
+    <TextClock
+        android:id="@+id/textClock1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="TextClock"
+        android:textSize="60sp" />
+
 </RelativeLayout>
