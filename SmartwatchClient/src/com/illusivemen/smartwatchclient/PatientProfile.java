@@ -39,8 +39,8 @@ public class PatientProfile extends Activity {
 		String name = profile[0];
 		String age = profile[1];
 		String address = profile[2];
-		String medical = profile[3];
-		String contact= profile[4];		
+		String contact = profile[3];
+		String medical= profile[4];		
 		
 		EditText patientName = (EditText) findViewById(R.id.patientName);
 		patientName.setText(name);		

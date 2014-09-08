@@ -131,7 +131,7 @@ public class MainMenu extends Activity {
 			int level = battery.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 			int scale = battery.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
-			float percent = level / (float)scale;
+			float percent = level / (float)scale * 100;
 			batteryPct = percent; 
 			
 			if (percent < 0.10) {

@@ -6,7 +6,8 @@
     <string name="patient_tracking">Patient Locations</string>
     <string name="title_activity_admin_google_mapping">Google Maps</string>
     <string name="hello_world">Hello world!</string>
-    <string name="toggle_panic">Panic</string>
+    <string name="panic_off">Patient State Normal</string>
+    <string name="panic_on">Patient Panic On</string>
     <string name="call_smartwatch">Call SmartWatch</string>
     <string name="mapstyle_map">Map</string>
     <string name="mapstyle_satellite">Satellite</string>

@@ -16,24 +16,25 @@
         android:layout_alignParentTop="true"
         android:onClick="showLocations"
         android:text="@string/patient_tracking" />
-    
-    <ToggleButton 
-        android:id="@+id/tglPanic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="changePanic"
-        android:text="Toggle Panic"/>
 
     <Button
         android:id="@+id/callSmartWatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnTrack"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/btnTrack"
-        android:layout_marginTop="22dp"
         android:onClick="callSmartWatch"
         android:text="Call SmartWatch" />
+
+    <ToggleButton
+        android:id="@+id/tglPanic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="changePanic"
+        android:text="@string/panic_off"
+        android:textOff="@string/panic_off"
+        android:textOn="@string/panic_on" />
 
 </RelativeLayout>

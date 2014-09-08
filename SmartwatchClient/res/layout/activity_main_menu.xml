@@ -26,25 +26,6 @@
         android:layout_marginBottom="32dp"
         android:onClick="showProfile"
         android:text="@string/show_profile" />
-    
-    <Button
-        android:id="@+id/btnPanic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:onClick="panicSOS" 
-        android:text="panic" />
-
-    <Button
-        android:id="@+id/btnBattery"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
-        android:onClick="showBattery"
-        android:text="@string/battery" />
 
     <TextClock
         android:id="@+id/textClock1"
@@ -54,5 +35,24 @@
         android:layout_centerVertical="true"
         android:text="TextClock"
         android:textSize="60sp" />
+
+    <Button
+        android:id="@+id/btnBattery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:layout_alignRight="@+id/btnPanic"
+        android:onClick="showBattery"
+        android:text="@string/battery" />
+
+    <Button
+        android:id="@+id/btnPanic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="panicSOS"
+        android:text="@string/panic" />
 
 </RelativeLayout>
