@@ -15,5 +15,16 @@
     <string name="emergencyContact">Emergency Contact:</string>
     <string name="battery">Battery Test</string>
     <string name="locating">Locating...</string>
+    <string name="title_patient_profile_settings">Patient Profile Settings</string>
+    <string name="title_hide_name">Hide Name</string>
+    <string name="title_hide_age">Hide Age</string>
+    <string name="title_hide_address">Hide Address</string>
+    <string name="title_hide_medical_info">Hide Medical Information</string>
+    <string name="title_hide_emergency_contacts">Hide Emergency Contacts</string>
+    <string name="summ_hide_name">Check this box to hide Patient Name</string>
+    <string name="summ_hide_age">Check this box to hide Patient Age</string>
+    <string name="summ_hide_address">Check this box to hide Patient Address</string>
+    <string name="summ_hide_medical_info">Check this box to hide Patient Medical Info</string>
+    <string name="summ_hide_emergency_contacts">Check this box to hide Patient Emergency Contacts</string>
 
 </resources>

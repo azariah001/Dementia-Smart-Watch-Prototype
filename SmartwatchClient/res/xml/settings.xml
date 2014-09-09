@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
     
-
+	<PreferenceCategory 
+	    android:title="@string/title_patient_profile_settings">
+	
+    <CheckBoxPreference
+        android:key="hideName"
+        android:defaultValue="false"
+        android:title="@string/title_hide_name"
+        android:summary="@string/summ_hide_name" />
+    
+    <CheckBoxPreference
+        android:key="hideAge"
+        android:defaultValue="false"
+        android:title="@string/title_hide_age"
+        android:summary="@string/summ_hide_age" />
+    
+    <CheckBoxPreference
+        android:key="hideAddress"
+        android:defaultValue="false"
+        android:title="@string/title_hide_address"
+        android:summary="@string/summ_hide_address" />
+    
+    <CheckBoxPreference
+        android:key="hideMedicalInfo"
+        android:defaultValue="false"
+        android:title="@string/title_hide_medical_info"
+        android:summary="@string/summ_hide_medical_info" />
+    
+    <CheckBoxPreference
+        android:key="hideEmergencyContact"
+        android:defaultValue="false"
+        android:title="@string/title_hide_emergency_contacts"
+        android:summary="@string/summ_hide_emergency_contacts" />
+	
+    </PreferenceCategory>
 </PreferenceScreen>

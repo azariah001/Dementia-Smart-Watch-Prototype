@@ -57,6 +57,11 @@
             android:name=".PatientProfile"
             android:label="@string/show_profile" >
         </activity>   
+        
+        <activity
+            android:name="com.illusivemen.setting.ShowSettings"
+            android:label="Settings">
+        </activity>
     </application>
 
 </manifest>
