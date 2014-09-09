@@ -18,6 +18,7 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
 	private Intent cLaunchIntent;
 	private MainMenu cMenu;
 	private Button btnMap;
+	private Button btnProfile;
 	
 	@Override
 	public void setUp() throws Exception {
@@ -31,6 +32,7 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
         // pointers for components
         cMenu = getActivity();
         btnMap = (Button) cMenu.findViewById(R.id.btnMap);
+        btnProfile = (Button) cMenu.findViewById(R.id.btnProfile);
 	}
 	
 	@Override
@@ -44,6 +46,7 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
     public void testPreconditions() {
         assertNotNull("cMenu is null", cMenu);
         assertNotNull("btnMap is null", btnMap);
+        assertNotNull("btnProfile is null", btnProfile);
     }
     
     // All Tests Should Be Below This Point
@@ -70,5 +73,26 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
 	    final String payload =
 	            launchIntent.getStringExtra(GoogleMapping.MAP_PURPOSE);
 	    assertEquals("Payload is empty", MainMenu.ACTIVITY_MESSAGE, payload);
+	}
+    
+    /**
+    * Test that the layout is correct.
+    */     
+    public void testButtonText_openProfile() {
+        final String expected =
+                cMenu.getString(R.string.show_profile);
+        final String actual = btnProfile.getText().toString();
+        assertEquals(expected, actual);
+    }
+	
+    /**
+    * Test that the button opens the patient profile activity
+    */
+    @MediumTest
+	public void testActivityIntent_openProfile() {
+	    btnProfile.performClick();
+
+	    final Intent launchIntent = getStartedActivityIntent();
+	    assertNotNull("ProfileActivity was null", launchIntent);
 	}
 }

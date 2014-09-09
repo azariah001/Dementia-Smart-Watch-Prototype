@@ -18,6 +18,7 @@ public class AdminMainMenuTest extends ActivityUnitTestCase<MainMenu> {
 	private Intent aLaunchIntent;
 	private MainMenu aMenu;
 	private Button btnTrack;
+	private Button btnCall;
 	
 	@Override
 	public void setUp() throws Exception {
@@ -31,6 +32,7 @@ public class AdminMainMenuTest extends ActivityUnitTestCase<MainMenu> {
         // pointers for components
         aMenu = getActivity();
         btnTrack = (Button) aMenu.findViewById(R.id.btnTrack);
+        btnCall = (Button) aMenu.findViewById(R.id.callSmartWatch);
 	}
 	
 	@Override
@@ -44,6 +46,7 @@ public class AdminMainMenuTest extends ActivityUnitTestCase<MainMenu> {
     public void testPreconditions() {
         assertNotNull("cMenu is null", aMenu);
         assertNotNull("btnTrack is null", btnTrack);
+        assertNotNull("btnCall is null", btnCall);
     }
     
     // All Tests Should Be Below This Point
@@ -92,5 +95,26 @@ public class AdminMainMenuTest extends ActivityUnitTestCase<MainMenu> {
 	    final String payload =
 	            launchIntent.getStringExtra(AdminGoogleMapping.MAP_PURPOSE);
 	    assertEquals("Payload is empty", MainMenu.TRACK_MESSAGE, payload);
+	}
+    
+    /**
+  	* Test that the layout is correct.
+  	*/     
+    public void testButtonText_callSmartWatch() {
+        final String expected =
+                aMenu.getString(R.string.call_smartwatch);
+        final String actual = btnCall.getText().toString();
+        assertEquals(expected, actual);
+    }
+	
+    /**
+    * Test that the button opens the call smart watch activity
+    */
+    @MediumTest
+	public void testActivityIntent_callSmartWatch() {
+	    btnCall.performClick();
+
+	    final Intent launchIntent = getStartedActivityIntent();
+	    assertNotNull("CallActivity was null", launchIntent);
 	}
 }
