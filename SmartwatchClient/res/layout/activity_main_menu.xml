@@ -59,11 +59,18 @@
         android:id="@+id/btnSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textClock1"
-        android:layout_alignLeft="@+id/btnMap"
-        android:layout_marginBottom="25dp"
-        android:layout_marginLeft="14dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnMap"
         android:onClick="showSettings"
         android:text="Settings" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnSettings"
+        android:onClick="startMemoryGame"
+        android:text="@string/start_memory_game" />
 
 </RelativeLayout>

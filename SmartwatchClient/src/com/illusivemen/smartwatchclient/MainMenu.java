@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.illusivemen.mapping.GoogleMapping;
+import com.illusivemen.memgame.MemoryGame;
 import com.illusivemen.setting.ShowSettings;
 
 import android.app.Activity;
@@ -62,6 +63,10 @@ public class MainMenu extends Activity {
 	
 	public void showLocation(View view) {
 		startActivity(GoogleMapping.makeIntent(MainMenu.this, ACTIVITY_MESSAGE));
+	}
+	
+	public void startMemoryGame(View view) {
+		startActivity(new Intent(this, MemoryGame.class));
 	}
 	
 	public void showProfile(View view) {

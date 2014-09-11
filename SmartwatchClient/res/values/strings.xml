@@ -26,5 +26,7 @@
     <string name="summ_hide_address">Check this box to hide Patient Address</string>
     <string name="summ_hide_medical_info">Check this box to hide Patient Medical Info</string>
     <string name="summ_hide_emergency_contacts">Check this box to hide Patient Emergency Contacts</string>
+    <string name="title_activity_memory_game">Memory Game</string>
+    <string name="start_memory_game">Memory Game</string>
 
 </resources>
