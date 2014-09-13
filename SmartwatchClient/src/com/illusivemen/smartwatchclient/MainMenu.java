@@ -1,5 +1,13 @@
 package com.illusivemen.smartwatchclient;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -99,6 +107,7 @@ public class MainMenu extends Activity {
 	        								
 	        								//Sets to panic mode
 	        								panic = 1;
+	        								sendPanicServer(panic);
 	        								dialog.dismiss(); } } );
 
 	    builder.setNegativeButton("OFF", new DialogInterface.OnClickListener() {
@@ -108,6 +117,7 @@ public class MainMenu extends Activity {
 	        	
 	        								//Sets to chill mode
 											panic = 0;
+											sendPanicServer(panic);
 											dialog.dismiss(); } } );
 
 	    AlertDialog alert = builder.create();
@@ -126,9 +136,49 @@ public class MainMenu extends Activity {
 		
 		panic = getPanic();
 		
+		String strUrl = "http://agile.azarel-howard.me/updatePatientState.php";
+		URL url = null;
+		try {
+			url = new URL(strUrl);
+			
+        	HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        	connection.setRequestMethod("POST");
+        	connection.setDoOutput(true);
+        	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
+        	
+        	// TODO: set patient to current patient id
+        	outputStreamWriter.write("patient=0"
+        			+ "&panic=" + getPanic()); 
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+            
+            InputStream iStream = connection.getInputStream();
+            BufferedReader reader = new BufferedReader(new
+            InputStreamReader(iStream));
+
+            StringBuffer sb = new StringBuffer();
+
+            String line = "";
+            
+            while( (line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            reader.close();
+            iStream.close();
+			} catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+			return;	
+		}
+	
+		
 		//TODO update server db with current panic state;
 		
-	}
+	
 	
 	TimerTask lowBattery = new TimerTask() {
 		
