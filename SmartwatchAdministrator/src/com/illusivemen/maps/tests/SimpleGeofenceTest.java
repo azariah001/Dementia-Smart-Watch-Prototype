@@ -1,4 +1,4 @@
-package com.illusivemen.smartwatchadministrator.test;
+package com.illusivemen.maps.tests;
 
 import junit.framework.TestCase;
 

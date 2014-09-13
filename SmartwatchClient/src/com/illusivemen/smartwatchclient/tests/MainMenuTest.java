@@ -1,14 +1,17 @@
-package com.illusivemen.smartwatchclient.test;
+package com.illusivemen.smartwatchclient.tests;
 
 import com.illusivemen.mapping.GoogleMapping;
 import com.illusivemen.smartwatchclient.MainMenu;
 import com.illusivemen.smartwatchclient.R;
+import com.illusivemen.smartwatchclient.R.id;
+import com.illusivemen.smartwatchclient.R.string;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.widget.Button;
 
+// change to instrumentatiton2
 public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
 	
 	public MainMenuTest() {

@@ -1,4 +1,4 @@
-package com.illusivemen.smartwatchadministrator.test;
+package com.illusivemen.smartwatchadministrator.tests;
 
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.smartwatchadministrator.MainMenu;
@@ -9,9 +9,9 @@ import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.widget.Button;
 
-public class AdminMainMenuTest extends ActivityUnitTestCase<MainMenu> {
+public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
 
-	public AdminMainMenuTest() {
+	public MainMenuTest() {
 		super(MainMenu.class);
 	}
 	

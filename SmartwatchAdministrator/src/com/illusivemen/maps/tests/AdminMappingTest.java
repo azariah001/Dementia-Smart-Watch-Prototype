@@ -1,4 +1,4 @@
-package com.illusivemen.smartwatchadministrator.test;
+package com.illusivemen.maps.tests;
 
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.smartwatchadministrator.MainMenu;
