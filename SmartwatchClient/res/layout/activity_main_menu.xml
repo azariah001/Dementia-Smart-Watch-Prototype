@@ -73,4 +73,13 @@
         android:onClick="startMemoryGame"
         android:text="@string/start_memory_game" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_toRightOf="@+id/btnSettings"
+        android:onClick="setReminder"
+        android:text="Set Reminder" />
+
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.illusivemen.smartwatchadministrator;
 
 import com.illusivemen.maps.AdminGoogleMapping;
+import com.illusivemen.reminder.CalendarReminder;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +17,7 @@ public class MainMenu extends Activity {
 
 	public final static String TRACK_MESSAGE = "TrackPatients";
 	public final static String CALL_MESSAGE = "CallSmartWatch";
+	public final static String SET_REMINDER = "SetReminder";
 	
 	private boolean patientPanic = false;
 
@@ -69,6 +71,11 @@ public class MainMenu extends Activity {
 	public void callSmartWatch(View view) {
 		startActivity(CallSmartWatch.makeIntent(MainMenu.this, CALL_MESSAGE));
 	}
+	
+	public void setReminder(View view) {
+		startActivity(CalendarReminder.makeIntent(MainMenu.this, SET_REMINDER));
+	}
+	
 }
 	
 	
