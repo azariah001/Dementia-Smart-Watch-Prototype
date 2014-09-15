@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.location.Geofence;
+import com.illusivemen.db.DBConn;
 import com.illusivemen.smartwatchadministrator.R;
 import com.illusivemen.smartwatchadministrator.R.menu;
 
@@ -63,6 +64,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	private SimpleDateFormat mySQLFormat;
 	private String positionTimestamp = null;
 	private String connectionTimestamp = null;
+	// database retrieval related
+	private static final String DB_LOCATIONS = "http://agile.azarel-howard.me/retrieveLastLocations.php";
+	private DBConn conn;
 	
 	/**
      * Factory method to create a launch Intent for this activity.
@@ -97,7 +101,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		
 		// local geofence store
 		geofenceList = new ArrayList<Geofence>();
-
+		
+		// database retrieval class
+		conn = new DBConn(DB_LOCATIONS);
 		
 		// Create Map
 		initilizeMap();
@@ -314,45 +320,11 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
     
     private class RetrieveLocation extends AsyncTask<Void, Void, String>{
     	
-    	private static final String strUrl = "http://agile.azarel-howard.me/retrieveLastLocations.php";
-    	
 		@Override
 		protected String doInBackground(Void... params) {
-	    	URL url;
-	    	BufferedReader reader = null;
-	    	InputStream iStream = null;
-			StringBuffer sb = new StringBuffer();
-			try {
-				url = new URL(strUrl);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                iStream = connection.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(iStream));
-                String line = "";
-                while( (line = reader.readLine()) != null){
-                    sb.append(line);
-                }
-  
-            } catch (MalformedURLException e) {
-            	// thrown by URL constructor
-            	System.out.println("Patient Location Retrieve Internal Error");
-            } catch (IOException e) {
-            	System.out.println("Patient Location Retrieve Network Error");
-            } finally {
-            	try {
-					reader.close();
-				} catch (Exception e) {
-					// reader was not opened
-					System.out.println("Patient Location Retrieve Read Error");
-				}
-            	try {
-					iStream.close();
-				} catch (Exception e) {
-					// iStream was not opened
-					System.out.println("Patient Location Retrieve Connection Error");
-				}
-            }
-            return sb.toString();
+			conn.execute();
+			System.out.println("Received Location");
+			return conn.getResult();
         }
 		
 		@Override
