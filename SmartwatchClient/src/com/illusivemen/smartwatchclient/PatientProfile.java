@@ -1,15 +1,6 @@
 package com.illusivemen.smartwatchclient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import com.google.android.gms.maps.model.LatLng;
-import com.illusivemen.mapping.GoogleMapping;
+import com.illusivemen.db.DBConn;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,33 +10,46 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class PatientProfile extends Activity {
 	
+	private String name;
+	private String age;
+	private String address;
+	private String contact;
+	private String medical;
+	private static final String HIDDEN_MSG = "Hidden";
 	
-	public static Intent makeIntent(Context context, String payload) {
-        return new Intent(context, PatientProfile.class);
-    }
+	/**
+	 * Factory method for creating a launch intent.
+	 * @param context
+	 * @param payload extra string input
+	 * @return
+	 */
+	public static Intent makeIntent(Context context) {
+		return new Intent(context, PatientProfile.class);
+	}
 	
+	/**
+	 * The activity starts with a connection to the database.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_patient_profile);
+		
+		// retrieve information and insert into display
 		new RetrieveProfile().execute();
 	}
 	
+	/**
+	 * Given that the profile has been retrieved,
+	 * this method will display the result.
+	 * @param profile
+	 */
 	private void showProfile(String[] profile) {	
 		
-		// Initialising intermediary variables
-		String name;
-		String age;
-		String address;
-		String contact;
-		String medical;
-		
-		// Getting previously saved Settings from SharedPreferences
+		// previously saved Settings from SharedPreferences
 		SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences
 				(getBaseContext());
 		boolean prefProfileName    = getPrefs.getBoolean("hideName", true);
@@ -54,68 +58,34 @@ public class PatientProfile extends Activity {
 		boolean prefProfileMedical = getPrefs.getBoolean("hideMedicalInfo", true);
 		boolean prefProfileContact = getPrefs.getBoolean("hideEmergencyContact", true);
 		
-		// Value for hidden Profile fields
-		String hiddenInfo = "This information is hidden.";
+		// retrieve values or message that information is hidden
+		name 	= (prefProfileName    == true) ? HIDDEN_MSG : profile[0];
+		age 	= (prefProfileAge     == true) ? HIDDEN_MSG : profile[1];
+		address = (prefProfileAddress == true) ? HIDDEN_MSG : profile[2];
+		medical = (prefProfileMedical == true) ? HIDDEN_MSG : profile[3];
+		contact = (prefProfileContact == true) ? HIDDEN_MSG : profile[4];
 		
-		// Sets the intermediary variable to hidden or the actual Profile information
-		name 	= (prefProfileName    == true) ? hiddenInfo : profile[0];
-		age 	= (prefProfileAge     == true) ? hiddenInfo : profile[1];
-		address = (prefProfileAddress == true) ? hiddenInfo : profile[2];
-		contact = (prefProfileContact == true) ? hiddenInfo : profile[3];
-		medical = (prefProfileMedical == true) ? hiddenInfo : profile[4];
-		
-		// Sets the EditText field to the intermediary variable
-		EditText patientName = (EditText) findViewById(R.id.patientName);
-		patientName.setText(name);		
-		patientName.setKeyListener(null);
-			
-		EditText patientAge = (EditText) findViewById(R.id.patientAge);
-		patientAge.setText(age);		
-		patientAge.setKeyListener(null);
-			
-		EditText patientAddress = (EditText) findViewById(R.id.patientAddress);
-		patientAddress.setText(address);		
-		patientAddress.setKeyListener(null);
-			
-		EditText medicalInformation = (EditText) findViewById(R.id.medicalInformation);
-		medicalInformation.setText(medical);		
-		medicalInformation.setKeyListener(null);
-			
-		EditText emergencyContact = (EditText) findViewById(R.id.emergencyContact);
-		emergencyContact.setText(contact);		
-		emergencyContact.setKeyListener(null);
-		
+		// display values in profile
+		((EditText) findViewById(R.id.patientName)).setText(name);
+		((EditText) findViewById(R.id.patientAge)).setText(age);
+		((EditText) findViewById(R.id.patientAddress)).setText(address);
+		((EditText) findViewById(R.id.medicalInformation)).setText(medical);
+		((EditText) findViewById(R.id.emergencyContact)).setText(contact);
 	}
 	
-	
+	/**
+	 * Background process which retrieves the profile information.
+	 */
 	private class RetrieveProfile extends AsyncTask<Void, Void, String> {
-
+		
+		private DBConn conn;
+		
 		@Override
 		protected String doInBackground(Void... params) {
-			String strUrl = "http://agile.azarel-howard.me/retrieveProfile.php";
-			URL url = null;
-			StringBuffer sb = new StringBuffer();
-			try {
-				url = new URL(strUrl);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	            connection.connect();
-	            InputStream iStream = connection.getInputStream();
-	            BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
-	            String line = "";
-	            while( (line = reader.readLine()) != null){
-	                sb.append(line);
-	            }
-
-	            reader.close();
-	            iStream.close();
-
-	        } catch (MalformedURLException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        return sb.toString();
-	    }
+			conn = new DBConn("/retrieveProfile.php");
+			conn.execute();
+			return conn.getResult();
+		}
 		
 		@Override
 		protected void onPostExecute(String result) {

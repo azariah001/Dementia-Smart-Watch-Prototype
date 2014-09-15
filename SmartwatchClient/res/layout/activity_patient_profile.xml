@@ -1,14 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-	<TextView 
+
+    <TextView
         android:id="@+id/text_view_patientName"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" 
-        android:text="@string/patientName"
-        android:layout_marginTop="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientName" />
 
     <TextView
         android:id="@+id/text_view_patientAge"
@@ -26,7 +27,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_patientAge"
         android:layout_marginTop="8dp"
+        android:clickable="false"
         android:ems="10"
+        android:focusable="false"
         android:inputType="number" />
 
     <TextView
@@ -45,7 +48,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_patientName"
         android:layout_marginTop="8dp"
+        android:clickable="false"
         android:ems="10"
+        android:focusable="false"
         android:inputType="textPersonName" />
 
     <EditText
@@ -55,12 +60,13 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_patientAdress"
         android:layout_marginTop="8dp"
+        android:clickable="false"
         android:ems="10"
+        android:focusable="false"
         android:inputType="textPostalAddress" />
 
+    <requestFocus />
 
-        <requestFocus />
-    
     <EditText
         android:id="@+id/medicalInformation"
         android:layout_width="match_parent"
@@ -68,7 +74,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_medicalInformation"
         android:layout_marginTop="8dp"
+        android:clickable="false"
         android:ems="10"
+        android:focusable="false"
         android:inputType="textMultiLine" />
 
     <TextView
@@ -76,8 +84,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="22dp"
         android:layout_below="@+id/patientAddress"
+        android:layout_marginTop="22dp"
         android:text="@string/medicalInformation" />
 
     <TextView
@@ -96,7 +104,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_emergencyContact"
         android:layout_marginTop="8dp"
+        android:clickable="false"
         android:ems="10"
+        android:focusable="false"
         android:inputType="phone" />
-    
+
 </RelativeLayout>

@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.illusivemen.db.DBConn;
 import com.illusivemen.smartwatchclient.R;
 
 import android.app.Activity;
@@ -43,6 +44,7 @@ public class GoogleMapping extends Activity {
 	private static final long MIN_UPDATE_MILLISEC = 250;
 	private static final float MIN_UPDATE_METRES = 1;
 	private static final float INITIAL_ZOOM= 18;
+	private static final String DUMP_SCRIPT = "/saveNewLocation.php";
 	
 	/**
      * Factory method to create a launch Intent for this activity.
@@ -187,46 +189,17 @@ public class GoogleMapping extends Activity {
 	private class SaveTask extends AsyncTask<Location, Void, Void> {
 		@Override
 		protected Void doInBackground(Location... params) {
-            String strUrl = "http://agile.azarel-howard.me/saveNewLocation.php";
-            URL url = null;
-            try {
-            	url = new URL(strUrl);
-            	
-            	HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            	connection.setRequestMethod("POST");
-            	connection.setDoOutput(true);
-            	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
-            	
-            	// TODO: set patient to current patient id
-            	outputStreamWriter.write("patient=0"
-            			+ "&lat=" + params[0].getLatitude() 
-            			+ "&lng=" + params[0].getLongitude()
-            			+ "&acc=" + params[0].getAccuracy());
-                outputStreamWriter.flush();
-                outputStreamWriter.close();
-                
-                InputStream iStream = connection.getInputStream();
-                BufferedReader reader = new BufferedReader(new
-                InputStreamReader(iStream));
- 
-                StringBuffer sb = new StringBuffer();
- 
-                String line = "";
- 
-                while( (line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
- 
-                reader.close();
-                iStream.close();
- 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-			return null;			
+			
+			// store parameters
+			String[] parameters = {"patient=0",
+					"lat=" + params[0].getLatitude(),
+					"lng=" + params[0].getLongitude(),
+					"acc=" + params[0].getAccuracy()};
+			
+			// post information
+			DBConn conn = new DBConn(DUMP_SCRIPT);
+			conn.execute(parameters);
+			return null;
 		}
 	}
 }

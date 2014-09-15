@@ -65,7 +65,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	private String positionTimestamp = null;
 	private String connectionTimestamp = null;
 	// database retrieval related
-	private static final String DB_LOCATIONS = "http://agile.azarel-howard.me/retrieveLastLocations.php";
+	private static final String DB_LOCATIONS = "/retrieveLastLocations.php";
 	private DBConn conn;
 	
 	/**

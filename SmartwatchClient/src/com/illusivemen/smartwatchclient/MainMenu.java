@@ -78,7 +78,7 @@ public class MainMenu extends Activity {
 	}
 	
 	public void showProfile(View view) {
-		startActivity(PatientProfile.makeIntent(MainMenu.this, ACTIVITY_MESSAGE));
+		startActivity(PatientProfile.makeIntent(MainMenu.this));
 	}
 	
 	// for testing purposes
