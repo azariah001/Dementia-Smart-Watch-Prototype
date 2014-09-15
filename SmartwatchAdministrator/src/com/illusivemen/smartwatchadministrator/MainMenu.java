@@ -72,6 +72,7 @@ public class MainMenu extends Activity {
 		startActivity(CallSmartWatch.makeIntent(MainMenu.this, CALL_MESSAGE));
 	}
 	
+	//IM-27 - Activity Reminder
 	public void setReminder(View view) {
 		startActivity(CalendarReminder.makeIntent(MainMenu.this, SET_REMINDER));
 	}

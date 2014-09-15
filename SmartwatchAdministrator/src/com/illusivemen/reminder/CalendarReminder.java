@@ -20,7 +20,7 @@ import android.widget.TimePicker;
 
 public class CalendarReminder extends Activity {
 	
-	// Calendar variables
+	// Calendar variables 
 	private String type = "vnd.android.cursor.item/event";
 	private String organiser;
 	private String title;
@@ -103,7 +103,7 @@ public class CalendarReminder extends Activity {
 		// Sets the frequency rule
 		rrule = "FREQ=DAILY;COUNT=" + frequency.getText();
 	}
-	
+	// Does not work
 	public void sendReminder() {
 		Intent calendarReminderIntent = new Intent();
 		calendarReminderIntent.setAction(Intent.ACTION_SEND);

@@ -36,5 +36,14 @@
         android:text="@string/panic_off"
         android:textOff="@string/panic_off"
         android:textOn="@string/panic_on" />
+	<!-- IM27 -->
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/callSmartWatch"
+        android:layout_below="@+id/callSmartWatch"
+        android:text="Add Reminder"
+        android:onClick="setReminder" />
 
 </RelativeLayout>

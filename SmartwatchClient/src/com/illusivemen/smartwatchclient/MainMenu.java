@@ -205,7 +205,7 @@ public class MainMenu extends Activity {
 		Intent showSettings = new Intent(this, ShowSettings.class);
 		startActivity(showSettings);
 	}
-	
+	// opens reminder view
 	public void setReminder(View view) {
 		Intent setReminder = new Intent(this, CalendarReminder.class);
 		startActivity(setReminder);

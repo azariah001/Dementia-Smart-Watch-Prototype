@@ -47,7 +47,7 @@ public class CalendarReminder extends Activity {
 			//createReminder();
 		}
 	}
-	
+	// Creates a reminder
 	public void setReminder(View view) {
 		Calendar cal = Calendar.getInstance();
 		Intent reminder = new Intent(Intent.ACTION_EDIT);
