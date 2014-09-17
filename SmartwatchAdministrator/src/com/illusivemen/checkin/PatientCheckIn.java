@@ -6,10 +6,16 @@ import com.illusivemen.smartwatchadministrator.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.view.View;
 
 // WIP
 public class PatientCheckIn extends Activity {
+	
+	String phoneNumber = "0411794760"; // TODO: should not be static
+	String message = "Checkin Request";
 	
 	/**
 	 * Factory method for creating a launch intent.
@@ -21,16 +27,16 @@ public class PatientCheckIn extends Activity {
 		return new Intent(context, PatientCheckIn.class);
 	}
 	
-	/**
-	 * The activity starts with a connection to the database.
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_patient_check_in);
-		
-		// retrieve information and insert into display
-		//new RetrieveProfile().execute();
+	}
+	
+	// sends a checkin request the client instantly via SMS
+	public void sendRequest(View view) {		
+		SmsManager manager = SmsManager.getDefault();
+		manager.sendTextMessage(phoneNumber, null, message, null, null);		
 	}
 	
 	/**

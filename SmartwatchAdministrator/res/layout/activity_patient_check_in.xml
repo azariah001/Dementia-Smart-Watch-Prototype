@@ -56,4 +56,13 @@
             android:text="Weekly" />
     </RadioGroup>
 
+    <Button
+        android:id="@+id/sendNowButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:text="Send Now" 
+        android:onClick="sendRequest"/>
+
 </RelativeLayout>

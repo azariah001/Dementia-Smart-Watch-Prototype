@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <!-- Required to show current location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -74,6 +75,16 @@
             android:name="com.illusivemen.memgame.MemoryGame"
             android:label="@string/title_activity_memory_game" >
         </activity>
+        <activity
+            android:name="com.illusivemen.checkin.PatientCheckIn" >
+        </activity>
+        
+        <receiver android:name="com.illusivemen.checkin.SmsListener">
+    <intent-filter>
+        <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+    </intent-filter>
+</receiver>
+        
     </application>
 
 </manifest>

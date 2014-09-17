@@ -38,7 +38,7 @@
         android:textOn="@string/panic_on" />
 	<!-- IM27 -->
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/sendNowButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/callSmartWatch"
@@ -50,8 +50,8 @@
         android:id="@+id/patientCheckIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1"
+        android:layout_alignLeft="@+id/sendNowButton"
+        android:layout_below="@+id/sendNowButton"
         android:text="Patient Check-In"
         android:onClick="patientCheckIn" />
 

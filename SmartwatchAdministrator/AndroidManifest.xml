@@ -24,6 +24,9 @@
     
     <!--  Required to Call SmartWatch -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    
+    <!--  Required for Patient Checkin -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
  
     <!-- Required OpenGL ES 2.0. for Maps V2 -->
     <uses-feature
