@@ -46,4 +46,13 @@
         android:text="Add Reminder"
         android:onClick="setReminder" />
 
+    <Button
+        android:id="@+id/patientCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:text="Patient Check-In"
+        android:onClick="patientCheckIn" />
+
 </RelativeLayout>

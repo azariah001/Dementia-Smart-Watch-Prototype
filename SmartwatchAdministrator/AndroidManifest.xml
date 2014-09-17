@@ -57,6 +57,9 @@
             android:name=".CallSmartWatch"
             android:label="@string/call_smartwatch" > 
         </activity>
+         <activity
+            android:name="com.illusivemen.checkin.PatientCheckIn" >
+        </activity>
         <!-- Google Maps -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
