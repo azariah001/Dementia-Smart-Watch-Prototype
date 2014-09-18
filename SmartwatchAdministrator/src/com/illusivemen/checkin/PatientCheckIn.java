@@ -15,7 +15,7 @@ import android.view.View;
 public class PatientCheckIn extends Activity {
 	
 	String phoneNumber = "0411794760"; // TODO: should not be static
-	String message = "Checkin Request";
+	String message = "Check-in Request";
 	
 	/**
 	 * Factory method for creating a launch intent.
