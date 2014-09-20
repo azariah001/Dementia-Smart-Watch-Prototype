@@ -8,20 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.illusivemen.reminder.CalendarReminder" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-	<!-- calls code -->
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnSetReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
         android:layout_marginTop="26dp"
         android:onClick="setReminder"
-        android:text="Set Reminder" />
+        android:text="@string/btn_set_reminder" />
 
 </RelativeLayout>

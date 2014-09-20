@@ -1,7 +1,6 @@
 package com.illusivemen.setting;
 
 import com.illusivemen.smartwatchclient.R;
-import com.illusivemen.smartwatchclient.R.xml;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

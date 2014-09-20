@@ -3,9 +3,6 @@ package com.illusivemen.reminder;
 import java.util.Calendar;
 
 import com.illusivemen.smartwatchclient.R;
-import com.illusivemen.smartwatchclient.R.id;
-import com.illusivemen.smartwatchclient.R.layout;
-import com.illusivemen.smartwatchclient.R.menu;
 
 import android.app.Activity;
 import android.content.Intent;

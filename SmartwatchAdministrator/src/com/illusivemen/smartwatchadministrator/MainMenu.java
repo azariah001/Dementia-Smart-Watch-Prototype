@@ -5,13 +5,10 @@ import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.reminder.CalendarReminder;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainMenu extends Activity {

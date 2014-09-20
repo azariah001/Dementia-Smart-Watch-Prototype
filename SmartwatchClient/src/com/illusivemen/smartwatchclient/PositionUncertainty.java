@@ -26,17 +26,4 @@ public class PositionUncertainty {
 		
 	}
 	
-	//TODO Check if current location is in the radius of the previous location
-	public boolean isCertain() {
-		boolean certain;
-		
-		//Checks whether the position is within a radius of the old position
-		if(false) {
-			certain = true;
-		} else {
-			certain = false;
-		}
-		
-		return certain;
-	}
 }

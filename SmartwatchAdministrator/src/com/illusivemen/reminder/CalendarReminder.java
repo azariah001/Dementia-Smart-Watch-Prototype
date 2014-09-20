@@ -2,11 +2,7 @@ package com.illusivemen.reminder;
 
 import java.util.Calendar;
 
-import com.illusivemen.smartwatchadministrator.CallSmartWatch;
 import com.illusivemen.smartwatchadministrator.R;
-import com.illusivemen.smartwatchadministrator.R.id;
-import com.illusivemen.smartwatchadministrator.R.layout;
-import com.illusivemen.smartwatchadministrator.R.menu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -61,21 +57,21 @@ public class CalendarReminder extends Activity {
 		// Gets the editable text
 		EditText organiser_email = (EditText) findViewById(R.id.organiser_email);
 		// Sets the organiser variable to the editable text
-		organiser = organiser_email.getEditableText().toString();
+		this.organiser = organiser_email.getEditableText().toString();
 	}
 	
 	public void setTitle() {
 		// Gets the editable text
 		EditText reminder_title = (EditText) findViewById(R.id.reminder_title);
 		// Sets the title variable to the editable text
-		title = reminder_title.getEditableText().toString();
+		this.title = reminder_title.getEditableText().toString();
 	}
 	
 	public void setDescription() {
 		// Gets the editable text
 		EditText reminder_description = (EditText) findViewById(R.id.reminder_description);
 		// Sets the editable text
-		description = reminder_description.getEditableText().toString();
+		this.description = reminder_description.getEditableText().toString();
 	}
 	
 	public void setbeginTime() {
@@ -101,15 +97,11 @@ public class CalendarReminder extends Activity {
 		// Gets the editable text
 		EditText frequency = (EditText) findViewById(R.id.frequency);
 		// Sets the frequency rule
-		rrule = "FREQ=DAILY;COUNT=" + frequency.getText();
+		this.rrule = "FREQ=DAILY;COUNT=" + frequency.getText();
 	}
 	// Does not work
 	public void sendReminder() {
-		Intent calendarReminderIntent = new Intent();
-		calendarReminderIntent.setAction(Intent.ACTION_SEND);
-		calendarReminderIntent.putExtra(Intent.EXTRA_TEXT, "hi");
-		calendarReminderIntent.setType("text/plain");
-		startActivity(calendarReminderIntent);
+		
 	}
 	
 
