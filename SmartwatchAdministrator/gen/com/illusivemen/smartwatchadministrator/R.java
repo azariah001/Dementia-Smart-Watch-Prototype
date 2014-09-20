@@ -407,36 +407,59 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f070018;
+        public static final int action_settings=0x7f07002f;
+        public static final int beginning_date=0x7f07001d;
+        public static final int beginning_time=0x7f07001f;
         public static final int book_now=0x7f070010;
-        public static final int btnTrack=0x7f070015;
+        public static final int btnSetReminder=0x7f070022;
+        public static final int btnTrack=0x7f070023;
         public static final int buyButton=0x7f07000a;
         public static final int buy_now=0x7f07000f;
         public static final int buy_with_google=0x7f07000e;
-        public static final int callSmartWatch=0x7f070016;
+        public static final int callSmartWatch=0x7f070024;
         public static final int classic=0x7f070011;
-        public static final int fences=0x7f07001e;
+        public static final int fences=0x7f070035;
+        public static final int frequency=0x7f070021;
         public static final int grayscale=0x7f070012;
         public static final int holo_dark=0x7f070005;
         public static final int holo_light=0x7f070006;
         public static final int hybrid=0x7f070004;
         public static final int map=0x7f070014;
-        public static final int map_hybrid=0x7f07001c;
-        public static final int map_map=0x7f07001a;
-        public static final int map_satellite=0x7f07001b;
-        public static final int map_terrain=0x7f07001d;
-        public static final int mapstyle=0x7f070019;
+        public static final int map_hybrid=0x7f070033;
+        public static final int map_map=0x7f070031;
+        public static final int map_satellite=0x7f070032;
+        public static final int map_terrain=0x7f070034;
+        public static final int mapstyle=0x7f070030;
         public static final int match_parent=0x7f07000c;
         public static final int monochrome=0x7f070013;
         public static final int none=0x7f070000;
         public static final int normal=0x7f070001;
+        public static final int organiser_email=0x7f070017;
+        public static final int patientCheckIn=0x7f070027;
+        public static final int patientCheckInSwitch=0x7f070028;
         public static final int production=0x7f070007;
+        public static final int radio0=0x7f07002c;
+        public static final int radio1=0x7f07002d;
+        public static final int radio2=0x7f07002e;
+        public static final int radioGroup1=0x7f07002b;
+        public static final int reminder_description=0x7f07001b;
+        public static final int reminder_title=0x7f070019;
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
+        public static final int scrollView1=0x7f070015;
         public static final int selectionDetails=0x7f07000b;
+        public static final int sendNowButton=0x7f070026;
         public static final int strict_sandbox=0x7f070009;
         public static final int terrain=0x7f070003;
-        public static final int tglPanic=0x7f070017;
+        public static final int textView1=0x7f070029;
+        public static final int textView2=0x7f07002a;
+        public static final int tglPanic=0x7f070025;
+        public static final int txtBeginningDate=0x7f07001c;
+        public static final int txtBeginningTime=0x7f07001e;
+        public static final int txtDescription=0x7f07001a;
+        public static final int txtFrequency=0x7f070020;
+        public static final int txtOrganiserEmail=0x7f070016;
+        public static final int txtReminderTitle=0x7f070018;
         public static final int wrap_content=0x7f07000d;
     }
     public static final class integer {
@@ -444,7 +467,9 @@ containing a value of this type.
     }
     public static final class layout {
         public static final int activity_admin_google_mapping=0x7f030000;
-        public static final int activity_main_menu=0x7f030001;
+        public static final int activity_calendar_reminder=0x7f030001;
+        public static final int activity_main_menu=0x7f030002;
+        public static final int activity_patient_check_in=0x7f030003;
     }
     public static final class menu {
         public static final int admin_google_mapping=0x7f0a0000;

@@ -3,7 +3,7 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="SmartwatchClient">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="SmartwatchAdministrator">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../../../../../../../../../../../usr/share/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
@@ -18,13 +18,13 @@
     <path id="Android Private Libraries.libraryclasspath">
         <pathelement location="libs/robotium-solo-5.2.1.jar"/>
         <pathelement location="../google-play-services_lib/libs/google-play-services.jar"/>
-        <pathelement location="../smartwatch-common_lib/libs/android-support-v4.jar"/>
+        <pathelement location="libs/android-support-v4.jar"/>
     </path>
     <path id="Android Dependencies.libraryclasspath">
         <pathelement location="../smartwatch-common_lib/bin/smartwatch-common_lib.jar"/>
         <pathelement location="../google-play-services_lib/bin/google-play-services_lib.jar"/>
     </path>
-    <path id="SmartwatchClient.classpath">
+    <path id="SmartwatchAdministrator.classpath">
         <pathelement location="bin/classes"/>
         <path refid="Google APIs (x86 System Image) [Android 4.4.2].libraryclasspath"/>
         <path refid="Android Private Libraries.libraryclasspath"/>
@@ -57,7 +57,7 @@
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin/classes" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <src path="gen"/>
-            <classpath refid="SmartwatchClient.classpath"/>
+            <classpath refid="SmartwatchAdministrator.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>

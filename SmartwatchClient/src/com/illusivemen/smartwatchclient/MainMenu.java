@@ -14,7 +14,7 @@ import java.util.TimerTask;
 
 import com.illusivemen.mapping.GoogleMapping;
 import com.illusivemen.memgame.MemoryGame;
-import com.illusivemen.reminder.CalendarReminder;
+//import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.setting.ShowSettings;
 
 import android.app.Activity;
@@ -207,7 +207,7 @@ public class MainMenu extends Activity {
 	}
 	// opens reminder view
 	public void setReminder(View view) {
-		Intent setReminder = new Intent(this, CalendarReminder.class);
-		startActivity(setReminder);
+		//Intent setReminder = new Intent(this, CalendarReminder.class);
+		//startActivity(setReminder);
 	}
 }

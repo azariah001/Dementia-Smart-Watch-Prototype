@@ -14,7 +14,7 @@
             android:id="@+id/txtOrganiserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_organiser_email"
+            android:text="doesn't exist!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -31,7 +31,7 @@
             android:id="@+id/txtReminderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_reminder_title"
+            android:text="doesn't exist!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -44,7 +44,7 @@
             android:id="@+id/txtDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_reminder_description"
+            android:text="doesn't exist!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -57,7 +57,7 @@
             android:id="@+id/txtBeginningDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_beginning_date"
+            android:text="doesn't exist!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <DatePicker
@@ -70,7 +70,7 @@
             android:id="@+id/txtBeginningTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_beginning_time"
+            android:text="doesn't exist!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TimePicker
@@ -83,7 +83,7 @@
             android:id="@+id/txtFrequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_frequency"
+            android:text="doesn't exist!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:onClick="sendReminder"
-            android:text="@string/title_set_reminder" />
+            android:text="doesn't exist!" />
 
     </LinearLayout>
 
