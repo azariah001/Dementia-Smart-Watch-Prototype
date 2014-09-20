@@ -117,4 +117,13 @@
     <string name="lat_lng_pattern">* ###.00000000;* -###.00000000</string>
     <string name="radius_pattern">* #.0000</string>
 
+    <!-- Reminder Strings -->
+    <string name="title_activity_calendar_reminder">CalendarReminder</string>
+    <string name="title_organiser_email">Organiser\'s E-mail:</string>
+    <string name="title_reminder_title">Reminder Title</string>
+    <string name="title_reminder_description">Reminder Description</string>
+    <string name="title_beginning_date">Beginning Date</string>
+    <string name="title_beginning_time">Beginning Time</string>
+    <string name="title_frequency">Frequency (specify \'Days\')</string>
+    <string name="title_set_reminder">Set Reminder</string>
 </resources>

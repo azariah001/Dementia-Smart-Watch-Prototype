@@ -72,6 +72,11 @@
             android:value="@integer/google_play_services_version" />
         <!-- Unit Testing -->
         <uses-library android:name="android.test.runner" />
+        
+        <activity
+            android:name="com.illusivemen.reminder.CalendarReminder"
+            android:label="@string/title_activity_calendar_reminder" >
+        </activity>
     </application>
 
 </manifest>
