@@ -473,7 +473,8 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int admin_google_mapping=0x7f0a0000;
-        public static final int main_menu=0x7f0a0001;
+        public static final int calendar_reminder=0x7f0a0001;
+        public static final int main_menu=0x7f0a0002;
     }
     public static final class string {
         public static final int action_settings=0x7f06001b;
@@ -632,6 +633,16 @@ containing a value of this type.
         public static final int remove_geofences_intent_failure=0x7f060053;
         public static final int remove_geofences_intent_success=0x7f060054;
         public static final int title_activity_admin_google_mapping=0x7f06001d;
+        /**  Reminder Strings 
+         */
+        public static final int title_activity_calendar_reminder=0x7f06005f;
+        public static final int title_beginning_date=0x7f060063;
+        public static final int title_beginning_time=0x7f060064;
+        public static final int title_frequency=0x7f060065;
+        public static final int title_organiser_email=0x7f060060;
+        public static final int title_reminder_description=0x7f060062;
+        public static final int title_reminder_title=0x7f060061;
+        public static final int title_set_reminder=0x7f060066;
         public static final int transition_entered=0x7f060055;
         public static final int transition_exited=0x7f060056;
         public static final int transition_unknown=0x7f060057;
