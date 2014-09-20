@@ -87,7 +87,12 @@
         <action android:name="android.provider.Telephony.SMS_RECEIVED" />
     </intent-filter>
 </receiver>
-        
+
+        <!-- Calendar Activity -->
+        <activity
+            android:name="com.illusivemen.reminder.CalendarReminder"
+            android:label="@string/title_activity_calendar_reminder" >
+        </activity>
     </application>
 
 </manifest>

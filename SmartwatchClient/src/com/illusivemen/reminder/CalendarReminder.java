@@ -25,8 +25,7 @@ public class CalendarReminder extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		// TODO: FIX
-		//getMenuInflater().inflate(R.menu.calendar_reminder, menu);
+		getMenuInflater().inflate(R.menu.calendar_reminder, menu);
 		return true;
 	}
 
