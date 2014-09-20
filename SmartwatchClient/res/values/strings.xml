@@ -14,7 +14,7 @@
     <string name="medicalInformation">Medical Information:</string>
     <string name="emergencyContact">Emergency Contact:</string>
     <string name="battery">Battery Test</string>
-    <string name="locating">Locating...</string>
+    <string name="locating">Locating&#8230;</string>
     <string name="title_patient_profile_settings">Patient Profile Settings</string>
     <string name="title_hide_name">Hide Name</string>
     <string name="title_hide_age">Hide Age</string>

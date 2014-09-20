@@ -1,15 +1,11 @@
 package com.illusivemen.smartwatchclient;
 
-import com.illusivemen.mapping.GoogleMapping;
+// This file should be deleted
 
 public class PositionUncertainty {
 
 	//TODO Private Fields
 	
-	//TODO Constructor
-	public PositionUncertainty() {
-		GoogleMapping googleMap = new GoogleMapping();
-	}
 	
 	//TODO Set current location
 	public void setCurrentLocation() {

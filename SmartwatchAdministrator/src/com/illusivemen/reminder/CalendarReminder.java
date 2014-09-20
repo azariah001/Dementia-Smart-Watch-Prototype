@@ -104,5 +104,19 @@ public class CalendarReminder extends Activity {
 		
 	}
 	
+	public void setReminder() {
+		Calendar cal = Calendar.getInstance();
+		Intent reminder = new Intent(Intent.ACTION_EDIT);
+		reminder.setType(this.type);
+		reminder.putExtra("beginTime", this.beginTime);
+		reminder.putExtra("allDay",  false);
+		reminder.putExtra("rrule",  this.rrule);
+		reminder.putExtra("endTime",  cal.getTimeInMillis()+60*60*1000);
+		reminder.putExtra("title", this.title);
+		reminder.putExtra("organizer", this.organiser);
+		reminder.putExtra("description", this.description);
+		startActivity(reminder);
+	}
+	
 
 }
