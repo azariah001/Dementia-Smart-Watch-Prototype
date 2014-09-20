@@ -56,54 +56,54 @@ public class DBConn {
 				// write POST data
 				writePostData(connection);
 			}
-            
-            // setup output reader
-            iStream = connection.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(iStream));
-            
-            // read in output
-            String output = "";
-            while((output = reader.readLine()) != null) {
-                sb.append(output);
-            }
+			
+			// setup output reader
+			iStream = connection.getInputStream();
+			reader = new BufferedReader(new InputStreamReader(iStream));
+			
+			// read in output
+			String output = "";
+			while((output = reader.readLine()) != null) {
+				sb.append(output);
+			}
 
-        } catch (MalformedURLException e) {
-        	// thrown by URL constructor
-        	System.out.println("DB Internal Error");
-        	
-        } catch (IOException e) {
-        	// general network error
-        	System.out.println("DB Network Error");
-        	
-        } finally {
-        	// close order opposite to open order
-        	// must have separate try blocks to ensure everything gets closed
-        	
-        	try {
+		} catch (MalformedURLException e) {
+			// thrown by URL constructor
+			System.out.println("DB Internal Error");
+			
+		} catch (IOException e) {
+			// general network error
+			System.out.println("DB Network Error");
+			
+		} finally {
+			// close order opposite to open order
+			// must have separate try blocks to ensure everything gets closed
+			
+			try {
 				reader.close();
 			} catch (IOException e) {
 				// general network error
 			} catch (NullPointerException e) {
 				// never initialized
 			}
-        	
-        	try {
+			
+			try {
 				iStream.close();
 			} catch (IOException e) {
 				// general network error
 			} catch (NullPointerException e) {
 				// never initialized
 			}
-        	
-        	try {
-        		connection.disconnect();
-        	} catch (NullPointerException e) {
-        		// never initialized
-        	}
-        }
+			
+			try {
+				connection.disconnect();
+			} catch (NullPointerException e) {
+				// never initialized
+			}
+		}
 		
 		// store resulting output
-        this.result = sb.toString();
+		this.result = sb.toString();
 	}
 	
 	/**
@@ -121,9 +121,6 @@ public class DBConn {
 			// open connection
 			outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
 			outputStreamWriter.write(stringJoin("&", parameters));
-			
-			outputStreamWriter.flush();
-			outputStreamWriter.close();
 		
 		} catch (ProtocolException e) {
 			// setRequestMethod throws
@@ -140,11 +137,9 @@ public class DBConn {
 				outputStreamWriter.flush();
 				outputStreamWriter.close();
 			} catch (IOException e) {
-				// general network error
-				e.printStackTrace();
+				// already closed/network error
 			} catch (NullPointerException e) {
 				// never initialized
-				e.printStackTrace();
 			}
 			
 		}

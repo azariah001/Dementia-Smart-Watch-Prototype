@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +18,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.location.Geofence;
 import com.illusivemen.db.DBConn;
+import com.illusivemen.db.OnLoopRetrievedListener;
+import com.illusivemen.db.RetrieveLoopThread;
 import com.illusivemen.smartwatchadministrator.R;
 
 import android.annotation.SuppressLint;
@@ -29,11 +29,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class AdminGoogleMapping extends Activity implements OnMapLongClickListener {
+public class AdminGoogleMapping extends Activity implements OnMapLongClickListener, OnLoopRetrievedListener {
 	
 	public final static String MAP_PURPOSE = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
 	private String purpose;
@@ -43,7 +45,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	// the map fragment and its constants
 	private GoogleMap googleMap;
 	private static final float INITIAL_ZOOM = 11;
-	private static final float LOCATED_ZOOM = 17;
+	private static final float LOCATED_ZOOM = 18.8f;
 	// initial map location
 	private static final LatLng BRISBANE = new LatLng(-27.5,153);
 	// the patient's location and history
@@ -55,9 +57,6 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	// last retrieved time and db connection time
 	private String positionTimestamp = null;
 	private String connectionTimestamp = null;
-	// database retrieval server connection and script paths
-	private DBConn conn;
-	private static final String DB_LOCATIONS = "/retrieveLastLocations.php";
 	// local geofence storage and default properties
 	ArrayList<GeofenceVisualisation> geofences = new ArrayList<GeofenceVisualisation>();
 	private static final int GEOFENCE_RADIUS = 30;
@@ -97,13 +96,12 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		mySQLFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		mySQLFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
-		// database retrieval class
-		conn = new DBConn(DB_LOCATIONS);
-		
 		// Create Map
 		initilizeMap();
 		// Location Updater
 		subscribeForLocations();
+		// load geofence visualisations
+		new RetrieveGeofences().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 	
 	/**
@@ -186,14 +184,13 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//initilizeMap();
-		//subscribeForLocations();
 	}
 	
 	private void subscribeForLocations() {
 		// retrieve patient location in loop
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new RetrieveUpdateTask(), 0, UPDATE_PERIOD);
+		RetrieveLoopThread retrieveThread = new RetrieveLoopThread("/retrieveLastLocations.php", new String[]{"patient=0"}, UPDATE_PERIOD);
+		retrieveThread.setListener(this);
+		retrieveThread.start();
 	}
 	
 	/**
@@ -324,53 +321,6 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		return age;
 	}
 	
-	/**
-	 * TimerTask which updates patients' positions from each tick.
-	 */
-	class RetrieveUpdateTask extends TimerTask {
-		public void run() {
-			new RetrieveLocation().execute();
-		}
-	}
-	
-	private class RetrieveLocation extends AsyncTask<Void, Void, String>{
-		
-		@Override
-		protected String doInBackground(Void... params) {
-			conn.execute();
-			System.out.println("Received Location");
-			return conn.getResult();
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			
-			// network errors may result in a null result
-			// server errors may result in unexpected output
-			try {
-				// list of recent points
-				String[] latestPoints = result.split(";");
-				// first recent point is the latest position
-				String[] location = latestPoints[0].split(",");
-				// parsing
-				LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-				positionTimestamp = location[2];
-				connectionTimestamp = mySQLFormat.format(new Date());
-				// processing
-				updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
-				updateTrack(latestPoints);
-			} catch (Exception e) {
-				System.out.println("Patient Location Retrieve Parse Error");
-				// only update age of the retrieved location
-				if (positionTimestamp != null) {
-					updateLocation("Location from " + getTimeAge(positionTimestamp)
-							+ " ago. Connection failed for " + getTimeAge(connectionTimestamp) + ".");
-				}
-			}
-		}
-	}
-
 	// ---------- BEGIN GEOFENCE RELATED ITEMS ----------
 	
 	/**
@@ -380,7 +330,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	@Override
 	public void onMapLongClick(LatLng point) {
 		// create geofence details in database and display on map
-		new SaveNewGeofence().execute(point);
+		new SaveNewGeofence().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, point);
+		//new SaveGeofence(point).start();
 	}
 	
 	/**
@@ -398,6 +349,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			lng = params[0].longitude;
 			
 			// create visualisation before while connecting for a better feedback response
+			System.out.println("Displaying new POINT...");
 			publishProgress();
 			
 			// store parameters
@@ -436,14 +388,114 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			
 			if (result == "") {
 				// database save unsuccessful
+				System.out.println("DB SAVE ERROR");
 				newFence.tearDown();
 				Toast.makeText(getApplicationContext(),
 						"Network Failure while Creating Geofence", Toast.LENGTH_SHORT)
 						.show();
 			} else {
 				// update visualisation now that the id is available from the database
+				System.out.println("DB SAVE SUCCESS");
 				newFence.initialise(result);
 			}
 		}
 	}
+	
+	// ---------- BEGIN GEOFENCE RETRIEVE ITEMS ----------
+	
+	private class RetrieveGeofences extends AsyncTask<Void, Void, String>{
+		
+		@Override
+		protected String doInBackground(Void... params) {
+			// store parameters
+			String[] parameters = {"patientid=0"};
+			
+			// post information
+			DBConn conn = new DBConn("/retrieveGeofences.php");
+			conn.execute(parameters);
+			
+			return conn.getResult();
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			
+			// network errors may result in a null result
+			// server errors may result in unexpected output
+			try {
+				// list of recent points
+				String[] geofences = result.split(";");
+				// parsing
+				for (String geofence : geofences) {
+					
+					String[] geofenceParams = geofence.split(",");
+					
+					new GeofenceVisualisation(
+							googleMap,
+							geofenceParams[0],
+							Double.valueOf(geofenceParams[2]),
+							Double.valueOf(geofenceParams[3]),
+							Float.valueOf(geofenceParams[4]),
+							Long.valueOf(geofenceParams[5]),
+							Integer.valueOf(geofenceParams[6])).hideInfo();
+				}
+			} catch (Exception e) {
+				System.out.println("GEOFENCE RETRIEVE ERROR");
+			}
+		}
+	}
+	
+	/**
+	 * Listener for patient location updates.
+	 */
+	@Override
+	public void onLocationRetrieved(String locations) {
+		
+		// access to the main thread
+		Handler handler = new Handler(Looper.getMainLooper());
+		
+		// network errors may result in a null result
+		// server errors may result in unexpected output
+		try {
+			// list of recent points
+			final String[] latestPoints = locations.split(";");
+			// first recent point is the latest position
+			String[] location = latestPoints[0].split(",");
+			
+			// process latest position
+			final LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+			positionTimestamp = location[2];
+			connectionTimestamp = mySQLFormat.format(new Date());
+			
+			// update the UI in the main thread
+			handler.post(new Runnable(){
+				@Override
+				public void run() {
+					updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
+					updateTrack(latestPoints);
+				} 
+			});
+			
+		} catch (NumberFormatException e) {
+			System.out.println("Patient Location Retrieve Parse Error");
+			// only update age of the retrieved location
+			if (positionTimestamp != null) {
+				// update the UI in the main thread
+				handler.post(new Runnable(){
+					@Override
+					public void run() {
+						updateLocation("Location from " + getTimeAge(positionTimestamp)
+								+ " ago. Connection failed for " + getTimeAge(connectionTimestamp) + ".");
+					} 
+				});
+			}
+		}
+		
+	}
+	
+	// ---------- BEGIN GEOFENCE MODIFY ITEMS ----------
+	
+	
+	
 }

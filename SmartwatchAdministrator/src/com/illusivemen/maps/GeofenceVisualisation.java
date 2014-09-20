@@ -154,6 +154,10 @@ public class GeofenceVisualisation {
 		}
 	}
 	
+	public void hideInfo() {
+		marker.hideInfoWindow();
+	}
+	
 	// Instance field setters
 	public void setRadius(float newRadius) {
 		this.mRadius = newRadius;

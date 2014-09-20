@@ -423,15 +423,16 @@ containing a value of this type.
     }
     public static final class id {
         public static final int action_settings=0x7f09002f;
-        public static final int address=0x7f090017;
+        public static final int address=0x7f090016;
         public static final int book_now=0x7f090010;
-        public static final int btnBattery=0x7f09001c;
-        public static final int btnMap=0x7f090019;
-        public static final int btnPanic=0x7f09001d;
-        public static final int btnProfile=0x7f09001a;
+        public static final int btnBattery=0x7f09001b;
+        public static final int btnMap=0x7f090018;
+        public static final int btnPanic=0x7f09001c;
+        public static final int btnProfile=0x7f090019;
         public static final int btnReminder=0x7f09001f;
-        public static final int btnSettings=0x7f09001e;
-        public static final int button1=0x7f090015;
+        public static final int btnSetReminder=0x7f090014;
+        public static final int btnSettings=0x7f09001d;
+        public static final int button1=0x7f09001e;
         public static final int buyButton=0x7f09000a;
         public static final int buy_now=0x7f09000f;
         public static final int buy_with_google=0x7f09000e;
@@ -446,7 +447,7 @@ containing a value of this type.
         public static final int holo_dark=0x7f090005;
         public static final int holo_light=0x7f090006;
         public static final int hybrid=0x7f090004;
-        public static final int map=0x7f090016;
+        public static final int map=0x7f090015;
         public static final int match_parent=0x7f09000c;
         public static final int medicalInformation=0x7f09002b;
         public static final int menu_settings=0x7f090030;
@@ -462,9 +463,8 @@ containing a value of this type.
         public static final int selectionDetails=0x7f09000b;
         public static final int strict_sandbox=0x7f090009;
         public static final int terrain=0x7f090003;
-        public static final int textClock1=0x7f09001b;
-        public static final int textUserSettings=0x7f090018;
-        public static final int textView1=0x7f090014;
+        public static final int textClock1=0x7f09001a;
+        public static final int textUserSettings=0x7f090017;
         public static final int text_view_emergencyContact=0x7f09002d;
         public static final int text_view_medicalInformation=0x7f09002c;
         public static final int text_view_patientAdress=0x7f090029;
@@ -484,10 +484,11 @@ containing a value of this type.
         public static final int activity_patient_profile=0x7f030005;
     }
     public static final class menu {
-        public static final int google_mapping=0x7f0d0000;
-        public static final int main_menu=0x7f0d0001;
-        public static final int memory_game=0x7f0d0002;
-        public static final int settings=0x7f0d0003;
+        public static final int calendar_reminder=0x7f0d0000;
+        public static final int google_mapping=0x7f0d0001;
+        public static final int main_menu=0x7f0d0002;
+        public static final int memory_game=0x7f0d0003;
+        public static final int settings=0x7f0d0004;
     }
     public static final class raw {
         public static final int card_down=0x7f050000;
@@ -497,6 +498,7 @@ containing a value of this type.
         public static final int action_settings=0x7f08001b;
         public static final int app_name=0x7f08001a;
         public static final int battery=0x7f080026;
+        public static final int btn_set_reminder=0x7f080036;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -602,6 +604,7 @@ containing a value of this type.
         public static final int summ_hide_emergency_contacts=0x7f080032;
         public static final int summ_hide_medical_info=0x7f080031;
         public static final int summ_hide_name=0x7f08002e;
+        public static final int title_activity_calendar_reminder=0x7f080035;
         public static final int title_activity_google_mapping=0x7f08001d;
         public static final int title_activity_memory_game=0x7f080033;
         public static final int title_hide_address=0x7f08002b;
