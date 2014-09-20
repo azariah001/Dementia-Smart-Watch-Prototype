@@ -1,0 +1,326 @@
+commit 0b071c522fee6bcddce7d3ab5a318dc3b680500f
+Author: richa_000 <richa_000@131.181.26.11>
+Date:   Tue Sep 9 09:58:26 2014 +1000
+
+    Completed User Story IM-46 Patient Profiling - Security Settings.
+    Patient Profle can now have any field hidden by the user.
+
+
+commit ed0a10a7d6e5213379adb19c0bb7540e123ad314
+Author: richa_000 <richa_000@131.181.26.11>
+Date:   Tue Sep 9 09:41:01 2014 +1000
+
+    Implemented a PreferenceScreen (Settings page).
+    Able to hide all Patient Profile fields via checkboxes.
+    Altered MainMenu.java to be able to load Settings Page.
+    Altered PatientProfile.java to hide fields when necessary.
+    Altered activity_main_menu.xml to load Settings Page.
+    Added settings.xml to be able to show Settings page.
+    Added ShowSettings.java and Settings.java.
+    User story IM-46 Patient Profiling - Security Settings completed.
+
+
+commit 4cd781801a214b21a8631dd1b522893fe0d41923
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Sep 8 23:24:56 2014 +1000
+
+    IM-1 6 Tests for the SimpleGeofence class.
+
+
+commit 090a8e2cbb45ed09340ab35b70c47fe3538a49e6
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Sep 8 22:56:20 2014 +1000
+
+    Fixing user interface for release. Alignments/strings/order etc.
+
+commit 5c4ea87e193227ae0c675a42e88feff0494d944a
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Sep 8 22:05:04 2014 +1000
+
+    IM-51 Patient clock display complete.
+
+
+commit f1bb793ebdc0715fcb87721ab39e5dde2ca32525
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Sep 8 11:40:54 2014 +1000
+
+    IM-1 Initial functionality including long press single geofence
+    creation. Still needs to listen for location services updates. Menu
+    should be opened for editing when the marker details are clicked.
+
+
+commit c6604e295554cce446a9e157a76fa94d4a1929a8
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Fri Sep 5 10:22:57 2014 +1000
+
+    IM-21 - Patient Support - Call SmartWatch
+
+commit b63ade5e646f2ba20ac7fdda237008edb336a5b0
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Thu Sep 4 20:46:33 2014 +1000
+
+    IM-3 Story Finished. Carer application also displays line of the
+    patient's history.
+
+
+commit 06d9ed1fa460d2f25a73432ad63405af51bcc989
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Thu Sep 4 16:21:01 2014 +1000
+
+    IM-59 and IM-60 Finished. Marker shows last location saved time and
+    length of network failure if can't update location.
+
+
+commit cc1fdc14b5b724be67e8a07871354df52373fc55
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Thu Sep 4 13:04:20 2014 +1000
+
+    IM-58 Completed story: address displayed on patient map view.
+
+
+commit f216c06a87b50f3aa841050480dd7cab9b1072ec
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Thu Sep 4 09:48:22 2014 +1000
+
+    IM-13 Low Battery Alert
+
+
+commit aa04e4ddea4a7741e9b103e97d3287f205816faa
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Wed Sep 3 13:01:14 2014 +1000
+
+    IM17 Patient Profiling - Show Profile
+    new layout
+
+
+commit 3f92d32c67f14bba4c7bc70b94488468c210cfca
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Tue Sep 2 22:06:02 2014 +1000
+
+    Story 2. Bugfix: Network errors retrieving location don't crash
+    application by surrounding result parsing in try/catch. Bugfix: Previous
+    network disruption doesn't prevent further updates by closing network
+    readers in finally block.
+
+
+commit 5588a4391a93bf2016631cbd51b081e536484a2e
+Author: richa_000 <richa_000@131.181.26.61>
+Date:   Tue Sep 2 03:47:52 2014 +1000
+
+    Security Settings partly implemented. IM-46
+
+
+commit 70a1ab016d42f40561d2ed3fb7bd9248e7de2c1d
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Mon Sep 1 20:15:43 2014 +1000
+
+    IM-17 Patient Profiling - updated AndroidManifest.xml
+
+
+commit eec42923f5b099018760d8ee5a80d1fce3aaf905
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Mon Sep 1 19:42:39 2014 +1000
+
+    IM-17 Patient Profiling - Show profile
+    - Now launches as an activity
+    - Database retrieval
+
+
+commit 74186d9c380e6dbf98a10ebefc720839787144b6
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sun Aug 31 21:21:59 2014 +1000
+
+    Bit of work on tests and testing setup.
+
+
+commit 5c3d4d267ee28b3dec87fad1f950ee1a25b95294
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sun Aug 31 14:44:58 2014 +1000
+
+    Updates for patient tracking now working!
+
+
+commit 5cd191f04cb91e349e72cdf7b6d4c8746495b976
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sun Aug 31 13:38:31 2014 +1000
+
+    Massively simplified patient location display, only missing updates.
+
+
+commit 1f994a7205b5e31046b3ed35d26ac4bc4ae41037
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sun Aug 31 11:04:04 2014 +1000
+
+    Fixed bug which closed application upon going back from map views, added
+    tests which will fail if this is set again.
+
+
+commit bf0612335bb967ddd7423e683f79ac9fcba878d2
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Fri Aug 29 16:15:10 2014 +1000
+
+    Retrieve stored client locations from the database. Story 56
+
+
+commit 7b483e11b66bd4140ffca359d5d86ae185cedb11
+Author: Daniel Luckhurst <daniel.luckhurst@connect.qut.edu.au>
+Date:   Fri Aug 29 16:01:52 2014 +1000
+
+    Retrieval of client locations stored on the database. Story 56
+
+
+commit 04af7f42dd8d1775abba422270c0c216bda03ccb
+Author: Andrejs <Joseph@131.181.26.181>
+Date:   Tue Aug 26 14:01:51 2014 +1000
+
+    Added dummy panic signal
+
+
+commit 66f40d713e89281af9589a2cc3c2908a2cf3e055
+Author: Andrejs <Joseph@131.181.26.27>
+Date:   Tue Aug 26 02:48:42 2014 +1000
+
+    Complete:
+    Panic notification pop-up box, sets panic value.
+    Getter for panic value.
+    
+    Template:
+    Panic value sender, update db patient profile.
+
+
+commit 1a157f8be678cfae08be957d1e4a8630fc65157d
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Aug 25 21:17:58 2014 +1000
+
+    Admin map shows marker for patient.
+
+
+commit b5f9631dc01252b2ffd9484b04badaf3d750066a
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 23 23:24:16 2014 +1000
+
+    Mapping now enabled in admin program.
+
+
+commit 391f93bb8679756f44acb172c7f3594030a20414
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 23 22:44:31 2014 +1000
+
+    Added initial admin program unit tests, added mapping configuration to
+    admin program.
+
+
+commit 5fb908fa738c579059d5b0b178cba494c239aa87
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 23 19:55:49 2014 +1000
+
+    Figured out testing, added a few client tests.
+
+
+commit aeeb427a75cb3aa436152494ab72412c14e124c0
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 23 09:29:22 2014 +1000
+
+    Made client compile and moved mapping to separate package.
+
+
+commit cb787050383455e1cb0f8611e2908fca2ba5e6b5
+Author: sitdbl <sitdbl@S74093.sonichealth.com.au>
+Date:   Fri Aug 22 14:01:38 2014 +1000
+
+    added class that sends GPS coordinates to the web server
+
+
+commit ec9835d2841cd28a4020aaee7e93aad23e944c3f
+Author: sitdbl <sitdbl@S74093.sonichealth.com.au>
+Date:   Wed Aug 20 14:29:18 2014 +1000
+
+    Patient Profiling + test push
+
+
+commit 2510622d7a0de4abb13680273550d0c57391d07d
+Author: Richard Lai <richard08192@hotmail.com>
+Date:   Tue Aug 19 06:02:44 2014 +1000
+
+    Moved ClientTesting testclass to Test folder.
+
+
+commit 284f3cd22482d96acf1c48840723807500be8181
+Author: Richard Lai <richard08192@hotmail.com>
+Date:   Tue Aug 19 05:58:34 2014 +1000
+
+    PositionUncertainty class and PositionUncertaintyTest testclass method
+    stubs.
+    
+    Test folder created.
+
+
+commit ddd8b0772083d14c70f6fbd860a139579fdf78bf
+Author: azariah001 <azariah001@gmail.com>
+Date:   Mon Aug 18 15:56:39 2014 +1000
+
+    Initial Commit of Server Files. Resources mainly.
+    
+    The current GUI prototype is in here as well.
+
+
+commit c592bbb2c8454aa3383cae3bc04168ee6ef11074
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Aug 18 15:26:58 2014 +1000
+
+    Attempt at Testing
+
+
+commit 6caf5c6e87c97b1ce532b54f335205e680bbab67
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Mon Aug 18 13:30:17 2014 +1000
+
+    Listen on multiple location sources.
+
+
+commit 645d9ec083245fa78f3750159eb236712ed4b1ab
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sun Aug 17 13:55:46 2014 +1000
+
+    Crash if previous location null, fix by using PASSIVE_PROVIDER from main
+    app/svc.
+
+
+commit 3513a04cdc9d03c2a3d76ccbb99e461275e60489
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 16 18:24:13 2014 +1000
+
+    Client map working, updating and simple.
+
+
+commit 4ac55865aa64f2e36f43c11a4067d0f7805d94ce
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 16 16:04:40 2014 +1000
+
+    Some sort of map showing on client.
+
+
+commit 62922195b7b892490aa017127cbe68a0cb574a48
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Sat Aug 16 16:03:20 2014 +1000
+
+    Adding google-play-services Library
+
+
+commit a93114bda298247818768dad7e69b29b51d995aa
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Tue Aug 12 23:09:04 2014 +1000
+
+    Removing Bin
+
+commit e0702c1dd6dd091c6ac9be1cd8db759cd849f93d
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Tue Aug 12 22:57:50 2014 +1000
+
+    Removing Hidden File
+
+commit a40c72ee491a97a60f033164f00c50f26d19c4ea
+Author: Viktor Polak <viktor.polak@connect.qut.edu.au>
+Date:   Tue Aug 12 20:58:46 2014 +1000
+
+    Initial Commit
