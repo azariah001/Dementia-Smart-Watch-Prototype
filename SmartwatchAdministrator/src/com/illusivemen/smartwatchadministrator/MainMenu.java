@@ -1,6 +1,7 @@
 package com.illusivemen.smartwatchadministrator;
 
 //import com.illusivemen.checkin.PatientCheckIn;
+import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.reminder.CalendarReminder;
 
@@ -78,7 +79,7 @@ public class MainMenu extends Activity {
 	
 	// - Patient Check In
 	public void patientCheckIn(View view) {
-		//startActivity(PatientCheckIn.makeIntent(MainMenu.this, PATIENT_CHECKIN));
+		startActivity(PatientCheckIn.makeIntent(MainMenu.this, PATIENT_CHECKIN));
 	}	
 }
 	
