@@ -54,7 +54,8 @@
         </activity>
         <activity
             android:name="com.illusivemen.maps.AdminGoogleMapping"
-            android:label="@string/title_activity_admin_google_mapping" >
+            android:label="@string/title_activity_admin_google_mapping"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".CallSmartWatch"

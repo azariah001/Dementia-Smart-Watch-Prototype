@@ -4,11 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,9 +35,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class AdminGoogleMapping extends Activity implements OnMapLongClickListener, OnLoopRetrievedListener {
+public class AdminGoogleMapping extends Activity implements OnMapLongClickListener, OnInfoWindowClickListener, OnLoopRetrievedListener {
 	
 	public final static String MAP_PURPOSE = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
 	private String purpose;
@@ -60,6 +66,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	// local geofence storage and default properties
 	ArrayList<GeofenceVisualisation> geofences = new ArrayList<GeofenceVisualisation>();
 	private static final int GEOFENCE_RADIUS = 30;
+	private HashMap<Marker, Integer[]> geofenceMarkerMap;
 	
 	
 	/**
@@ -101,6 +108,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		// Location Updater
 		subscribeForLocations();
 		// load geofence visualisations
+		geofenceMarkerMap = new HashMap<Marker, Integer[]>();
 		new RetrieveGeofences().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 	
@@ -167,8 +175,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 					R.id.map)).getMap();
 			// set type of map to use
 			googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-			// act out on long clicks
+			// act out on long clicks and marker infowindow clicks
 			googleMap.setOnMapLongClickListener(this);
+			googleMap.setOnInfoWindowClickListener(this);
 			// setup UI controls
 			setupUi();
 			
@@ -321,6 +330,54 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		return age;
 	}
 	
+	/**
+	 * Listener for patient location updates.
+	 */
+	@Override
+	public void onLocationRetrieved(String locations) {
+		
+		// access to the main thread
+		Handler handler = new Handler(Looper.getMainLooper());
+		
+		// network errors may result in a null result
+		// server errors may result in unexpected output
+		try {
+			// list of recent points
+			final String[] latestPoints = locations.split(";");
+			// first recent point is the latest position
+			String[] location = latestPoints[0].split(",");
+			
+			// process latest position
+			final LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+			positionTimestamp = location[2];
+			connectionTimestamp = mySQLFormat.format(new Date());
+			
+			// update the UI in the main thread
+			handler.post(new Runnable(){
+				@Override
+				public void run() {
+					updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
+					updateTrack(latestPoints);
+				} 
+			});
+			
+		} catch (NumberFormatException e) {
+			System.out.println("Patient Location Retrieve Parse Error");
+			// only update age of the retrieved location
+			if (positionTimestamp != null) {
+				// update the UI in the main thread
+				handler.post(new Runnable(){
+					@Override
+					public void run() {
+						updateLocation("Location from " + getTimeAge(positionTimestamp)
+								+ " ago. Connection failed for " + getTimeAge(connectionTimestamp) + ".");
+					} 
+				});
+			}
+		}
+		
+	}
+	
 	// ---------- BEGIN GEOFENCE RELATED ITEMS ----------
 	
 	/**
@@ -397,6 +454,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 				// update visualisation now that the id is available from the database
 				System.out.println("DB SAVE SUCCESS");
 				newFence.initialise(result);
+				geofences.add(newFence);
+				geofenceMarkerMap.put(newFence.getMarker(), new Integer[]{Integer.valueOf(newFence.getId()), (int) newFence.getRadius()});
 			}
 		}
 	}
@@ -425,77 +484,172 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			// server errors may result in unexpected output
 			try {
 				// list of recent points
-				String[] geofences = result.split(";");
+				String[] allFences = result.split(";");
 				// parsing
-				for (String geofence : geofences) {
+				for (String geofence : allFences) {
 					
 					String[] geofenceParams = geofence.split(",");
 					
-					new GeofenceVisualisation(
+					GeofenceVisualisation newVisualisation = new GeofenceVisualisation(
 							googleMap,
 							geofenceParams[0],
 							Double.valueOf(geofenceParams[2]),
 							Double.valueOf(geofenceParams[3]),
 							Float.valueOf(geofenceParams[4]),
 							Long.valueOf(geofenceParams[5]),
-							Integer.valueOf(geofenceParams[6])).hideInfo();
+							Integer.valueOf(geofenceParams[6]));
+					newVisualisation.hideInfo();
+					geofences.add(newVisualisation);
+					geofenceMarkerMap.put(newVisualisation.getMarker(), new Integer[]{Integer.valueOf(newVisualisation.getId()), (int) newVisualisation.getRadius()});
 				}
-			} catch (Exception e) {
-				System.out.println("GEOFENCE RETRIEVE ERROR");
+			} catch (NumberFormatException e) {
+				System.out.println("GEOFENCE FORMAT ERROR");
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println(result);
 			}
 		}
-	}
-	
-	/**
-	 * Listener for patient location updates.
-	 */
-	@Override
-	public void onLocationRetrieved(String locations) {
-		
-		// access to the main thread
-		Handler handler = new Handler(Looper.getMainLooper());
-		
-		// network errors may result in a null result
-		// server errors may result in unexpected output
-		try {
-			// list of recent points
-			final String[] latestPoints = locations.split(";");
-			// first recent point is the latest position
-			String[] location = latestPoints[0].split(",");
-			
-			// process latest position
-			final LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-			positionTimestamp = location[2];
-			connectionTimestamp = mySQLFormat.format(new Date());
-			
-			// update the UI in the main thread
-			handler.post(new Runnable(){
-				@Override
-				public void run() {
-					updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
-					updateTrack(latestPoints);
-				} 
-			});
-			
-		} catch (NumberFormatException e) {
-			System.out.println("Patient Location Retrieve Parse Error");
-			// only update age of the retrieved location
-			if (positionTimestamp != null) {
-				// update the UI in the main thread
-				handler.post(new Runnable(){
-					@Override
-					public void run() {
-						updateLocation("Location from " + getTimeAge(positionTimestamp)
-								+ " ago. Connection failed for " + getTimeAge(connectionTimestamp) + ".");
-					} 
-				});
-			}
-		}
-		
 	}
 	
 	// ---------- BEGIN GEOFENCE MODIFY ITEMS ----------
 	
+	/**
+	 * Edit geofence activity should be opened when clicking a geofence marker info window.
+	 */
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		
+		// geofence infowindow click
+		if (marker.getTitle().toString().equals("Geofence")) {
+			// store what geofence ID is being modified
+			int id = geofenceMarkerMap.get(marker)[0];
+			TextView hiddenId = (TextView) findViewById(R.id.geofenceModId);
+			hiddenId.setText(String.valueOf(id));
+			
+			// set the current radius
+			int radius = geofenceMarkerMap.get(marker)[1];
+			EditText editRadius = (EditText) findViewById(R.id.editRadius);
+			editRadius.setText("");
+			editRadius.append(String.valueOf(radius));
+			
+			// show modification dialogue
+			findViewById(R.id.overlay).setVisibility(View.VISIBLE);;
+		}
+	}
 	
+	private void hideModifyFence() {
+		// close keyboard
+		EditText editRadius = (EditText) findViewById(R.id.editRadius);
+		editRadius.clearFocus();
+		
+		InputMethodManager imm = (InputMethodManager)getSystemService(
+				Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(editRadius.getWindowToken(), 0);
+		
+		// close modification dialogue
+		findViewById(R.id.overlay).setVisibility(View.GONE);
+	}
+	
+	public void hideModifyFence(View view) {
+		hideModifyFence();
+	}
+	
+	public void deleteGeofence(View view) {
+		TextView hiddenId = (TextView) findViewById(R.id.geofenceModId);
+		String target = String.valueOf(hiddenId.getText());
+		
+		// delete from the database
+		new UpdateGeofenceDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 
+				new Integer[]{Integer.valueOf(target), -1});
+	}
+	
+	public void updateGeofence(View view) {
+		TextView hiddenId = (TextView) findViewById(R.id.geofenceModId);
+		String target = String.valueOf(hiddenId.getText());
+		
+		EditText editRadius = (EditText) findViewById(R.id.editRadius);
+		int newRadius = Integer.valueOf(editRadius.getText().toString());
+		
+		// update in database
+		new UpdateGeofenceDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 
+				new Integer[]{Integer.valueOf(target), newRadius});
+	}
+	
+	/**
+	 * Changes an existing geofence by deleting or updating it.
+	 */
+	private class UpdateGeofenceDB extends AsyncTask<Integer[], Void, String>{
+		
+		int geofenceId;
+		int newRadius;
+		GeofenceVisualisation previousVisualisation;
+		
+		@Override
+		protected String doInBackground(Integer[]... params) {
+			geofenceId = params[0][0];
+			newRadius = params[0][1];
+			
+			// provide progress feedback
+			publishProgress();
+			
+			// store parameters
+			String[] parameters = {"id=" + geofenceId,
+					"radius=" + newRadius};
+			
+			DBConn conn;
+			// post information
+			if (newRadius < 0) {
+				conn = new DBConn("/deleteGeofence.php");
+			} else {
+				conn = new DBConn("/updateGeofence.php");
+			}
+			conn.execute(parameters);
+			
+			return conn.getResult();
+		}
+		
+		@Override
+		protected void onProgressUpdate(Void... mVoid) {
+			
+			// visual feedback that the geofence is in the process of being deleted
+			for (GeofenceVisualisation geofence : geofences) {
+				if (geofence.getId().equals(String.valueOf(geofenceId))) {
+					previousVisualisation = geofence;
+					break;
+				}
+			}
+			if (newRadius < 0) {
+				previousVisualisation.updateLoad("Deleting");
+			} else {
+				previousVisualisation.updateLoad("Updating...");
+			}
+			hideModifyFence();
+			
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			
+			if (result.equals("1")) {
+				// database delete/update success
+				if (newRadius < 0) {
+					// delete from local storage as well
+					geofenceMarkerMap.remove(previousVisualisation.getMarker());
+					previousVisualisation.tearDown();
+					geofences.remove(previousVisualisation);
+				} else {
+					previousVisualisation.setRadius(newRadius);
+					previousVisualisation.initialise(String.valueOf(geofenceId));
+					
+					// update marker hash table for new radius
+					geofenceMarkerMap.remove(previousVisualisation.getMarker());
+					geofenceMarkerMap.put(previousVisualisation.getMarker(), new Integer[]{geofenceId, newRadius});
+				}
+			} else {
+				// delete/update fail
+				previousVisualisation.initialise(String.valueOf(geofenceId));
+			}
+		}
+	}
 	
 }

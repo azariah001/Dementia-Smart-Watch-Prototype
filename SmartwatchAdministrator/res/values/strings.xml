@@ -15,6 +15,11 @@
     <string name="mapstyle_select">Map Style…</string>
     <string name="mapstyle_terrain">Terrain</string>
     <string name="geofence_add">Add Fence</string>
+    <string name="geofence_modify">Modify Geofence</string>
+    <string name="geofence_radius">Radius (metres):</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     
     <!-- copied junk TODO: refine -->
     <string name="connection_error_code">Connection failure error code: %1$d</string>

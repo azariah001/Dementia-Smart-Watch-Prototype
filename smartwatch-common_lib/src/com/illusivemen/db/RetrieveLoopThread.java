@@ -64,7 +64,8 @@ public class RetrieveLoopThread extends Thread {
 			}
 			notifyListener(conn.getResult());
 			
-			nop(2000);
+			// wait before running again
+			nop();
 		}
 		
 	}
@@ -73,9 +74,9 @@ public class RetrieveLoopThread extends Thread {
 	 * No operation for specified time between runs.
 	 * @param time milliseconds to wait
 	 */
-	private void nop(long time) {
+	private void nop() {
 		try {
-			Thread.sleep(time);
+			Thread.sleep(interval);
 		} catch (InterruptedException e) {
 			System.out.println("Unexpected Interrupt");
 			System.exit(0);

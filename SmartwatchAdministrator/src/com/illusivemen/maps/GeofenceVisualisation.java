@@ -77,27 +77,36 @@ public class GeofenceVisualisation {
 		this.mTransitionType = transition;
 		
 		// draw temporary representation on the map
-		loadingVisualisation();
+		loadingVisualisation("Saving...");
 	}
 	
-	private void loadingVisualisation() {
+	private void loadingVisualisation(String status) {
 		
 		LatLng latlng = new LatLng(mLatitude, mLongitude);
 		
-		// add initial marker/circle
-		marker = googleMap.addMarker(new MarkerOptions()
-				.position(latlng)
-				.title("Saving...")
-				.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-				.snippet("Connecting to Database"));
-		marker.showInfoWindow();
-		
-		circle = googleMap.addCircle(new CircleOptions()
-				.center(latlng)
-				.radius(mRadius)
-				.fillColor(0x40000000)
-				.strokeColor(Color.TRANSPARENT)
-				.strokeWidth(2));
+		if (marker != null && circle != null) {
+			marker.setTitle(status);
+			marker.setSnippet("Connecting to Database");
+			circle.setFillColor(0x40000000);
+			
+			marker.hideInfoWindow();
+			marker.showInfoWindow();
+		} else {
+			// add initial marker/circle
+			marker = googleMap.addMarker(new MarkerOptions()
+					.position(latlng)
+					.title(status)
+					.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+					.snippet("Connecting to Database"));
+			marker.showInfoWindow();
+			
+			circle = googleMap.addCircle(new CircleOptions()
+					.center(latlng)
+					.radius(mRadius)
+					.fillColor(0x40000000)
+					.strokeColor(Color.TRANSPARENT)
+					.strokeWidth(2));
+		}
 	}
 	
 	/**
@@ -105,12 +114,17 @@ public class GeofenceVisualisation {
 	 */
 	public void initialise(String id) {
 		this.mId = id;
-		circle.remove();
-		marker.remove();
-		circle = null;
-		marker = null;
+		marker.setTitle("Geofence");
+		marker.setSnippet("Radius: " + mRadius + "m");
+		circle.setFillColor(GEOFENCE_COLOUR);
 		
-		updateVisualisation();
+		// update view
+		marker.hideInfoWindow();
+		marker.showInfoWindow();
+	}
+	
+	public void updateLoad(String status) {
+		loadingVisualisation(status);
 	}
 	
 	/**
@@ -140,9 +154,9 @@ public class GeofenceVisualisation {
 			// add initial marker/circle
 			marker = googleMap.addMarker(new MarkerOptions()
 					.position(latlng)
-					.title("Fence " + mId)
+					.title("Geofence")
 					.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-					.snippet("Radius: " + mRadius));
+					.snippet("Radius: " + mRadius + "m"));
 			marker.showInfoWindow();
 			
 			circle = googleMap.addCircle(new CircleOptions()
@@ -192,5 +206,8 @@ public class GeofenceVisualisation {
 	}
 	public int getTransitionType() {
 		return mTransitionType;
+	}
+	public Marker getMarker() {
+		return marker;
 	}
 }
