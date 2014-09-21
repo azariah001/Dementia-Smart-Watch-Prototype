@@ -11,7 +11,9 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.illusivemen.db.DBConn;
 import com.illusivemen.mapping.GoogleMapping;
+import com.illusivemen.mapping.GoogleMapping.SaveTask;
 import com.illusivemen.memgame.MemoryGame;
 import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.setting.ShowSettings;
@@ -22,6 +24,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +41,7 @@ public class MainMenu extends Activity {
 	//For SOS Beacon.//0 = not panicked.//1 = very panicked
 	private int panic = 0;
 	private boolean lowBatteryAlert = false;
+	private static final String DUMP_SCRIPT = "/updatePatientState.php";
 	private float batteryPct;
 	
 	@Override
@@ -172,8 +177,7 @@ public class MainMenu extends Activity {
 		}
 	
 		
-		//TODO update server db with current panic state;
-		
+
 	
 	
 	TimerTask lowBattery = new TimerTask() {
