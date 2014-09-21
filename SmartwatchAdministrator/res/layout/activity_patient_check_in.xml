@@ -18,7 +18,7 @@
         android:layout_alignLeft="@+id/patientCheckInSwitch"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"
-        android:text="Patient Check In" />
+        android:text="@string/patient_checkin_title" />
 
     <TextView
         android:id="@+id/geofenceModId"
@@ -41,19 +41,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Hourly" />
+            android:text="@string/patient_checkin_hourly" />
 
         <RadioButton
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Daily" />
+            android:text="@string/patient_checkin_daily" />
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weekly" />
+            android:text="@string/patient_checkin_weekly" />
     </RadioGroup>
 
     <Button
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:text="Send Now" 
+        android:text="@string/checkin_send_now" 
         android:onClick="sendRequest"/>
 
 </RelativeLayout>
