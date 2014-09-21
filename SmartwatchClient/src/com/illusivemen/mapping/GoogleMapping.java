@@ -174,9 +174,25 @@ public class GoogleMapping extends Activity {
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			
-			
+			/* This is called when the GPS status alters */
+		    switch (status) {
+			    case 0:
+			        showToast("Status Changed: Out of Service");
+			        break;
+			    case 1:
+			    	showToast("Status Changed: Temporarily Unavailable");
+			        break;
+			    case 2:
+			        showToast("Status Changed: Available");
+			        break;
+		    }
 		}
 	};
+	
+	private void showToast(String message) {
+		Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+		toast.show();
+	}
 	
 	private void sendToServer(Location location) {
 		new SaveTask().execute(location);
