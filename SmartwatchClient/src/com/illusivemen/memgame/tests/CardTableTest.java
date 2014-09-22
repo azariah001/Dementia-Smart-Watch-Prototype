@@ -23,8 +23,8 @@ public class CardTableTest extends AndroidTestCase {
 	private final boolean TURN_TWICE = true;
 	// scoring rules
 	private final int START_SCORE = 1000;
-	private final int BAD_MATCH_PENALTY = 100;
-	private final int CHECK_PENALTY = 40;
+	private final int BAD_MATCH_PENALTY = 50;
+	private final int CHECK_PENALTY = 20;
 	
 	// ---------- PRE/POST TEST ----------
 	
@@ -67,6 +67,7 @@ public class CardTableTest extends AndroidTestCase {
 		randomCard.setVisible(true);
 		
 		if (turnTwice) {
+			cardTable.processFlippedCards();
 			randomCard.setVisible(false);
 		}
 	}

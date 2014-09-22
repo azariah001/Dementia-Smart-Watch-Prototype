@@ -8,6 +8,11 @@ import android.content.Context;
 
 public class CardTable {
 	
+	// game score
+	private int score = 1000;
+	private final int BAD_MATCH_PENALTY = 50;
+	private final int CHECK_PENALTY = 20;
+	private boolean lastSelectionWasSingle = false;
 	// possible cards to use
 	ArrayList<Integer> cardDeck = new ArrayList<Integer>(16);
 	// cards on table
@@ -97,6 +102,7 @@ public class CardTable {
 					firstCard = card;
 				} else if (card.getCard() != firstCard.getCard()) {
 					// doesn't match reference
+					score -= BAD_MATCH_PENALTY;
 					hideBadPair(firstCard, card);
 					return false;
 				} else {
@@ -104,6 +110,16 @@ public class CardTable {
 					savePair(firstCard, card);
 					return true;
 				}
+			}
+			
+			// code only reachable if two cards havn't been selected yet
+			if (firstCard != null) {
+				// one selection has been made - store this state
+				lastSelectionWasSingle = true;
+			} else if (lastSelectionWasSingle) {
+				// no card selected but the last selection was only single
+				score -= CHECK_PENALTY;
+				lastSelectionWasSingle = false;
 			}
 		}
 		
@@ -121,7 +137,6 @@ public class CardTable {
 	}
 
 	public int getScore() {
-		// TODO Auto-generated method stub
-		return 0;
+		return score;
 	}
 }

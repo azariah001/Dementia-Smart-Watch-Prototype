@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MemoryGame extends Activity implements OnClickListener, OnCompletionListener {
 	
@@ -40,6 +41,10 @@ public class MemoryGame extends Activity implements OnClickListener, OnCompletio
 				((LinearLayout) findViewById(R.id.card_row4)).addView(cards.get(card));
 			}
 		}
+		
+		// initial score
+		TextView scoreDisplay = (TextView) findViewById(R.id.valueScore);
+		scoreDisplay.setText(String.valueOf(cardTable.getScore()));
 		
 		// feedback sounds
 		mp = new MediaPlayer();
@@ -74,16 +79,16 @@ public class MemoryGame extends Activity implements OnClickListener, OnCompletio
 		}
 		
 		// process table
-		if (cardTable.secondSelection()) {
-			if (cardTable.processFlippedCards()) {
-				// successful match
-				if (cardTable.finishedGame()) {
-					System.out.println("congratulations! you have completed the mini-game!");
-				}
-			} else {
-				// bad match
+		if (cardTable.processFlippedCards()) {
+			// successful match
+			if (cardTable.finishedGame()) {
+				System.out.println("congratulations! you have completed the mini-game!");
 			}
 		}
+		
+		// show score
+		TextView scoreDisplay = (TextView) findViewById(R.id.valueScore);
+		scoreDisplay.setText(String.valueOf(cardTable.getScore()));
 	}
 	
 	private void playSound(int sound) {
