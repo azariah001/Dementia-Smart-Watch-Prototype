@@ -17,6 +17,7 @@ import com.illusivemen.mapping.GoogleMapping;
 import com.illusivemen.memgame.MemoryGame;
 import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.setting.ShowSettings;
+import com.illusivemen.panic.UtilityClass;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,8 +39,8 @@ public class MainMenu extends Activity {
 	public final static String ACTIVITY_MESSAGE = "ClientStart";
 	private static final long CHECK_BATTERY_STATE = 250;
 	
-	//For SOS Beacon.//0 = not panicked.//1 = very panicked
-	private int panic = 0;
+	public UtilityClass utility;
+	
 	private boolean lowBatteryAlert = false;
 	private static final String DUMP_SCRIPT = "/updatePatientState.php";
 	private float batteryPct;
@@ -82,6 +83,32 @@ public class MainMenu extends Activity {
 		startActivity(PatientProfile.makeIntent(MainMenu.this));
 	}
 	
+	public void panicSOS(View view) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    builder.setTitle("SOS Beacon");
+	    builder.setMessage("Are you sure?");
+	    
+	    builder.setPositiveButton("ON", new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {            
+	        								
+	        								//Sets to panic mode
+	        								new UtilityClass().sendRequest();
+	        								dialog.dismiss(); } } );
+
+	    builder.setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	        	
+	        								//Sets to chill mode
+
+											dialog.dismiss(); } } );
+
+	    AlertDialog alert = builder.create();
+	    alert.show();
+	}
+	
 	// for testing purposes
 	public void showBattery(View view) {
 		Context context = getApplicationContext();
@@ -96,85 +123,9 @@ public class MainMenu extends Activity {
 		toast.show();
 	}
 	
-	//Panic notification dialogbox, creates on click.
-	public void panicSOS (View view) {
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("SOS Beacon");
-	    builder.setMessage("Are you sure?");
-	    
-	    builder.setPositiveButton("ON", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) {            
-	        								
-	        								//Sets to panic mode
-	        								panic = 1;
-	        								sendPanicServer(panic);
-	        								dialog.dismiss(); } } );
 
-	    builder.setNegativeButton("OFF", new DialogInterface.OnClickListener() {
-
-	        @Override
-	        public void onClick(DialogInterface dialog, int which) {
-	        	
-	        								//Sets to chill mode
-											panic = 0;
-											sendPanicServer(panic);
-											dialog.dismiss(); } } );
-
-	    AlertDialog alert = builder.create();
-	    alert.show();
-
-	}
 	
-	//Panic getter
-	public int getPanic() {
-		
-		return this.panic;
-	}
-	
-	//Panic sender
-	private void sendPanicServer(int panic) {
-		
-		panic = getPanic();
-		
-		String strUrl = "http://agile.azarel-howard.me/updatePatientState.php";
-		URL url = null;
-		try {
-			url = new URL(strUrl);
-			
-        	HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        	connection.setRequestMethod("POST");
-        	connection.setDoOutput(true);
-        	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
-        	
-        	// TODO: set patient to current patient id
-        	outputStreamWriter.write("patient=0"
-        			+ "&panic=" + getPanic()); 
-            outputStreamWriter.flush();
-            outputStreamWriter.close();
-            
-            InputStream iStream = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new
-            InputStreamReader(iStream));
 
-            StringBuffer sb = new StringBuffer();
-
-            String line = "";
-            
-            while( (line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-            
-            reader.close();
-            iStream.close();
-			} catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-			return;	
-		}
 	
 		
 
