@@ -43,10 +43,16 @@ public class CardTableTest extends AndroidTestCase {
 	/**
 	 * Helper method to select any first card which is still in play.
 	 */
-	private void selectCard() {
+	private void selectCard(boolean turnTwice) {
 		for (PlayingCard card : cardTable.getCards()) {
 			if (!card.isLocked() && !card.getVisible()) {
 				card.setVisible(true);
+				
+				if (turnTwice) {
+					cardTable.processFlippedCards();
+					card.setVisible(false);
+				}
+				
 				return;
 			}
 		}
@@ -85,10 +91,15 @@ public class CardTableTest extends AndroidTestCase {
 			PlayingCard playingCard = cardTable.getCards().get(card);
 			int cardFace = playingCard.getCard();
 			
-			if (card == 0) {
+			if (playingCard.isLocked()) {
+				continue;
+			}
+			
+			if (firstType == 0) {
 				// select the first card for comparrison
 				firstType = cardFace;
 				playingCard.setVisible(true);
+				cardTable.processFlippedCards();
 			} else {
 				// find if card matches first card
 				if ((cardFace == firstType) && equalCards) {
@@ -219,7 +230,7 @@ public class CardTableTest extends AndroidTestCase {
 		// process cards
 		cardTable.processFlippedCards();
 		// select another card
-		selectCard();
+		selectCard(TURN_ONCE);
 		assertFalse(cardTable.secondSelection());
 	}
 	
@@ -285,7 +296,7 @@ public class CardTableTest extends AndroidTestCase {
 			cardTable.processFlippedCards();
 		}
 		
-		selectCard();
+		selectCard(TURN_ONCE);
 		assertFalse(cardTable.finishedGame());
 	}
 	
@@ -338,13 +349,34 @@ public class CardTableTest extends AndroidTestCase {
 	 */
 	public void testScore_peekThenMatch() {
 		
-		selectRandomCard(TURN_TWICE);
+		selectCard(TURN_TWICE);
 		cardTable.processFlippedCards();
 		
 		selectTwoCards(SAME_CARDS);
 		cardTable.processFlippedCards();
 		
 		assertEquals(START_SCORE - CHECK_PENALTY, cardTable.getScore());
+	}
+	
+	/**
+	 * Test score after peeking first card and a bad match not including the first card (failed for previous bug).
+	 */
+	public void testScore_peekBadMatch() {
+		
+		// turn first card over twice
+		selectCard(TURN_TWICE);
+		cardTable.processFlippedCards();
+		
+		// prevent turning first card by locking it
+		cardTable.getCards().get(0).setLocked(true);
+		
+		assertEquals(START_SCORE - CHECK_PENALTY, cardTable.getScore());
+		
+		// bad pair, not with the first card
+		selectTwoCards(DIFFERENT_CARDS);
+		cardTable.processFlippedCards();
+		
+		assertEquals(START_SCORE - CHECK_PENALTY - BAD_MATCH_PENALTY, cardTable.getScore());
 	}
 	
 	/**

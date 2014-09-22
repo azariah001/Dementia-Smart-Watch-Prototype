@@ -14,6 +14,7 @@ public class MemoryGameTest extends ActivityInstrumentationTestCase2<MemoryGame>
 	
 	private Solo solo;
 	private final int CARDS_SUM = 16;
+	private final int START_SCORE = 1000;
 	
 	public MemoryGameTest() {
 		super(MemoryGame.class);
@@ -59,6 +60,21 @@ public class MemoryGameTest extends ActivityInstrumentationTestCase2<MemoryGame>
 				solo.clickOnImage(card);
 			}
 		}
+	}
+	
+	/**
+	 * Make sure the score is displayed.
+	 */
+	public void testScore_displayed() {
+		assertEquals((Integer) START_SCORE, Integer.valueOf(solo.getText(1).getText().toString()));
+	}
+	
+	/**
+	 * Make sure no penalties have been given after a perfect game.
+	 */
+	public void testScore_perfectEnding() {
+		testSolve();
+		assertEquals((Integer) START_SCORE, Integer.valueOf(solo.getText(1).getText().toString()));
 	}
 
 }

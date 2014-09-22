@@ -96,31 +96,33 @@ public class CardTable {
 		PlayingCard firstCard = null;
 		
 		for (PlayingCard card : playingCards) {
-			if (card.getVisible()) {
+			if (card.getVisible() && !card.isLocked()) {
 				if (firstCard == null) {
 					// set reference
 					firstCard = card;
 				} else if (card.getCard() != firstCard.getCard()) {
+					lastSelectionWasSingle = false;
 					// doesn't match reference
 					score -= BAD_MATCH_PENALTY;
 					hideBadPair(firstCard, card);
 					return false;
 				} else {
+					lastSelectionWasSingle = false;
 					// matches reference
 					savePair(firstCard, card);
 					return true;
 				}
 			}
-			
-			// code only reachable if two cards havn't been selected yet
-			if (firstCard != null) {
-				// one selection has been made - store this state
-				lastSelectionWasSingle = true;
-			} else if (lastSelectionWasSingle) {
-				// no card selected but the last selection was only single
-				score -= CHECK_PENALTY;
-				lastSelectionWasSingle = false;
-			}
+		}
+		
+		// code only reachable if two cards haven't been selected yet
+		if (firstCard != null) {
+			// one selection has been made - store this state
+			lastSelectionWasSingle = true;
+		} else if (lastSelectionWasSingle) {
+			// no card selected but the last selection was only single
+			score -= CHECK_PENALTY;
+			lastSelectionWasSingle = false;
 		}
 		
 		// only one card was flipped
