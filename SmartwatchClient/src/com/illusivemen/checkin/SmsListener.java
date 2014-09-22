@@ -7,11 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 public class SmsListener extends BroadcastReceiver {
 
     String msgBody;
+    String sentFrom;
     String confirmText = "Check-in Request";
 
 	@Override
@@ -31,6 +33,7 @@ public class SmsListener extends BroadcastReceiver {
 	                    msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
 	                    msg_from = msgs[i].getOriginatingAddress();
 	                    msgBody = msgs[i].getMessageBody();
+	                    sentFrom = msgs[i].getOriginatingAddress();
 	                    
 	                    CharSequence text = msgBody;
 	                    int duration = Toast.LENGTH_LONG;
@@ -42,13 +45,16 @@ public class SmsListener extends BroadcastReceiver {
 	                    
 	                    if (msgBody.equals(confirmText)) {
 	                    	Intent activityIntent = new Intent(context, PatientCheckIn.class);
-	    	    		    activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	                    	activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	                    	Bundle b = new Bundle();
+	                    	b.putString("key", sentFrom); // stores the senders number
+	                    	activityIntent.putExtras(b);
 	    	    		    context.startActivity(activityIntent);
 	                    }
 	               }                
 	    		    
 	            }catch(Exception e){
-//	                        Log.d("Exception caught",e.getMessage());
+	                        Log.d("Exception caught",e.getMessage());
 	            }
 	        }
 	    };		
