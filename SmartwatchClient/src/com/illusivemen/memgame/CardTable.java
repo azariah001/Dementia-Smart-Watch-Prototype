@@ -119,4 +119,9 @@ public class CardTable {
 		}
 		return true;
 	}
+
+	public int getScore() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

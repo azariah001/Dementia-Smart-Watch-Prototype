@@ -18,6 +18,13 @@ public class CardTableTest extends AndroidTestCase {
 	private final boolean SAME_CARDS = true;
 	private final boolean DIFFERENT_CARDS = false;
 	private final int PAIR = 2;
+	// selection options
+	private final boolean TURN_ONCE = false;
+	private final boolean TURN_TWICE = true;
+	// scoring rules
+	private final int START_SCORE = 1000;
+	private final int BAD_MATCH_PENALTY = 100;
+	private final int CHECK_PENALTY = 40;
 	
 	// ---------- PRE/POST TEST ----------
 	
@@ -48,7 +55,7 @@ public class CardTableTest extends AndroidTestCase {
 	/**
 	 * Helper method to select a random card.
 	 */
-	private void selectRandomCard() {
+	private void selectRandomCard(boolean turnTwice) {
 		PlayingCard randomCard;
 		
 		// use random to select a card until the selected card is available to be flipped
@@ -58,6 +65,10 @@ public class CardTableTest extends AndroidTestCase {
 		
 		// flip the available card
 		randomCard.setVisible(true);
+		
+		if (turnTwice) {
+			randomCard.setVisible(false);
+		}
 	}
 	
 	/**
@@ -153,7 +164,7 @@ public class CardTableTest extends AndroidTestCase {
 	 */
 	@MediumTest
 	public void testPairNotSelected() {
-		selectRandomCard();
+		selectRandomCard(TURN_ONCE);
 		
 		assertFalse(cardTable.secondSelection());
 	}
@@ -289,4 +300,123 @@ public class CardTableTest extends AndroidTestCase {
 		
 		assertTrue(cardTable.finishedGame());
 	}
+	
+	// ---------- BEGIN SCORE TEST CASES ----------
+	
+	/**
+	 * Test the initial score is correct.
+	 */
+	public void testScore_initial() {
+		assertEquals(START_SCORE, cardTable.getScore());
+	}
+	
+	/**
+	 * Test the score after a selection.
+	 */
+	public void testScore_selection() {
+		// first selection should not modify the score,
+		selectRandomCard(TURN_ONCE);
+		
+		cardTable.processFlippedCards();
+		assertEquals(START_SCORE, cardTable.getScore());
+	}
+	
+	/**
+	 * Test the score after a peek (card is selected and then hidden again).
+	 */
+	public void testScore_peek() {
+		// there is a penalty for flipping a card over twice
+		selectRandomCard(TURN_TWICE);
+		
+		cardTable.processFlippedCards();
+		assertEquals(START_SCORE - CHECK_PENALTY, cardTable.getScore());
+	}
+	
+	/**
+	 * Test score after 1 peeks followed by a good match.
+	 */
+	public void testScore_peekThenMatch() {
+		
+		selectRandomCard(TURN_TWICE);
+		cardTable.processFlippedCards();
+		
+		selectTwoCards(SAME_CARDS);
+		cardTable.processFlippedCards();
+		
+		assertEquals(START_SCORE - CHECK_PENALTY, cardTable.getScore());
+	}
+	
+	/**
+	 * Test the score after a not matching selection is made.
+	 */
+	public void testScore_badSelection() {
+		// there is a penalty for an unsuccessful match
+		selectTwoCards(DIFFERENT_CARDS);
+		
+		cardTable.processFlippedCards();
+		assertEquals(START_SCORE - BAD_MATCH_PENALTY, cardTable.getScore());
+	}
+	
+	/**
+	 * Test the score after a matching selection.
+	 */
+	public void testScore_goodSelection() {
+		// there is no penalty for a good match
+		selectTwoCards(SAME_CARDS);
+		
+		cardTable.processFlippedCards();
+		assertEquals(START_SCORE, cardTable.getScore());
+	}
+	
+	/**
+	 * Test score after 1 good match and 3 bad matches.
+	 */
+	public void testScore_mixedMatches() {
+		selectTwoCards(SAME_CARDS);
+		cardTable.processFlippedCards();
+		
+		selectTwoCards(DIFFERENT_CARDS);
+		cardTable.processFlippedCards();
+		selectTwoCards(DIFFERENT_CARDS);
+		cardTable.processFlippedCards();
+		selectTwoCards(DIFFERENT_CARDS);
+		cardTable.processFlippedCards();
+		
+		assertEquals(START_SCORE - 3 * BAD_MATCH_PENALTY, cardTable.getScore());
+	}
+	
+	/**
+	 * Test the score after all matching selections (perfect score) is not changed.
+	 */
+	public void testScore_perfectGame() {
+		
+		// flip cards that always match
+		do {
+			selectTwoCards(SAME_CARDS);
+			cardTable.processFlippedCards();
+		} while (!cardTable.finishedGame());
+		
+		// no penalties have been given
+		assertEquals(START_SCORE, cardTable.getScore());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

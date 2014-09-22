@@ -494,6 +494,7 @@ containing a value of this type.
         public static final int app_name=0x7f06001a;
         public static final int call_smartwatch=0x7f060021;
         public static final int cancel=0x7f06002b;
+        public static final int checkin_send_now=0x7f06006f;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -634,6 +635,10 @@ containing a value of this type.
         public static final int no_resolution=0x7f060051;
         public static final int panic_off=0x7f06001f;
         public static final int panic_on=0x7f060020;
+        public static final int patient_checkin_daily=0x7f06006c;
+        public static final int patient_checkin_hourly=0x7f06006e;
+        public static final int patient_checkin_title=0x7f060070;
+        public static final int patient_checkin_weekly=0x7f06006d;
         public static final int patient_tracking=0x7f06001c;
         public static final int play_services_available=0x7f060052;
         public static final int radius_error_message=0x7f060053;

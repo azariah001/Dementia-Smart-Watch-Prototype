@@ -30,5 +30,6 @@
     <string name="start_memory_game">Memory Game</string>
     <string name="title_activity_calendar_reminder">Calendar Reminder</string>
     <string name="btn_set_reminder">Set Reminder</string>
+    <string name="memgame_score">Score: </string>
 
 </resources>
