@@ -16,13 +16,22 @@ import android.widget.TimePicker;
 
 public class CalendarReminder extends Activity {
 	
+	// putExtra final strings
+	private final String TITLE = "title";
+	private final String ORGANISER = "organizer";
+	private final String DESCRIPTION = "description";
+	private final String BEGINTIME = "beginTime";
+	private final String FREQUENCY = "rrule";
+	private final String TYPE = "vnd.android.cursor.item/event";
+	
 	// Calendar variables 
-	private String type = "vnd.android.cursor.item/event";
-	private String organiser;
 	private String title;
+	private String organiser;
 	private String description;
-	private long beginTime;
+	private long longBeginTime;
+	private String beginTime;
 	private String rrule;
+	private String[] calendarVariables;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +69,30 @@ public class CalendarReminder extends Activity {
 		this.organiser = organiser_email.getEditableText().toString();
 	}
 	
-	public void setTitle() {
+	public String getOrganiser() {
+		return this.organiser;
+	}
+	
+	public void setReminderTitle() {
 		// Gets the editable text
 		EditText reminder_title = (EditText) findViewById(R.id.reminder_title);
 		// Sets the title variable to the editable text
 		this.title = reminder_title.getEditableText().toString();
 	}
 	
-	public void setDescription() {
+	public String getReminderTitle() {
+		return this.title;
+	}
+	
+	public void setReminderDescription() {
 		// Gets the editable text
 		EditText reminder_description = (EditText) findViewById(R.id.reminder_description);
 		// Sets the editable text
 		this.description = reminder_description.getEditableText().toString();
+	}
+	
+	public String getReminderDescription() {
+		return this.description;
 	}
 	
 	public void setbeginTime() {
@@ -90,7 +111,12 @@ public class CalendarReminder extends Activity {
 		// Sets the calendar using the time and date variables
 		beginTime.set(year, month, day, hour, minute);
 		// Sets beginTime to the calendar time in Millis
-		this.beginTime = beginTime.getTimeInMillis();
+		this.longBeginTime = beginTime.getTimeInMillis();
+		this.beginTime = String.valueOf(longBeginTime);
+	}
+	
+	public String getBeginTime() {
+		return this.beginTime;
 	}
 	
 	public void setFrequency() {
@@ -99,22 +125,25 @@ public class CalendarReminder extends Activity {
 		// Sets the frequency rule
 		this.rrule = "FREQ=DAILY;COUNT=" + frequency.getText();
 	}
+	
+	public String getFrequency() {
+		return this.rrule;
+	}
 	// Does not work
 	public void sendReminder() {
-		
+		// Sets the parameters 
+		calendarVariables = new String[]{title, organiser, beginTime, description, rrule};
 	}
 	
 	public void setReminder() {
 		Calendar cal = Calendar.getInstance();
 		Intent reminder = new Intent(Intent.ACTION_EDIT);
-		reminder.setType(this.type);
-		reminder.putExtra("beginTime", this.beginTime);
-		reminder.putExtra("allDay",  false);
-		reminder.putExtra("rrule",  this.rrule);
-		reminder.putExtra("endTime",  cal.getTimeInMillis()+60*60*1000);
-		reminder.putExtra("title", this.title);
-		reminder.putExtra("organizer", this.organiser);
-		reminder.putExtra("description", this.description);
+		reminder.setType(TYPE);
+		reminder.putExtra(TITLE, getReminderTitle());
+		reminder.putExtra(ORGANISER, getOrganiser());
+		reminder.putExtra(DESCRIPTION, getReminderDescription());
+		reminder.putExtra(BEGINTIME, getBeginTime());
+		reminder.putExtra(FREQUENCY, getFrequency());
 		startActivity(reminder);
 	}
 	
