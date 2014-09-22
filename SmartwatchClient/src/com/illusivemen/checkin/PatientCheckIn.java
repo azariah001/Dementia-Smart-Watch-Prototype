@@ -15,7 +15,7 @@ import android.telephony.SmsManager;
 
 public class PatientCheckIn extends Activity {
 	
-	String phoneNumber = "0411794760";
+	String sentFrom;
 	String message;
 	SmsManager manager = SmsManager.getDefault();
 	
@@ -26,13 +26,15 @@ public class PatientCheckIn extends Activity {
 	        case DialogInterface.BUTTON_POSITIVE:
 	            //Yes button clicked
 	        	message = "Check-in: Patient OK";
-	    		manager.sendTextMessage(phoneNumber, null, message, null, null);
+	    		manager.sendTextMessage(sentFrom, null, message, null, null);
+	    		finish();
 	            break;
 
 	        case DialogInterface.BUTTON_NEGATIVE:
 	            //No button clicked
 	        	message = "Check-in: Patient has responded NOT OK";
-	    		manager.sendTextMessage(phoneNumber, null, message, null, null);
+	    		manager.sendTextMessage(sentFrom, null, message, null, null);
+	    		finish();
 	            break;
 	        }
 	    }
@@ -49,25 +51,32 @@ public class PatientCheckIn extends Activity {
 	}
 	
 	/**
-	 * Comment.
+	 * Comment...
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Bundle b = getIntent().getExtras();
+		sentFrom = b.getString("key");
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Check-in Request sent by Carer: Are you OK?").setPositiveButton("Yes", dialogClickListener)
 	    .setNegativeButton("No", dialogClickListener);
 		AlertDialog dlg = builder.create();
 		dlg.show();
-		timerDelayRemoveDialog(20000, dlg);
+		timerDelayRemoveDialog(30000, dlg);
 	}
 	
 	public void timerDelayRemoveDialog(long time, final AlertDialog d){
 	    new Handler().postDelayed(new Runnable() {
 	        public void run() {
-	        	message = "Check-in timeout: Patient did not respond";
-	    		manager.sendTextMessage(phoneNumber, null, message, null, null);
-	            d.dismiss();         
+	        	
+	        	// if the AlertDialog is still showing after the timeout period
+	        	if (d.isShowing()) {
+	        		message = "Check-in timeout: Patient did not respond";
+	        		manager.sendTextMessage(sentFrom, null, message, null, null);
+	        		d.dismiss();
+	        		finish();
+	        	}
 	        }
 	    }, time); 
 	}
