@@ -2,17 +2,20 @@ package com.illusivemen.reminder;
 
 import java.util.Calendar;
 
+import com.illusivemen.db.DBConn;
 import com.illusivemen.smartwatchadministrator.R;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class CalendarReminder extends Activity {
 	
@@ -31,7 +34,6 @@ public class CalendarReminder extends Activity {
 	private long longBeginTime;
 	private String beginTime;
 	private String rrule;
-	private String[] calendarVariables;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class CalendarReminder extends Activity {
 	
 	public void setOrganiser() {
 		// Gets the editable text
-		EditText organiser_email = (EditText) findViewById(R.id.organiser_email);
+		EditText organiser_email = (EditText) findViewById(R.id.organiser_name);
 		// Sets the organiser variable to the editable text
 		this.organiser = organiser_email.getEditableText().toString();
 	}
@@ -131,21 +133,35 @@ public class CalendarReminder extends Activity {
 	}
 	// Does not work
 	public void sendReminder() {
-		// Sets the parameters 
-		calendarVariables = new String[]{title, organiser, beginTime, description, rrule};
 	}
 	
 	public void setReminder() {
-		Calendar cal = Calendar.getInstance();
-		Intent reminder = new Intent(Intent.ACTION_EDIT);
-		reminder.setType(TYPE);
-		reminder.putExtra(TITLE, getReminderTitle());
-		reminder.putExtra(ORGANISER, getOrganiser());
-		reminder.putExtra(DESCRIPTION, getReminderDescription());
-		reminder.putExtra(BEGINTIME, getBeginTime());
-		reminder.putExtra(FREQUENCY, getFrequency());
-		startActivity(reminder);
+		new UpdatePatientReminderDB().execute();
 	}
 	
+	private class UpdatePatientReminderDB extends AsyncTask<Void, Void, String> {
 
+		@Override
+		protected String doInBackground(Void... params) {
+			// Store Parameters
+			String setTitle = "title=";
+			String setOrganiser = "organiser=";
+			String setBeginTime = "beginTime=";
+			String setDescription = "description=";
+			String setRrule = "rrule=";
+			String [] parameters = {setTitle + title,
+					setOrganiser + organiser,
+					setDescription + description,
+					setBeginTime + beginTime,
+					setRrule + rrule};
+			
+			// Creates a database connection
+			DBConn conn;
+			// Posts information
+			conn = new DBConn("/putPatientReminder.php");
+			conn.execute(parameters);
+			
+			return conn.getResult();
+		}
+	}
 }

@@ -16,4 +16,13 @@
         android:onClick="setReminder"
         android:text="@string/btn_set_reminder" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnSetReminder"
+        android:layout_below="@+id/btnSetReminder"
+        android:text="Get Reminder"
+        android:onClick="getReminder" />
+
 </RelativeLayout>

@@ -2,10 +2,12 @@ package com.illusivemen.reminder;
 
 import java.util.Calendar;
 
+import com.illusivemen.db.DBConn;
 import com.illusivemen.smartwatchclient.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +15,15 @@ import android.view.View;
 
 public class CalendarReminder extends Activity {
 
+	private String title;
+	private String organiser;
+	private String beginTime;
+	private long longBeginTime;
+	private String endTime;
+	private long longEndTime;
+	private String description;
+	private String rrule;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,16 +55,54 @@ public class CalendarReminder extends Activity {
 			//createReminder();
 		}
 	}
+	
 	// Creates a reminder
 	public void setReminder(View view) {
 		Calendar cal = Calendar.getInstance();
 		Intent reminder = new Intent(Intent.ACTION_EDIT);
 		reminder.setType("vnd.android.cursor.item/event");
-		reminder.putExtra("beginTime", cal.getTimeInMillis());
+		reminder.putExtra("title", title);
+		reminder.putExtra("beginTime", longBeginTime);
+		reminder.putExtra("endTime",  longBeginTime+60*60*1000);
 		reminder.putExtra("allDay",  false);
-		reminder.putExtra("rrule",  "FREQ=DAILY");
-		reminder.putExtra("endTime",  cal.getTimeInMillis()+60*60*1000);
-		reminder.putExtra("title", "a test");
+		reminder.putExtra("description", description);
+		reminder.putExtra("rrule", rrule);
 		startActivity(reminder);
 	}
+	
+	public void getReminder() {
+		new RetrievePatientReminder().execute();
+	}
+	
+	private void setInfo(String[] reminder) {
+		title = reminder[1];
+		organiser = reminder[2];
+		beginTime = reminder[3];
+		description = reminder[4];
+		rrule = reminder[5];
+		longBeginTime = Long.valueOf(beginTime);
+	}
+	/**
+	 * Background process which retrieves the Patient Reminder information.
+	 */
+	private class RetrievePatientReminder extends AsyncTask<Void, Void, String> {
+		
+		DBConn conn;
+		
+		@Override
+		protected String doInBackground(Void... params) {
+			conn = new DBConn("/getPatientReminder.php");
+			conn.execute();
+			return conn.getResult();
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			
+			String[] reminder = result.split(",");
+			setInfo(reminder);
+		}
+	}
+	
 }
