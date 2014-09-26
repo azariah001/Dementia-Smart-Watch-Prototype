@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/text_view_patientName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientName" />
+
+    <TextView
+        android:id="@+id/text_view_patientAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientName"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientAge" />
+
+    <EditText
+        android:id="@+id/patientAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_patientAge"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/text_view_patientAdress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientAge"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientAddress" />
+
+    <EditText
+        android:id="@+id/patientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_patientName"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/patientAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_patientAdress"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPostalAddress" />
+
+    <requestFocus />
+
+    <EditText
+        android:id="@+id/medicalInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_medicalInformation"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/text_view_medicalInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientAddress"
+        android:layout_marginTop="22dp"
+        android:text="@string/medicalInformation" />
+
+    <TextView
+        android:id="@+id/text_view_emergencyContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/text_view_medicalInformation"
+        android:layout_below="@+id/medicalInformation"
+        android:layout_marginTop="22dp"
+        android:text="@string/emergencyContact" />
+
+    <EditText
+        android:id="@+id/emergencyContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_emergencyContact"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/saveButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/saveButton" />
+
+</RelativeLayout>

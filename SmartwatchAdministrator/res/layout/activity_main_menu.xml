@@ -55,4 +55,13 @@
         android:text="Patient Check-In"
         android:onClick="patientCheckIn" />
 
+    <Button
+        android:id="@+id/patientProfiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/patientCheckIn"
+        android:layout_below="@+id/patientCheckIn"
+        android:text="@string/patient_profiles" 
+        android:onClick="selectPatientProfile"/>
+
 </RelativeLayout>

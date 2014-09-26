@@ -64,6 +64,12 @@
          <activity
             android:name="com.illusivemen.checkin.PatientCheckIn" >
         </activity>
+        <activity
+            android:name="com.illusivemen.patientprofile.SelectPatientProfile" >
+        </activity>
+        <activity
+            android:name="com.illusivemen.patientprofile.UpdatePatientProfile" >
+        </activity>
         <!-- Google Maps -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

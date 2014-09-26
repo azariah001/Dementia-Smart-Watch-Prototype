@@ -3,6 +3,8 @@ package com.illusivemen.smartwatchadministrator;
 //import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.maps.AdminGoogleMapping;
+import com.illusivemen.patientprofile.SelectPatientProfile;
+import com.illusivemen.patientprofile.UpdatePatientProfile;
 import com.illusivemen.reminder.CalendarReminder;
 
 import android.app.Activity;
@@ -18,6 +20,7 @@ public class MainMenu extends Activity {
 	public final static String CALL_MESSAGE = "CallSmartWatch";
 	public final static String SET_REMINDER = "SetReminder";
 	public final static String PATIENT_CHECKIN = "PatientCheckIn";
+	public final static String PROFILE_SELECT = "ProfileSelect";
 	
 	private boolean patientPanic = false;
 
@@ -77,10 +80,15 @@ public class MainMenu extends Activity {
 		startActivity(CalendarReminder.makeIntent(MainMenu.this, SET_REMINDER));
 	}
 	
-	// - Patient Check In
+	//IM-25 - Patient Check In
 	public void patientCheckIn(View view) {
 		startActivity(PatientCheckIn.makeIntent(MainMenu.this, PATIENT_CHECKIN));
-	}	
+	}
+	
+	//IM-15 - Patient Profile Update
+	public void selectPatientProfile(View view) {
+		startActivity(SelectPatientProfile.makeIntent(MainMenu.this, PROFILE_SELECT));
+	}
 }
 	
 	
