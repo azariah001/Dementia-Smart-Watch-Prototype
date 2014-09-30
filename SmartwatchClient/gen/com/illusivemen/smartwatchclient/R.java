@@ -423,16 +423,16 @@ containing a value of this type.
     }
     public static final class id {
         public static final int action_settings=0x7f090031;
-        public static final int address=0x7f090016;
+        public static final int address=0x7f090017;
         public static final int book_now=0x7f090010;
-        public static final int btnBattery=0x7f09001b;
-        public static final int btnMap=0x7f090018;
-        public static final int btnPanic=0x7f09001c;
-        public static final int btnProfile=0x7f090019;
+        public static final int btnBattery=0x7f09001c;
+        public static final int btnMap=0x7f090019;
+        public static final int btnPanic=0x7f09001d;
+        public static final int btnProfile=0x7f09001a;
         public static final int btnReminder=0x7f09001f;
         public static final int btnSetReminder=0x7f090014;
-        public static final int btnSettings=0x7f09001d;
-        public static final int button1=0x7f09001e;
+        public static final int btnSettings=0x7f09001e;
+        public static final int button1=0x7f090015;
         public static final int buyButton=0x7f09000a;
         public static final int buy_now=0x7f09000f;
         public static final int buy_with_google=0x7f09000e;
@@ -447,7 +447,7 @@ containing a value of this type.
         public static final int holo_dark=0x7f090005;
         public static final int holo_light=0x7f090006;
         public static final int hybrid=0x7f090004;
-        public static final int map=0x7f090015;
+        public static final int map=0x7f090016;
         public static final int match_parent=0x7f09000c;
         public static final int medicalInformation=0x7f09002d;
         public static final int menu_settings=0x7f090032;
@@ -463,9 +463,9 @@ containing a value of this type.
         public static final int selectionDetails=0x7f09000b;
         public static final int strict_sandbox=0x7f090009;
         public static final int terrain=0x7f090003;
-        public static final int textClock1=0x7f09001a;
+        public static final int textClock1=0x7f09001b;
         public static final int textScore=0x7f090025;
-        public static final int textUserSettings=0x7f090017;
+        public static final int textUserSettings=0x7f090018;
         public static final int text_view_emergencyContact=0x7f09002f;
         public static final int text_view_medicalInformation=0x7f09002e;
         public static final int text_view_patientAdress=0x7f09002b;

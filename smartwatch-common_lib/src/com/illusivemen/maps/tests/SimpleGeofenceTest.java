@@ -10,7 +10,6 @@ import android.test.suitebuilder.annotation.SmallTest;
 public class SimpleGeofenceTest extends TestCase {
 	
 	private SimpleGeofence geofence;
-	private SimpleGeofence testfence;
 	
 	private String geofenceId = "18834";
 	private double latitude = -27.18423523453;
