@@ -83,11 +83,16 @@
         </activity>
         
         <receiver android:name="com.illusivemen.checkin.SmsListener">
-    <intent-filter>
-        <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-    </intent-filter>
-</receiver>
-
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- Background Service -->
+        <service
+            android:name="com.illusivemen.service.BackgroundServices"
+            android:exported="false" />
+        
         <!-- Calendar Activity -->
         <activity
             android:name="com.illusivemen.reminder.CalendarReminder"

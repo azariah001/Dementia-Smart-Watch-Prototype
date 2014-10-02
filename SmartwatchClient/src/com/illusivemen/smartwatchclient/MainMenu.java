@@ -1,21 +1,13 @@
 package com.illusivemen.smartwatchclient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.illusivemen.db.DBConn;
 import com.illusivemen.mapping.GoogleMapping;
 //import com.illusivemen.mapping.GoogleMapping.SaveTask;
 import com.illusivemen.memgame.MemoryGame;
 import com.illusivemen.reminder.CalendarReminder;
+import com.illusivemen.service.BackgroundServices;
 import com.illusivemen.setting.ShowSettings;
 import com.illusivemen.panic.UtilityClass;
 
@@ -25,8 +17,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,13 +32,16 @@ public class MainMenu extends Activity {
 	public UtilityClass utility;
 	
 	private boolean lowBatteryAlert = false;
-	private static final String DUMP_SCRIPT = "/updatePatientState.php";
 	private float batteryPct;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
+		
+		// start background service
+		this.startService(new Intent(this, BackgroundServices.class));
+		
 		new Timer().scheduleAtFixedRate(lowBattery, 0, CHECK_BATTERY_STATE);
 	}
 
@@ -122,14 +115,6 @@ public class MainMenu extends Activity {
 		Toast toast = Toast.makeText(context, alertText, duration);
 		toast.show();
 	}
-	
-
-	
-
-	
-		
-
-	
 	
 	TimerTask lowBattery = new TimerTask() {
 		
