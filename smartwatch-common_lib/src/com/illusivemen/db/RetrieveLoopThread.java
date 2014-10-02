@@ -72,7 +72,6 @@ public class RetrieveLoopThread extends Thread {
 	
 	/**
 	 * No operation for specified time between runs.
-	 * @param time milliseconds to wait
 	 */
 	private void nop() {
 		try {

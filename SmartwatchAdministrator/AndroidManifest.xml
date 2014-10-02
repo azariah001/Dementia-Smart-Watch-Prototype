@@ -84,6 +84,11 @@
             android:name="com.illusivemen.reminder.CalendarReminder"
             android:label="@string/title_activity_calendar_reminder" >
         </activity>
+        
+        <!-- Background Service -->
+        <service
+            android:name="com.illusivemen.service.BackgroundServices"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -20,13 +20,6 @@ public class BackgroundServices extends Service {
 	// script which stores locations in the database
 	private static final String LOCATION_DUMP_SCRIPT = "/saveNewLocation.php";
 	
-	/**
-	 * Main method executed upon creation.
-	 */
-	public BackgroundServices() {
-		super();
-	}
-	
 	@Override
 	public void onCreate() {
 		listenForLocation();
