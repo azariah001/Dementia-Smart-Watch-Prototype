@@ -15,7 +15,7 @@ public class BackgroundServices extends Service {
 	
 	private LocationManager locationManager;
 	// don't want locations that are too close together
-	private static final long MIN_UPDATE_MILLISEC = 250;
+	private static final long MIN_UPDATE_MILLISEC = 1000;
 	private static final float MIN_UPDATE_METRES = 1;
 	// script which stores locations in the database
 	private static final String LOCATION_DUMP_SCRIPT = "/saveNewLocation.php";

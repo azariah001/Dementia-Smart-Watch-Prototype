@@ -6,7 +6,7 @@ import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.patientprofile.SelectPatientProfile;
 import com.illusivemen.patientprofile.UpdatePatientProfile;
 import com.illusivemen.reminder.CalendarReminder;
-import com.illusivemen.service.BackgroundServices;
+import com.illusivemen.service.NotificationService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,7 +32,7 @@ public class MainMenu extends Activity {
 		setContentView(R.layout.activity_main_menu);
 		
 		// start background service
-		this.startService(new Intent(this, BackgroundServices.class));
+		this.startService(new Intent(this, NotificationService.class));
 	}
 
 	@Override

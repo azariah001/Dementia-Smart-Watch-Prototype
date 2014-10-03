@@ -22,19 +22,22 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.SparseBooleanArray;
 
-public class BackgroundServices extends Service implements OnLoopRetrievedListener {
+public class NotificationService extends Service implements OnLoopRetrievedListener {
 	
 	// used for creating notifications
 	private NotificationManager notificationManager;
+	private final static boolean REPEAT = true;
+	private final static boolean NO_REPEAT = false;
 	// how often to check for patients outsite their fences (millisec)
 	private static final int GEOFENCE_POLL_PERIOD = 10000;
 	// patient position not updated alert threshold
 	private static final long POS_TIMEOUT = 5 * 60;
 	// access to the worker thread
 	RetrieveLoopThread geofenceRetrieveThread;
-	// geofence and timeout state storage
+	// geofence, timeout and panic state storage
 	private SparseBooleanArray geofenceStatus;
 	private SparseBooleanArray timeoutStatus;
+	private SparseBooleanArray panicStatus;
 	// database time format
 	private SimpleDateFormat mySQLFormat;
 	
@@ -47,6 +50,7 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 	public void onCreate() {
 		geofenceStatus = new SparseBooleanArray();
 		timeoutStatus = new SparseBooleanArray();
+		panicStatus = new SparseBooleanArray();
 		
 		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		
@@ -99,27 +103,35 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 			
 			String patientName;
 			int patientId;
-			Boolean inGeofence;
-			Boolean timedOut;
+			Boolean inGeofence = null;
+			Boolean timedOut = null;
+			Boolean isPaniced;
 			String[] details = patient.split(",");
 			
 			try {
+				// items that cannot be NULL (returned as ''):
 				patientName = details[0];
 				patientId = Integer.parseInt(details[1]);
-				inGeofence = (Double.parseDouble(details[2]) <= 0);
-				timedOut = (new Date().getTime()/1000 
-						- mySQLFormat.parse(details[3]).getTime()/1000)
-						> POS_TIMEOUT;
-			} catch (NumberFormatException | IndexOutOfBoundsException | ParseException e) {
+				isPaniced = (Integer.parseInt(details[4]) > 0);
+				// items that may be NULL depending on the situation:
+				try {
+					inGeofence = (Double.parseDouble(details[2]) <= 0);
+					timedOut = (new Date().getTime()/1000 
+							- mySQLFormat.parse(details[3]).getTime()/1000)
+							> POS_TIMEOUT;
+				} catch (NumberFormatException | ParseException e) {
+					// quite possible to legitimately not be set yet
+				}
+			} catch (NumberFormatException | IndexOutOfBoundsException e) {
 				// incorrect input format
 				return;
 			}
 			
 			// GEOFENCE PROCESSING IM-61
-			if (geofenceStatus.indexOfKey(patientId) < 0) {
+			if (inGeofence != null && geofenceStatus.indexOfKey(patientId) < 0) {
 				// initial value
 				geofenceStatus.put(patientId, inGeofence);
-			} else if (geofenceStatus.get(patientId) != inGeofence) {
+			} else if (inGeofence != null && geofenceStatus.get(patientId) != inGeofence) {
 				// patient has transitioned in/out of a geofence
 				
 				// update value
@@ -129,17 +141,17 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 					// patient has left geofences, send a notification
 					sendNotification(patientName, patientId, 
 							"Geofence Transition", " is not in a geofence.",
-							R.raw.left_fence);
+							R.raw.left_fence, NO_REPEAT);
 				} else {
 					// TODO: possibly remove an existing notification
 				}
 			}
 			
 			// TIMESTAMP PROCESSING IM-18
-			if (timeoutStatus.indexOfKey(patientId) < 0) {
+			if (timedOut != null && timeoutStatus.indexOfKey(patientId) < 0) {
 				// initial value
 				timeoutStatus.put(patientId, timedOut);
-			} else if (timeoutStatus.get(patientId) != timedOut) {
+			} else if (timedOut != null && timeoutStatus.get(patientId) != timedOut) {
 				// patient has either timed out or sent a location after timing out
 				
 				// update value
@@ -149,11 +161,27 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 					// patient's location has not been updated in a while (timeout)
 					sendNotification(patientName, patientId, 
 							"Position Timeout", " has not sent a recent location update.",
-							R.raw.pos_timeout);
+							R.raw.pos_timeout, NO_REPEAT);
 				}
 			}
 			
 			// PANIC STATE PROCESSING IM-37
+			if (panicStatus.indexOfKey(patientId) < 0) {
+				// initial value
+				panicStatus.put(patientId, isPaniced);
+			} else if (panicStatus.get(patientId) != isPaniced) {
+				// patient has either entered the panic state or it has been dismissed
+				
+				// update value
+				panicStatus.put(patientId, isPaniced);
+				
+				if (isPaniced) {
+					// patient has switched to the panic state
+					sendNotification(patientName, patientId,
+							"PATIENT PANIC", " needs assistance.",
+							R.raw.panic_alarm, REPEAT);
+				}
+			}
 		}
 	}
 	
@@ -164,7 +192,7 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 	}
 	
 	private void sendNotification(String patientName, int patientId,
-			String title, String content, int sound) {
+			String title, String content, int sound, boolean repeatSound) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 				.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle(title)
@@ -187,11 +215,13 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		mBuilder.setContentIntent(resultPendingIntent);
 		
-		// close the notification once it has been clicked
-		// NOTE: very useful: Notification.DEFAULT_LIGHTS will play the notification in a loop until viewed 
-		//         - use this for patient panic, separated by |
+		// close the notification once it has been clicked, optionally repeat sound? (default lights)
 		Notification n = mBuilder.build();
-		n.flags = Notification.FLAG_AUTO_CANCEL;
+		if (repeatSound) {
+			n.flags = Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_LIGHTS;
+		} else {
+			n.flags = Notification.FLAG_AUTO_CANCEL;
+		}
 		
 		// first id allows you to update the notification later on
 		notificationManager.notify(patientId, n);
