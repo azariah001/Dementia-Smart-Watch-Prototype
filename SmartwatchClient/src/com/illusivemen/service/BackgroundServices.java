@@ -25,6 +25,15 @@ public class BackgroundServices extends Service {
 		listenForLocation();
 	}
 	
+	/**
+	 * Prevent service from starting again once application closed.
+	 * XXX: THIS SHOULD NOT BE SET IN RELEASES
+	 */
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		return START_NOT_STICKY;
+	}
+	
 	@Override
 	public void onDestroy() {
 		// listener may still be running and processing data after service is stopped

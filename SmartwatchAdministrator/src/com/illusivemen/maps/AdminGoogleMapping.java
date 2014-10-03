@@ -89,15 +89,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_google_mapping);
 		
-		// What is the Function of this Map?
+		// TODO: this should be used for which patient to show first
 		purpose = getIntent().getStringExtra(MAP_PURPOSE);
-		
-		// Title by Function
-		switch (purpose) {
-		case "TrackPatients":
-			this.setTitle("Patient's Location");
-			break;
-		}
 		
 		// used for parsing timestamps from mysql
 		mySQLFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
