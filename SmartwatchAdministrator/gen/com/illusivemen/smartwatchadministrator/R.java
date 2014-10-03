@@ -502,6 +502,7 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int left_fence=0x7f040000;
+        public static final int pos_timeout=0x7f040001;
     }
     public static final class string {
         public static final int action_settings=0x7f07001b;

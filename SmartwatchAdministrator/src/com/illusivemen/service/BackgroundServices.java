@@ -1,10 +1,16 @@
 package com.illusivemen.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 import com.illusivemen.db.OnLoopRetrievedListener;
 import com.illusivemen.db.RetrieveLoopThread;
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.smartwatchadministrator.R;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,20 +28,31 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 	private NotificationManager notificationManager;
 	// how often to check for patients outsite their fences (millisec)
 	private static final int GEOFENCE_POLL_PERIOD = 10000;
+	// patient position not updated alert threshold
+	private static final long POS_TIMEOUT = 5 * 60;
 	// access to the worker thread
 	RetrieveLoopThread geofenceRetrieveThread;
-	// geofence state storage
+	// geofence and timeout state storage
 	private SparseBooleanArray geofenceStatus;
+	private SparseBooleanArray timeoutStatus;
+	// database time format
+	private SimpleDateFormat mySQLFormat;
 	
 	/**
 	 * Setup method for this service.
 	 * When the service is started, this method is called.
 	 */
+	@SuppressLint("SimpleDateFormat")
 	@Override
 	public void onCreate() {
 		geofenceStatus = new SparseBooleanArray();
+		timeoutStatus = new SparseBooleanArray();
 		
 		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		
+		// used for parsing timestamps from mysql
+		mySQLFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		mySQLFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		geofenceRetrieveThread = new RetrieveLoopThread("/geofenceDistances.php", GEOFENCE_POLL_PERIOD);
 		startGeofenceQuery();
@@ -83,17 +100,22 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 			String patientName;
 			int patientId;
 			Boolean inGeofence;
+			Boolean timedOut;
 			String[] details = patient.split(",");
 			
 			try {
 				patientName = details[0];
 				patientId = Integer.parseInt(details[1]);
 				inGeofence = (Double.parseDouble(details[2]) <= 0);
-			} catch (NumberFormatException | IndexOutOfBoundsException e) {
+				timedOut = (new Date().getTime()/1000 
+						- mySQLFormat.parse(details[3]).getTime()/1000)
+						> POS_TIMEOUT;
+			} catch (NumberFormatException | IndexOutOfBoundsException | ParseException e) {
 				// incorrect input format
 				return;
 			}
 			
+			// GEOFENCE PROCESSING IM-61
 			if (geofenceStatus.indexOfKey(patientId) < 0) {
 				// initial value
 				geofenceStatus.put(patientId, inGeofence);
@@ -105,9 +127,29 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 				
 				if (!inGeofence) {
 					// patient has left geofences, send a notification
-					sendNotification(patientName);
+					sendNotification(patientName, patientId, 
+							"Geofence Transition", " is not in a geofence.",
+							R.raw.left_fence);
 				} else {
 					// TODO: possibly remove an existing notification
+				}
+			}
+			
+			// TIMESTAMP PROCESSING IM-18
+			if (timeoutStatus.indexOfKey(patientId) < 0) {
+				// initial value
+				timeoutStatus.put(patientId, timedOut);
+			} else if (timeoutStatus.get(patientId) != timedOut) {
+				// patient has either timed out or sent a location after timing out
+				
+				// update value
+				timeoutStatus.put(patientId, timedOut);
+				
+				if (timedOut) {
+					// patient's location has not been updated in a while (timeout)
+					sendNotification(patientName, patientId, 
+							"Position Timeout", " has not sent a recent location update.",
+							R.raw.pos_timeout);
 				}
 			}
 		}
@@ -119,14 +161,15 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 		geofenceRetrieveThread.start();
 	}
 	
-	private void sendNotification(String patientName) {
+	private void sendNotification(String patientName, int patientId,
+			String title, String content, int sound) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle("Geofence Transition")
-				.setContentText(patientName + " is not in a geofence.")
+				.setContentTitle(title)
+				.setContentText(patientName + content)
 				.setSound(Uri.parse(
 						"android.resource://com.illusivemen.smartwatchadministrator/" 
-						+ R.raw.left_fence));
+						+ sound));
 		
 		// intent to show the position
 		Intent resultIntent = new Intent(this, AdminGoogleMapping.class);
@@ -149,6 +192,6 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 		n.flags = Notification.FLAG_AUTO_CANCEL;
 		
 		// first id allows you to update the notification later on
-		notificationManager.notify(0, n);
+		notificationManager.notify(patientId, n);
 	}
 }
