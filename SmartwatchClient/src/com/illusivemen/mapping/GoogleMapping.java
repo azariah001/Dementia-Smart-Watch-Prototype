@@ -118,7 +118,8 @@ public class GoogleMapping extends Activity {
 		myMarker = googleMap.addMarker(new MarkerOptions()
 		        .position(latLng)
 		        .title("Current Location")
-		        .icon(BitmapDescriptorFactory.fromResource(R.drawable.person)));
+		        .icon(BitmapDescriptorFactory.fromResource(R.drawable.person))
+		        .anchor(0.5f, 0.5f));
 		
 		// passive provider is used as the service is already running location updates
 		locationManager.requestLocationUpdates(

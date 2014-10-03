@@ -1,7 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.illusivemen.smartwatchadministrator.AdminGoogleMapping" >
-
+    
+    <!-- Search, should appear as action button -->
+    <item android:id="@+id/action_trackPosition"
+          android:icon="@drawable/track_off"
+          android:checkable="true"
+          android:checked="false"
+          android:title="@string/action_trackPosition"
+          android:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

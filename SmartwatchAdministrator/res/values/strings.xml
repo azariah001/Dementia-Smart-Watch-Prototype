@@ -9,6 +9,8 @@
     <string name="panic_off">Patient State Normal</string>
     <string name="panic_on">Patient Panic On</string>
     <string name="call_smartwatch">Call SmartWatch</string>
+    
+    <!-- Mapping Strings -->
     <string name="mapstyle_map">Map</string>
     <string name="mapstyle_satellite">Satellite</string>
     <string name="mapstyle_hybrid">Hybrid</string>
@@ -20,6 +22,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="action_trackPosition">Active Position Tracking</string>
     
     <!-- Number patterns -->
     <string name="lat_lng_pattern">* ###.00000000;* -###.00000000</string>

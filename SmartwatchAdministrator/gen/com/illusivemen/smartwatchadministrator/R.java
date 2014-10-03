@@ -398,16 +398,20 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f020015;
         public static final int common_signin_btn_text_pressed_dark=0x7f020016;
         public static final int common_signin_btn_text_pressed_light=0x7f020017;
-        public static final int ic_launcher=0x7f020018;
-        public static final int ic_plusone_medium_off_client=0x7f020019;
-        public static final int ic_plusone_small_off_client=0x7f02001a;
-        public static final int ic_plusone_standard_off_client=0x7f02001b;
-        public static final int ic_plusone_tall_off_client=0x7f02001c;
-        public static final int powered_by_google_dark=0x7f02001d;
-        public static final int powered_by_google_light=0x7f02001e;
+        public static final int fence=0x7f020018;
+        public static final int ic_launcher=0x7f020019;
+        public static final int ic_plusone_medium_off_client=0x7f02001a;
+        public static final int ic_plusone_small_off_client=0x7f02001b;
+        public static final int ic_plusone_standard_off_client=0x7f02001c;
+        public static final int ic_plusone_tall_off_client=0x7f02001d;
+        public static final int powered_by_google_dark=0x7f02001e;
+        public static final int powered_by_google_light=0x7f02001f;
+        public static final int track_off=0x7f020020;
+        public static final int track_on=0x7f020021;
     }
     public static final class id {
-        public static final int action_settings=0x7f080045;
+        public static final int action_settings=0x7f080046;
+        public static final int action_trackPosition=0x7f080045;
         public static final int beginning_date=0x7f080026;
         public static final int beginning_time=0x7f080028;
         public static final int book_now=0x7f080010;
@@ -422,7 +426,7 @@ containing a value of this type.
         public static final int deleteFence=0x7f08001b;
         public static final int editRadius=0x7f08001a;
         public static final int emergencyContact=0x7f080043;
-        public static final int fences=0x7f08004b;
+        public static final int fences=0x7f08004c;
         public static final int frequency=0x7f08002a;
         public static final int geofenceModId=0x7f080018;
         public static final int geofenceModTitile=0x7f080017;
@@ -432,11 +436,11 @@ containing a value of this type.
         public static final int hybrid=0x7f080004;
         public static final int inputRadius=0x7f080019;
         public static final int map=0x7f080014;
-        public static final int map_hybrid=0x7f080049;
-        public static final int map_map=0x7f080047;
-        public static final int map_satellite=0x7f080048;
-        public static final int map_terrain=0x7f08004a;
-        public static final int mapstyle=0x7f080046;
+        public static final int map_hybrid=0x7f08004a;
+        public static final int map_map=0x7f080048;
+        public static final int map_satellite=0x7f080049;
+        public static final int map_terrain=0x7f08004b;
+        public static final int mapstyle=0x7f080047;
         public static final int match_parent=0x7f08000c;
         public static final int medicalInformation=0x7f080040;
         public static final int monochrome=0x7f080013;
@@ -502,14 +506,16 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int left_fence=0x7f040000;
-        public static final int pos_timeout=0x7f040001;
+        public static final int panic_alarm=0x7f040001;
+        public static final int pos_timeout=0x7f040002;
     }
     public static final class string {
         public static final int action_settings=0x7f07001b;
+        public static final int action_trackPosition=0x7f07002d;
         public static final int app_name=0x7f07001a;
         public static final int call_smartwatch=0x7f070021;
         public static final int cancel=0x7f07002b;
-        public static final int checkin_send_now=0x7f07003a;
+        public static final int checkin_send_now=0x7f07003b;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -600,46 +606,48 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f070018;
         public static final int delete=0x7f07002a;
-        public static final int emergencyContact=0x7f070040;
+        public static final int emergencyContact=0x7f070041;
         public static final int geofence_add=0x7f070027;
         public static final int geofence_modify=0x7f070028;
         public static final int geofence_radius=0x7f070029;
         public static final int hello_world=0x7f07001e;
         /**  Number patterns 
          */
-        public static final int lat_lng_pattern=0x7f07002d;
+        public static final int lat_lng_pattern=0x7f07002e;
         public static final int mapstyle_hybrid=0x7f070024;
+        /**  Mapping Strings 
+         */
         public static final int mapstyle_map=0x7f070022;
         public static final int mapstyle_satellite=0x7f070023;
         public static final int mapstyle_select=0x7f070025;
         public static final int mapstyle_terrain=0x7f070026;
-        public static final int medicalInformation=0x7f07003f;
+        public static final int medicalInformation=0x7f070040;
         public static final int panic_off=0x7f07001f;
         public static final int panic_on=0x7f070020;
-        public static final int patientAddress=0x7f07003e;
-        public static final int patientAge=0x7f07003d;
-        public static final int patientName=0x7f07003c;
-        public static final int patient_checkin_daily=0x7f070037;
-        public static final int patient_checkin_hourly=0x7f070039;
-        public static final int patient_checkin_title=0x7f07003b;
-        public static final int patient_checkin_weekly=0x7f070038;
-        public static final int patient_profiles=0x7f070042;
+        public static final int patientAddress=0x7f07003f;
+        public static final int patientAge=0x7f07003e;
+        public static final int patientName=0x7f07003d;
+        public static final int patient_checkin_daily=0x7f070038;
+        public static final int patient_checkin_hourly=0x7f07003a;
+        public static final int patient_checkin_title=0x7f07003c;
+        public static final int patient_checkin_weekly=0x7f070039;
+        public static final int patient_profiles=0x7f070043;
         public static final int patient_tracking=0x7f07001c;
-        public static final int radius_pattern=0x7f07002e;
+        public static final int radius_pattern=0x7f07002f;
         public static final int save=0x7f07002c;
-        public static final int saveButton=0x7f070043;
+        public static final int saveButton=0x7f070044;
         public static final int title_activity_admin_google_mapping=0x7f07001d;
         /**  Reminder Strings 
          */
-        public static final int title_activity_calendar_reminder=0x7f07002f;
-        public static final int title_beginning_date=0x7f070033;
-        public static final int title_beginning_time=0x7f070034;
-        public static final int title_frequency=0x7f070035;
-        public static final int title_organiser_email=0x7f070030;
-        public static final int title_reminder_description=0x7f070032;
-        public static final int title_reminder_title=0x7f070031;
-        public static final int title_set_reminder=0x7f070036;
-        public static final int updateButton=0x7f070041;
+        public static final int title_activity_calendar_reminder=0x7f070030;
+        public static final int title_beginning_date=0x7f070034;
+        public static final int title_beginning_time=0x7f070035;
+        public static final int title_frequency=0x7f070036;
+        public static final int title_organiser_email=0x7f070031;
+        public static final int title_reminder_description=0x7f070033;
+        public static final int title_reminder_title=0x7f070032;
+        public static final int title_set_reminder=0x7f070037;
+        public static final int updateButton=0x7f070042;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

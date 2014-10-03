@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.illusivemen.smartwatchadministrator.R;
 
 import android.graphics.Color;
 
@@ -96,7 +97,9 @@ public class GeofenceVisualisation {
 			marker = googleMap.addMarker(new MarkerOptions()
 					.position(latlng)
 					.title(status)
-					.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+					//.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.fence))
+					.anchor(0.5f, 0.5f)
 					.snippet("Connecting to Database"));
 			marker.showInfoWindow();
 			
@@ -104,7 +107,7 @@ public class GeofenceVisualisation {
 					.center(latlng)
 					.radius(mRadius)
 					.fillColor(0x40000000)
-					.strokeColor(Color.TRANSPARENT)
+					.strokeColor(Color.YELLOW)
 					.strokeWidth(2));
 		}
 	}
@@ -155,7 +158,9 @@ public class GeofenceVisualisation {
 			marker = googleMap.addMarker(new MarkerOptions()
 					.position(latlng)
 					.title("Geofence")
-					.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+					//.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.fence))
+					.anchor(0.5f, 0.5f)
 					.snippet("Radius: " + mRadius + "m"));
 			marker.showInfoWindow();
 			
@@ -163,7 +168,7 @@ public class GeofenceVisualisation {
 					.center(latlng)
 					.radius(mRadius)
 					.fillColor(GEOFENCE_COLOUR)
-					.strokeColor(Color.TRANSPARENT)
+					.strokeColor(Color.YELLOW)
 					.strokeWidth(2));
 		}
 	}

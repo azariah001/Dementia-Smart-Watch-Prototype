@@ -93,7 +93,7 @@ public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
 	    btnTrack.performClick();
 	    final Intent launchIntent = getStartedActivityIntent();
 	    final String payload =
-	            launchIntent.getStringExtra(AdminGoogleMapping.MAP_PURPOSE);
+	            launchIntent.getStringExtra(AdminGoogleMapping.PATIENT_TO_TRACK);
 	    assertEquals("Payload is empty", MainMenu.TRACK_MESSAGE, payload);
 	}
     

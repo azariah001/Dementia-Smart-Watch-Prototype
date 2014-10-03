@@ -152,6 +152,8 @@ public class BackgroundServices extends Service implements OnLoopRetrievedListen
 							R.raw.pos_timeout);
 				}
 			}
+			
+			// PANIC STATE PROCESSING IM-37
 		}
 	}
 	

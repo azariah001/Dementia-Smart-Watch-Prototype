@@ -13,6 +13,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -36,6 +38,7 @@ import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,8 +46,8 @@ import android.widget.Toast;
 
 public class AdminGoogleMapping extends Activity implements OnMapLongClickListener, OnInfoWindowClickListener, OnLoopRetrievedListener {
 	
-	public final static String MAP_PURPOSE = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
-	private String purpose;
+	public final static String PATIENT_TO_TRACK = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
+	private int patientBeingTracked;
 	
 	// options menu
 	private Menu menu;
@@ -56,7 +59,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	private static final LatLng BRISBANE = new LatLng(-27.5,153);
 	// the patient's location and history
 	private Marker patient;
+	private Circle patientUncertainty;
 	private Polyline track;
+	private boolean trackPatient = false;
 	private final static int UPDATE_PERIOD = 2000;
 	// database time format
 	private SimpleDateFormat mySQLFormat;
@@ -77,7 +82,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	 * @return a configured intent to launch this activity with a String payload.
 	 */
 	public static Intent makeIntent(Context context, String payload) {
-		return new Intent(context, AdminGoogleMapping.class).putExtra(MAP_PURPOSE, payload);
+		return new Intent(context, AdminGoogleMapping.class).putExtra(PATIENT_TO_TRACK, payload);
 	}
 	
 	/**
@@ -90,7 +95,12 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		setContentView(R.layout.activity_admin_google_mapping);
 		
 		// TODO: this should be used for which patient to show first
-		purpose = getIntent().getStringExtra(MAP_PURPOSE);
+		try {
+			patientBeingTracked = Integer.parseInt(getIntent().getStringExtra(PATIENT_TO_TRACK));
+		} catch (NumberFormatException e) {
+			// this activity has been called badly
+			System.out.println("ACTIVITY STARTED WITH BAD PAYLOAD");
+		}
 		
 		// used for parsing timestamps from mysql
 		mySQLFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -123,6 +133,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
+			case R.id.action_trackPosition:
+				togglePositionTracking();
+				return true;
 			case R.id.map_map:
 				setMenuMapType(item);
 				googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -157,6 +170,35 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		
 		// check the selected option
 		selection.setChecked(true);
+	}
+	
+	/**
+	 * Called via the action button.
+	 * Set's whether the patient's location should remain centered.
+	 */
+	private void togglePositionTracking() {
+		// toggle icon, screen dim-able, check state
+		if (trackPatient) {
+			// turning off patient position tracking
+			menu.findItem(R.id.action_trackPosition).setIcon(R.drawable.track_off);
+			menu.findItem(R.id.action_trackPosition).setChecked(false);
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		} else {
+			// turning on patient position tracking
+			menu.findItem(R.id.action_trackPosition).setIcon(R.drawable.track_on);
+			menu.findItem(R.id.action_trackPosition).setChecked(true);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+			
+			// initial move to patient position
+			try {
+				googleMap.animateCamera(CameraUpdateFactory.newLatLng(patient.getPosition()));
+			} catch (NullPointerException e) {
+				// patient marker hasn't been created yet
+			}
+		}
+		
+		// update the value
+		trackPatient = !trackPatient;
 	}
 	
 	/**
@@ -216,12 +258,19 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	 * @param latlng the new position
 	 * @param positionAge how long ago the data was retrieved/stored
 	 */
-	private void updateLocation(LatLng latlng, String positionAge) {
+	private void updateLocation(LatLng latlng, int uncertainty, String positionAge) {
 		
 		if (patient != null) {
 			// update previous location
 			patient.setPosition(latlng);
 			patient.setSnippet(positionAge);
+			patientUncertainty.setCenter(latlng);
+			patientUncertainty.setRadius(uncertainty);
+			
+			// move view to focus on patient's new location
+			if (trackPatient) {
+				googleMap.animateCamera(CameraUpdateFactory.newLatLng(latlng));
+			}
 			
 			updatePatientLocationTooltip();
 		} else {
@@ -231,6 +280,13 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 					.title("Patient's Location")
 					.snippet(positionAge));
 			googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, LOCATED_ZOOM));
+			// add initial uncertainty circle
+			patientUncertainty = googleMap.addCircle(new CircleOptions()
+					.center(latlng)
+					.radius(uncertainty)
+					.fillColor(0x20FF0000)
+					.strokeColor(Color.RED)
+					.strokeWidth(2));
 		}
 	}
 	
@@ -342,6 +398,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			
 			// process latest position
 			final LatLng position = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+			final int uncertainty = Integer.parseInt(location[3]);
 			positionTimestamp = location[2];
 			connectionTimestamp = mySQLFormat.format(new Date());
 			
@@ -349,7 +406,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			handler.post(new Runnable(){
 				@Override
 				public void run() {
-					updateLocation(position, "Updated " + getTimeAge(positionTimestamp) + " ago.");
+					updateLocation(position, uncertainty, "Updated " + getTimeAge(positionTimestamp) + " ago.");
 					updateTrack(latestPoints);
 				} 
 			});
@@ -399,7 +456,6 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			lng = params[0].longitude;
 			
 			// create visualisation before while connecting for a better feedback response
-			System.out.println("Displaying new POINT...");
 			publishProgress();
 			
 			// store parameters
@@ -438,14 +494,12 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			
 			if (result == "") {
 				// database save unsuccessful
-				System.out.println("DB SAVE ERROR");
 				newFence.tearDown();
 				Toast.makeText(getApplicationContext(),
 						"Network Failure while Creating Geofence", Toast.LENGTH_SHORT)
 						.show();
 			} else {
 				// update visualisation now that the id is available from the database
-				System.out.println("DB SAVE SUCCESS");
 				newFence.initialise(result);
 				geofences.add(newFence);
 				geofenceMarkerMap.put(newFence.getMarker(), new Integer[]{Integer.valueOf(newFence.getId()), (int) newFence.getRadius()});
