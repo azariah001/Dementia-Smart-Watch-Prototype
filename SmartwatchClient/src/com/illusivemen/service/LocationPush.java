@@ -11,12 +11,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 
-public class BackgroundServices extends Service {
+public class LocationPush extends Service {
 	
 	private LocationManager locationManager;
 	// don't want locations that are too close together
 	private static final long MIN_UPDATE_MILLISEC = 1000;
 	private static final float MIN_UPDATE_METRES = 1;
+	// last GPS point, how long to wait before accepting a WiFi location
+	private Long gpsTimestamp;
+	private final static int GPS_TIMEOUT = 1000 * 8;
 	// script which stores locations in the database
 	private static final String LOCATION_DUMP_SCRIPT = "/saveNewLocation.php";
 	
@@ -64,6 +67,16 @@ public class BackgroundServices extends Service {
 	private final LocationListener locationListener = new LocationListener() {
 		@Override
 		public void onLocationChanged(final Location location) {
+			
+			// location quality determination
+			if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+				gpsTimestamp = location.getTime();
+			} else if (gpsTimestamp != null && 
+					(location.getTime()) < (gpsTimestamp + GPS_TIMEOUT)) {
+				// don't accept a low accuracy estimate of a location
+				return;
+			}
+			
 			// push new location to database
 			new SaveTask().execute(location);
 		}

@@ -7,7 +7,7 @@ import com.illusivemen.mapping.GoogleMapping;
 //import com.illusivemen.mapping.GoogleMapping.SaveTask;
 import com.illusivemen.memgame.MemoryGame;
 import com.illusivemen.reminder.CalendarReminder;
-import com.illusivemen.service.BackgroundServices;
+import com.illusivemen.service.LocationPush;
 import com.illusivemen.setting.ShowSettings;
 import com.illusivemen.panic.UtilityClass;
 
@@ -40,7 +40,7 @@ public class MainMenu extends Activity {
 		setContentView(R.layout.activity_main_menu);
 		
 		// start background service
-		this.startService(new Intent(this, BackgroundServices.class));
+		this.startService(new Intent(this, LocationPush.class));
 		
 		new Timer().scheduleAtFixedRate(lowBattery, 0, CHECK_BATTERY_STATE);
 	}

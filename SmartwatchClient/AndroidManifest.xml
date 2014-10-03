@@ -90,7 +90,7 @@
         
         <!-- Background Service -->
         <service
-            android:name="com.illusivemen.service.BackgroundServices"
+            android:name="com.illusivemen.service.LocationPush"
             android:exported="false" />
         
         <!-- Calendar Activity -->
