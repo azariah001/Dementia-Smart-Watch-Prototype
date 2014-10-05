@@ -35,13 +35,11 @@
         <mkdir dir="bin/classes"/>
         <copy includeemptydirs="false" todir="bin/classes">
             <fileset dir="src">
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin/classes">
             <fileset dir="gen">
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
