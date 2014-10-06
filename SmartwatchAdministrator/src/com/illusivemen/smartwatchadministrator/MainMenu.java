@@ -2,6 +2,7 @@ package com.illusivemen.smartwatchadministrator;
 
 //import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.checkin.PatientCheckIn;
+import com.illusivemen.login.AdminLogIn;
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.patientprofile.SelectPatientProfile;
 import com.illusivemen.patientprofile.UpdatePatientProfile;
@@ -23,6 +24,7 @@ public class MainMenu extends Activity {
 	public final static String SET_REMINDER = "SetReminder";
 	public final static String PATIENT_CHECKIN = "PatientCheckIn";
 	public final static String PROFILE_SELECT = "ProfileSelect";
+	public final static String ADMIN_LOGIN = "AdminLogin";
 	
 	private boolean patientPanic = false;
 
@@ -90,9 +92,14 @@ public class MainMenu extends Activity {
 		startActivity(PatientCheckIn.makeIntent(MainMenu.this, PATIENT_CHECKIN));
 	}
 	
-	//IM-15 - Patient Profile Update
+	//IM-19 - Patient Profile Update
 	public void selectPatientProfile(View view) {
 		startActivity(SelectPatientProfile.makeIntent(MainMenu.this, PROFILE_SELECT));
+	}
+	
+	//IM-15
+	public void loginPrompt(View view) {
+		startActivity(AdminLogIn.makeIntent(MainMenu.this, ADMIN_LOGIN));
 	}
 }
 	

@@ -410,23 +410,27 @@ containing a value of this type.
         public static final int track_on=0x7f020021;
     }
     public static final class id {
-        public static final int action_settings=0x7f080046;
-        public static final int action_trackPosition=0x7f080045;
+        public static final int action_settings=0x7f08004d;
+        public static final int action_trackPosition=0x7f08004c;
         public static final int beginning_date=0x7f080026;
         public static final int beginning_time=0x7f080028;
         public static final int book_now=0x7f080010;
+        public static final int btnLogin=0x7f08002f;
+        public static final int btnRetrieve=0x7f080031;
         public static final int btnSetReminder=0x7f08002b;
-        public static final int btnTrack=0x7f08002c;
+        public static final int btnTrack=0x7f080032;
         public static final int buyButton=0x7f08000a;
         public static final int buy_now=0x7f08000f;
         public static final int buy_with_google=0x7f08000e;
-        public static final int callSmartWatch=0x7f08002d;
+        public static final int callSmartWatch=0x7f080033;
         public static final int cancelFence=0x7f08001d;
+        public static final int carerIdField=0x7f08002e;
+        public static final int carerIdFieldTextView=0x7f08002c;
         public static final int classic=0x7f080011;
         public static final int deleteFence=0x7f08001b;
         public static final int editRadius=0x7f08001a;
-        public static final int emergencyContact=0x7f080043;
-        public static final int fences=0x7f08004c;
+        public static final int emergencyContact=0x7f08004a;
+        public static final int fences=0x7f080053;
         public static final int frequency=0x7f08002a;
         public static final int geofenceModId=0x7f080018;
         public static final int geofenceModTitile=0x7f080017;
@@ -435,57 +439,60 @@ containing a value of this type.
         public static final int holo_light=0x7f080006;
         public static final int hybrid=0x7f080004;
         public static final int inputRadius=0x7f080019;
+        public static final int loginPrompt=0x7f080038;
         public static final int map=0x7f080014;
-        public static final int map_hybrid=0x7f08004a;
-        public static final int map_map=0x7f080048;
-        public static final int map_satellite=0x7f080049;
-        public static final int map_terrain=0x7f08004b;
-        public static final int mapstyle=0x7f080047;
+        public static final int map_hybrid=0x7f080051;
+        public static final int map_map=0x7f08004f;
+        public static final int map_satellite=0x7f080050;
+        public static final int map_terrain=0x7f080052;
+        public static final int mapstyle=0x7f08004e;
         public static final int match_parent=0x7f08000c;
-        public static final int medicalInformation=0x7f080040;
+        public static final int medicalInformation=0x7f080047;
         public static final int monochrome=0x7f080013;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080001;
         public static final int organiser_name=0x7f080020;
         public static final int overlay=0x7f080015;
         public static final int overlay_sub=0x7f080016;
-        public static final int patientAddress=0x7f08003f;
-        public static final int patientAge=0x7f08003d;
-        public static final int patientCheckIn=0x7f080030;
-        public static final int patientCheckInSwitch=0x7f080032;
-        public static final int patientName=0x7f08003c;
-        public static final int patientProfiles=0x7f080031;
+        public static final int passwordField=0x7f080030;
+        public static final int passwordFieldTextView=0x7f08002d;
+        public static final int patientAddress=0x7f080046;
+        public static final int patientAge=0x7f080044;
+        public static final int patientCheckIn=0x7f080036;
+        public static final int patientCheckInSwitch=0x7f080039;
+        public static final int patientName=0x7f080043;
+        public static final int patientProfiles=0x7f080037;
         public static final int production=0x7f080007;
-        public static final int radio0=0x7f080035;
-        public static final int radio1=0x7f080036;
-        public static final int radio2=0x7f080037;
-        public static final int radioGroup1=0x7f080034;
+        public static final int radio0=0x7f08003c;
+        public static final int radio1=0x7f08003d;
+        public static final int radio2=0x7f08003e;
+        public static final int radioGroup1=0x7f08003b;
         public static final int reminder_description=0x7f080024;
         public static final int reminder_title=0x7f080022;
         public static final int sandbox=0x7f080008;
         public static final int satellite=0x7f080002;
-        public static final int saveButton=0x7f080044;
+        public static final int saveButton=0x7f08004b;
         public static final int saveFence=0x7f08001c;
         public static final int scrollView1=0x7f08001e;
-        public static final int selectPatientListView=0x7f080038;
+        public static final int selectPatientListView=0x7f08003f;
         public static final int selectionDetails=0x7f08000b;
-        public static final int sendNowButton=0x7f08002f;
+        public static final int sendNowButton=0x7f080035;
         public static final int strict_sandbox=0x7f080009;
         public static final int terrain=0x7f080003;
-        public static final int textView1=0x7f080033;
-        public static final int text_view_emergencyContact=0x7f080042;
-        public static final int text_view_medicalInformation=0x7f080041;
-        public static final int text_view_patientAdress=0x7f08003e;
-        public static final int text_view_patientAge=0x7f08003b;
-        public static final int text_view_patientName=0x7f08003a;
-        public static final int tglPanic=0x7f08002e;
+        public static final int textView1=0x7f08003a;
+        public static final int text_view_emergencyContact=0x7f080049;
+        public static final int text_view_medicalInformation=0x7f080048;
+        public static final int text_view_patientAdress=0x7f080045;
+        public static final int text_view_patientAge=0x7f080042;
+        public static final int text_view_patientName=0x7f080041;
+        public static final int tglPanic=0x7f080034;
         public static final int txtBeginningDate=0x7f080025;
         public static final int txtBeginningTime=0x7f080027;
         public static final int txtDescription=0x7f080023;
         public static final int txtFrequency=0x7f080029;
         public static final int txtOrganiserEmail=0x7f08001f;
         public static final int txtReminderTitle=0x7f080021;
-        public static final int updateButton=0x7f080039;
+        public static final int updateButton=0x7f080040;
         public static final int wrap_content=0x7f08000d;
     }
     public static final class integer {
@@ -494,10 +501,11 @@ containing a value of this type.
     public static final class layout {
         public static final int activity_admin_google_mapping=0x7f030000;
         public static final int activity_calendar_reminder=0x7f030001;
-        public static final int activity_main_menu=0x7f030002;
-        public static final int activity_patient_check_in=0x7f030003;
-        public static final int activity_patient_profiles=0x7f030004;
-        public static final int activity_update_patient_profile=0x7f030005;
+        public static final int activity_login=0x7f030002;
+        public static final int activity_main_menu=0x7f030003;
+        public static final int activity_patient_check_in=0x7f030004;
+        public static final int activity_patient_profiles=0x7f030005;
+        public static final int activity_update_patient_profile=0x7f030006;
     }
     public static final class menu {
         public static final int admin_google_mapping=0x7f0b0000;
@@ -515,6 +523,7 @@ containing a value of this type.
         public static final int app_name=0x7f07001a;
         public static final int call_smartwatch=0x7f070021;
         public static final int cancel=0x7f07002b;
+        public static final int carer_id=0x7f070048;
         public static final int checkin_send_now=0x7f07003b;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
@@ -614,6 +623,7 @@ containing a value of this type.
         /**  Number patterns 
          */
         public static final int lat_lng_pattern=0x7f07002e;
+        public static final int login=0x7f070045;
         public static final int mapstyle_hybrid=0x7f070024;
         /**  Mapping Strings 
          */
@@ -624,6 +634,7 @@ containing a value of this type.
         public static final int medicalInformation=0x7f070040;
         public static final int panic_off=0x7f07001f;
         public static final int panic_on=0x7f070020;
+        public static final int password=0x7f070047;
         public static final int patientAddress=0x7f07003f;
         public static final int patientAge=0x7f07003e;
         public static final int patientName=0x7f07003d;
@@ -634,6 +645,7 @@ containing a value of this type.
         public static final int patient_profiles=0x7f070043;
         public static final int patient_tracking=0x7f07001c;
         public static final int radius_pattern=0x7f07002f;
+        public static final int retrieve_id=0x7f070046;
         public static final int save=0x7f07002c;
         public static final int saveButton=0x7f070044;
         public static final int title_activity_admin_google_mapping=0x7f07001d;

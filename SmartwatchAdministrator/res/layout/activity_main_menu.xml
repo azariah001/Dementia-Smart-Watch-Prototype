@@ -64,4 +64,14 @@
         android:text="@string/patient_profiles" 
         android:onClick="selectPatientProfile"/>
 
+    <Button
+        android:id="@+id/loginPrompt"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/patientProfiles"
+        android:layout_below="@+id/patientProfiles"
+        android:text="@string/login" 
+        android:onClick="loginPrompt" />
+
 </RelativeLayout>

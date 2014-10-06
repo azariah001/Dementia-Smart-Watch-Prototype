@@ -45,4 +45,8 @@
     <string name="updateButton">Update</string>
     <string name="patient_profiles">Patient Profiles</string>
     <string name="saveButton">Save</string>
+    <string name="login">Login</string> 
+  	<string name="retrieve_id">Retrieve</string> 
+  	<string name="password">Password</string>
+  	<string name="carer_id">Carer ID</string>
 </resources>
