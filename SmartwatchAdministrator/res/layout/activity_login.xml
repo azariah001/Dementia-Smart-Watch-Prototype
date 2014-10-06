@@ -34,10 +34,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/carerIdFieldTextView"
         android:layout_marginTop="20dp"
-        android:ems="10" >
+        android:ems="10" />
 
-        <requestFocus />
-    </EditText>
 
     <EditText
         android:id="@+id/passwordField"

@@ -415,8 +415,8 @@ containing a value of this type.
         public static final int beginning_date=0x7f080026;
         public static final int beginning_time=0x7f080028;
         public static final int book_now=0x7f080010;
-        public static final int btnLogin=0x7f08002f;
-        public static final int btnRetrieve=0x7f080031;
+        public static final int btnLogin=0x7f08002e;
+        public static final int btnRetrieve=0x7f080030;
         public static final int btnSetReminder=0x7f08002b;
         public static final int btnTrack=0x7f080032;
         public static final int buyButton=0x7f08000a;
@@ -424,8 +424,8 @@ containing a value of this type.
         public static final int buy_with_google=0x7f08000e;
         public static final int callSmartWatch=0x7f080033;
         public static final int cancelFence=0x7f08001d;
-        public static final int carerIdField=0x7f08002e;
-        public static final int carerIdFieldTextView=0x7f08002c;
+        public static final int carerIdField=0x7f08002d;
+        public static final int carerIdFieldTextView=0x7f080031;
         public static final int classic=0x7f080011;
         public static final int deleteFence=0x7f08001b;
         public static final int editRadius=0x7f08001a;
@@ -454,8 +454,8 @@ containing a value of this type.
         public static final int organiser_name=0x7f080020;
         public static final int overlay=0x7f080015;
         public static final int overlay_sub=0x7f080016;
-        public static final int passwordField=0x7f080030;
-        public static final int passwordFieldTextView=0x7f08002d;
+        public static final int passwordField=0x7f08002f;
+        public static final int passwordFieldTextView=0x7f08002c;
         public static final int patientAddress=0x7f080046;
         public static final int patientAge=0x7f080044;
         public static final int patientCheckIn=0x7f080036;

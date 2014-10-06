@@ -99,7 +99,8 @@ public class MainMenu extends Activity {
 	
 	//IM-15
 	public void loginPrompt(View view) {
-		startActivity(AdminLogIn.makeIntent(MainMenu.this, ADMIN_LOGIN));
+		//startActivity(AdminLogIn.makeIntent(MainMenu.this, ADMIN_LOGIN));
+		startActivity(new Intent(this, AdminLogIn.class));
 	}
 }
 	
