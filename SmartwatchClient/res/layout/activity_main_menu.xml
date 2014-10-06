@@ -26,7 +26,7 @@
         android:layout_marginBottom="32dp"
         android:onClick="showProfile"
         android:text="@string/show_profile" />
-
+    
     <TextClock
         android:id="@+id/textClock1"
         android:layout_width="wrap_content"
@@ -81,5 +81,15 @@
         android:layout_toRightOf="@+id/btnSettings"
         android:onClick="setReminder"
         android:text="Set Reminder" />
+    
+    <Button
+        android:id="@+id/btnLogin"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnProfile"
+        android:layout_alignLeft="@+id/btnProfile"
+        android:onClick="loginPrompt"
+        android:text="@string/login" />
 
 </RelativeLayout>

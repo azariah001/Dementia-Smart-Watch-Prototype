@@ -3,6 +3,7 @@ package com.illusivemen.smartwatchclient;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.illusivemen.login.PatientLogIn;
 import com.illusivemen.mapping.GoogleMapping;
 //import com.illusivemen.mapping.GoogleMapping.SaveTask;
 import com.illusivemen.memgame.MemoryGame;
@@ -74,6 +75,10 @@ public class MainMenu extends Activity {
 	
 	public void showProfile(View view) {
 		startActivity(PatientProfile.makeIntent(MainMenu.this));
+	}
+	
+	public void loginPrompt(View view) {
+		startActivity(new Intent(this, PatientLogIn.class));
 	}
 	
 	public void panicSOS(View view) {

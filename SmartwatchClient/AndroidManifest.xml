@@ -81,6 +81,9 @@
         <activity
             android:name="com.illusivemen.checkin.PatientCheckIn" >
         </activity>
+        <activity
+            android:name="com.illusivemen.login.PatientLogIn" >
+        </activity>
         
         <receiver android:name="com.illusivemen.checkin.SmsListener">
             <intent-filter>
