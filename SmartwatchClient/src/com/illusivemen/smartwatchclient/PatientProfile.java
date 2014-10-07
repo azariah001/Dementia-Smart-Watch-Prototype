@@ -1,6 +1,7 @@
 package com.illusivemen.smartwatchclient;
 
 import com.illusivemen.db.DBConn;
+import com.illusivemen.login.LogIn;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class PatientProfile extends Activity {
 	
@@ -19,6 +21,8 @@ public class PatientProfile extends Activity {
 	private String contact;
 	private String medical;
 	private static final String HIDDEN_MSG = "Hidden";
+	private LogIn login;
+	private String id;
 	
 	/**
 	 * Factory method for creating a launch intent.
@@ -37,6 +41,9 @@ public class PatientProfile extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_patient_profile);
+		
+		login = new LogIn();
+		id = login.GetId(this.getApplicationContext());
 		
 		// retrieve information and insert into display
 		new RetrieveProfile().execute();
@@ -80,10 +87,20 @@ public class PatientProfile extends Activity {
 		
 		private DBConn conn;
 		
+		
 		@Override
 		protected String doInBackground(Void... params) {
+			
+			// use a default if not logged in
+			if (id.isEmpty()) {
+				id = "1";
+			}
+			
+			// prepare parameters for query
+			String[] parameters = {"patient_id=" + id};
+			
 			conn = new DBConn("/retrieveProfile.php");
-			conn.execute();
+			conn.execute(parameters);
 			return conn.getResult();
 		}
 		
@@ -91,9 +108,19 @@ public class PatientProfile extends Activity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			
-			String[] profile = result.split(",");
-			showProfile(profile);
-			
+			if (result != null && !result.isEmpty()) {				
+				
+				String[] profile = result.split(",");
+				showProfile(profile);				
+				
+			} else {
+				Context context = getApplicationContext();
+				CharSequence text = "DB Error";
+				int duration = Toast.LENGTH_SHORT;
+
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();	
+			}			
 		}
 	}
 }

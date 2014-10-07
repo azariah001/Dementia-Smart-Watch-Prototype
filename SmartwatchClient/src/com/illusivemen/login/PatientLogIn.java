@@ -26,7 +26,6 @@ import android.widget.Toast;
  */
 public class PatientLogIn extends Activity {
 	
-	String FILENAME = "login_file";
 	LogIn login;
 	
 	/**
@@ -97,7 +96,6 @@ public class PatientLogIn extends Activity {
 	//TODO - add this to smartwatch-common_lib
 	private void retrieve() {
 		
-		//String login;
 		LogIn login = new LogIn();
 		String id = login.GetId(this.getApplicationContext());
 		

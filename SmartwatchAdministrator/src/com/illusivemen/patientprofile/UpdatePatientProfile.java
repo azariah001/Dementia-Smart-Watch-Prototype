@@ -19,7 +19,8 @@ public class UpdatePatientProfile extends Activity {
 	private String age;
 	private String address;
 	private String medical;
-	private String contact;		
+	private String contact;
+	private String DEFAULT_PATIENT = "1";
 	
 	/**
 	 * Factory method for creating a launch intent.
@@ -101,9 +102,7 @@ public class UpdatePatientProfile extends Activity {
 		}
 		
 		// update in database
-		String id;
-		id = "0";
-		new UpdatePatientProfileDB().execute(new String[]{id,name,age,address,medical,contact});
+		new UpdatePatientProfileDB().execute(new String[]{DEFAULT_PATIENT,name,age,address,medical,contact});
 	}
 	
 	/**
@@ -113,11 +112,13 @@ public class UpdatePatientProfile extends Activity {
 		
 		private DBConn conn;
 		
-		@Override
-		protected String doInBackground(Void... params) {			
+		protected String doInBackground(Void... params) {
+						
+			// prepare parameters for query
+			String[] parameters = {"patient_id=1"};			
 			
 			conn = new DBConn("/retrieveProfile.php");
-			conn.execute();
+			conn.execute(parameters);
 			return conn.getResult();
 		}
 		
@@ -125,10 +126,20 @@ public class UpdatePatientProfile extends Activity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			
-			String[] profile = result.split(",");
-			showProfile(profile);
-			
-		}		
+			if (result != null && !result.isEmpty()) {				
+	
+				String[] profile = result.split(",");
+				showProfile(profile);				
+				
+			} else {
+				Context context = getApplicationContext();
+				CharSequence text = "DB Error";
+				int duration = Toast.LENGTH_SHORT;
+
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();	
+			}		
+		}
 	}
 	
 	/**
