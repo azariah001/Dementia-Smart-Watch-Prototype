@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -29,7 +30,7 @@ public class CalendarReminder extends Activity {
 	
 	// Calendar variables 
 	private String title;
-	private String organiser;
+	private static String organiser;
 	private String description;
 	private long longBeginTime;
 	private String beginTime;
@@ -41,24 +42,24 @@ public class CalendarReminder extends Activity {
 		setContentView(R.layout.activity_calendar_reminder);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		//Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.calendar_reminder, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.calendar_reminder, menu);
+//		return true;
+//	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		// Handle action bar item clicks here. The action bar will
+//		// automatically handle clicks on the Home/Up button, so long
+//		// as you specify a parent activity in AndroidManifest.xml.
+//		int id = item.getItemId();
+//		if (id == R.id.action_settings) {
+//			return true;
+//		}
+//		return super.onOptionsItemSelected(item);
+//	}
 	
 	public static Intent makeIntent(Context context, String payload) {
         return new Intent(context, CalendarReminder.class);
@@ -68,11 +69,11 @@ public class CalendarReminder extends Activity {
 		// Gets the editable text
 		EditText organiser_email = (EditText) findViewById(R.id.organiser_name);
 		// Sets the organiser variable to the editable text
-		this.organiser = organiser_email.getEditableText().toString();
+		organiser = organiser_email.getEditableText().toString();
 	}
 	
-	public String getOrganiser() {
-		return this.organiser;
+	public static String getOrganiser() {
+		return organiser;
 	}
 	
 	public void setReminderTitle() {
@@ -135,7 +136,7 @@ public class CalendarReminder extends Activity {
 	public void sendReminder() {
 	}
 	
-	public void setReminder() {
+	public void setReminder(View view) {
 		new UpdatePatientReminderDB().execute();
 	}
 	
