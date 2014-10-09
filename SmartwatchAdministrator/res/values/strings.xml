@@ -49,4 +49,5 @@
   	<string name="retrieve_id">Retrieve</string> 
   	<string name="password">Password</string>
   	<string name="carer_id">Carer ID</string>
+  	<string name="my_patients">My Patients</string>
 </resources>

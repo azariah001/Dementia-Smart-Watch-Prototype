@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/patientCheckIn"
         android:layout_below="@+id/patientCheckIn"
-        android:text="@string/patient_profiles" 
+        android:text="@string/my_patients" 
         android:onClick="selectPatientProfile"/>
 
     <Button

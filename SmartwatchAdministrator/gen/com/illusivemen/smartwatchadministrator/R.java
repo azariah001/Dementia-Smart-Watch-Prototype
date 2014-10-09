@@ -459,14 +459,14 @@ containing a value of this type.
         public static final int patientAddress=0x7f080046;
         public static final int patientAge=0x7f080044;
         public static final int patientCheckIn=0x7f080036;
-        public static final int patientCheckInSwitch=0x7f080039;
+        public static final int patientCheckInSwitch=0x7f08003b;
         public static final int patientName=0x7f080043;
         public static final int patientProfiles=0x7f080037;
         public static final int production=0x7f080007;
-        public static final int radio0=0x7f08003c;
-        public static final int radio1=0x7f08003d;
-        public static final int radio2=0x7f08003e;
-        public static final int radioGroup1=0x7f08003b;
+        public static final int radio0=0x7f08003e;
+        public static final int radio1=0x7f08003f;
+        public static final int radio2=0x7f080040;
+        public static final int radioGroup1=0x7f08003d;
         public static final int reminder_description=0x7f080024;
         public static final int reminder_title=0x7f080022;
         public static final int sandbox=0x7f080008;
@@ -474,12 +474,12 @@ containing a value of this type.
         public static final int saveButton=0x7f08004b;
         public static final int saveFence=0x7f08001c;
         public static final int scrollView1=0x7f08001e;
-        public static final int selectPatientListView=0x7f08003f;
+        public static final int selectPatientListView=0x7f080039;
         public static final int selectionDetails=0x7f08000b;
         public static final int sendNowButton=0x7f080035;
         public static final int strict_sandbox=0x7f080009;
         public static final int terrain=0x7f080003;
-        public static final int textView1=0x7f08003a;
+        public static final int textView1=0x7f08003c;
         public static final int text_view_emergencyContact=0x7f080049;
         public static final int text_view_medicalInformation=0x7f080048;
         public static final int text_view_patientAdress=0x7f080045;
@@ -492,7 +492,7 @@ containing a value of this type.
         public static final int txtFrequency=0x7f080029;
         public static final int txtOrganiserEmail=0x7f08001f;
         public static final int txtReminderTitle=0x7f080021;
-        public static final int updateButton=0x7f080040;
+        public static final int updateButton=0x7f08003a;
         public static final int wrap_content=0x7f08000d;
     }
     public static final class integer {
@@ -503,8 +503,8 @@ containing a value of this type.
         public static final int activity_calendar_reminder=0x7f030001;
         public static final int activity_login=0x7f030002;
         public static final int activity_main_menu=0x7f030003;
-        public static final int activity_patient_check_in=0x7f030004;
-        public static final int activity_patient_profiles=0x7f030005;
+        public static final int activity_my_patients=0x7f030004;
+        public static final int activity_patient_check_in=0x7f030005;
         public static final int activity_update_patient_profile=0x7f030006;
     }
     public static final class menu {
@@ -632,6 +632,7 @@ containing a value of this type.
         public static final int mapstyle_select=0x7f070025;
         public static final int mapstyle_terrain=0x7f070026;
         public static final int medicalInformation=0x7f070040;
+        public static final int my_patients=0x7f070049;
         public static final int panic_off=0x7f07001f;
         public static final int panic_on=0x7f070020;
         public static final int password=0x7f070047;

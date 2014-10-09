@@ -115,7 +115,7 @@ public class UpdatePatientProfile extends Activity {
 		protected String doInBackground(Void... params) {
 						
 			// prepare parameters for query
-			String[] parameters = {"patient_id=1"};			
+			String[] parameters = {"patient_id=2"};			
 			
 			conn = new DBConn("/retrieveProfile.php");
 			conn.execute(parameters);
