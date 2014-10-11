@@ -1,4 +1,4 @@
-package com.illusivemen.patientprofile;
+package com.illusivemen.patients;
 
 import com.illusivemen.db.DBConn;
 import com.illusivemen.smartwatchadministrator.R;
@@ -20,7 +20,10 @@ public class UpdatePatientProfile extends Activity {
 	private String address;
 	private String medical;
 	private String contact;
-	private String DEFAULT_PATIENT = "1";
+	private String DEFAULT_PATIENT = "0";
+	private String patientId;
+	CurrentPatient currentPatient;
+	
 	
 	/**
 	 * Factory method for creating a launch intent.
@@ -46,7 +49,10 @@ public class UpdatePatientProfile extends Activity {
             	updateProfile();
             }
         });
-		
+        
+        currentPatient = new CurrentPatient();
+		patientId = currentPatient.GetId(getApplicationContext());		
+    	
 		// retrieve information and insert into display
 		new RetrieveProfile().execute();
 	}
@@ -102,7 +108,7 @@ public class UpdatePatientProfile extends Activity {
 		}
 		
 		// update in database
-		new UpdatePatientProfileDB().execute(new String[]{DEFAULT_PATIENT,name,age,address,medical,contact});
+		new UpdatePatientProfileDB().execute(new String[]{patientId,name,age,address,medical,contact});
 	}
 	
 	/**
@@ -112,10 +118,9 @@ public class UpdatePatientProfile extends Activity {
 		
 		private DBConn conn;
 		
-		protected String doInBackground(Void... params) {
-						
-			// prepare parameters for query
-			String[] parameters = {"patient_id=2"};			
+		protected String doInBackground(Void... params) {			
+			
+			String parameters[] = {"patient_id=" + patientId};
 			
 			conn = new DBConn("/retrieveProfile.php");
 			conn.execute(parameters);

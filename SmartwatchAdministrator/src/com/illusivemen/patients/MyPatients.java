@@ -1,5 +1,10 @@
-package com.illusivemen.patientprofile;
+package com.illusivemen.patients;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.util.concurrent.ExecutionException;
 
 import com.illusivemen.db.DBConn;
@@ -20,15 +25,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SelectPatientProfile extends Activity {
+public class MyPatients extends Activity {
 	
 	public final static String PROFILE_UPDATE = "ProfileUpdate";
 	private LogIn login;
 	private String id;
 	String[] patients;
 	String patientList;
+	String FILENAME;
+	String patientId;
 	ListView listView ;
 	RetrievePatients retrievePatients;
+	CurrentPatient currentPatient;
 	
 	/**
 	 * Factory method for creating a launch intent.
@@ -37,7 +45,7 @@ public class SelectPatientProfile extends Activity {
 	 * @return
 	 */
 	public static Intent makeIntent(Context context, String payload) {
-		return new Intent(context, SelectPatientProfile.class);
+		return new Intent(context, MyPatients.class);
 	}
 	
 	/**
@@ -56,7 +64,7 @@ public class SelectPatientProfile extends Activity {
             public void onClick(View v) {
             	updateSelectedProfile(v);
             }
-        });
+        });        
         
         // retrieve patients
         retrievePatients = new RetrievePatients();
@@ -90,28 +98,47 @@ public class SelectPatientProfile extends Activity {
               @Override
               public void onItemClick(AdapterView<?> parent, View view,
                  int position, long id) {
+            	  
+            	  view.setSelected(true);
                 
                // ListView Clicked item index
                int itemPosition     = position;
                
                // ListView Clicked item value
-               String  itemValue    = (String) listView.getItemAtPosition(position);
-                  
-                // Show Alert 
+               String  itemValue    = (String) listView.getItemAtPosition(itemPosition);
+               
+               // point to the selected patient
+               patientId = itemValue.substring(0,1);
+               currentPatient.selectPatient(getApplicationContext(), patientId);
+                
+                String p = currentPatient.GetId(getApplicationContext());
                 Toast.makeText(getApplicationContext(),
-                  "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                  .show();
+                        p, Toast.LENGTH_LONG)
+                        .show();
              
               }
 
-         });        
+         });
+        
+      currentPatient = new CurrentPatient();
+        
+      //Check for a previously selected patient and highlight the relevant patient if set
+      //Doesn't work        
+        //String id = currentPatient.GetId(getApplicationContext());
+        //if (id != null && !id.isEmpty()) {        	
+        	//String[] listPosition = id.split(",");
+        	//int position = Integer.parseInt(listPosition[1]);
+        	//listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        	//listView.setSelector(android.R.color.darker_gray);
+        	//listView.setItemChecked(position, true);
+		//}
 	}
 	
 	/**
 	 * Update the selected profile
 	 */
 	private void updateSelectedProfile(View view) {
-		startActivity(UpdatePatientProfile.makeIntent(SelectPatientProfile.this, PROFILE_UPDATE));
+		startActivity(UpdatePatientProfile.makeIntent(MyPatients.this, PROFILE_UPDATE));
 		finish();
 	}
 	
@@ -159,7 +186,7 @@ public class SelectPatientProfile extends Activity {
 				
 				Context context = getApplicationContext();
 				CharSequence text = "Displaying Patients";
-				int duration = Toast.LENGTH_LONG;
+				int duration = Toast.LENGTH_SHORT;
 
 				Toast toast = Toast.makeText(context, text, duration);
 				toast.show();				

@@ -4,8 +4,8 @@ package com.illusivemen.smartwatchadministrator;
 import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.login.AdminLogIn;
 import com.illusivemen.maps.AdminGoogleMapping;
-import com.illusivemen.patientprofile.SelectPatientProfile;
-import com.illusivemen.patientprofile.UpdatePatientProfile;
+import com.illusivemen.patients.MyPatients;
+import com.illusivemen.patients.UpdatePatientProfile;
 import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.service.NotificationService;
 
@@ -94,12 +94,11 @@ public class MainMenu extends Activity {
 	
 	//IM-19 - Patient Profile Update
 	public void selectPatientProfile(View view) {
-		startActivity(SelectPatientProfile.makeIntent(MainMenu.this, PROFILE_SELECT));
+		startActivity(MyPatients.makeIntent(MainMenu.this, PROFILE_SELECT));
 	}
 	
 	//IM-15
 	public void loginPrompt(View view) {
-		//startActivity(AdminLogIn.makeIntent(MainMenu.this, ADMIN_LOGIN));
 		startActivity(new Intent(this, AdminLogIn.class));
 	}
 }

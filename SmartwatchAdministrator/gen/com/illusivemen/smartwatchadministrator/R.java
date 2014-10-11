@@ -661,6 +661,7 @@ containing a value of this type.
         public static final int title_reminder_title=0x7f070032;
         public static final int title_set_reminder=0x7f070037;
         public static final int updateButton=0x7f070042;
+        public static final int viewProfile=0x7f07004a;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

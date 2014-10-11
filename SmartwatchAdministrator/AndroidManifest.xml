@@ -65,10 +65,10 @@
             android:name="com.illusivemen.checkin.PatientCheckIn" >
         </activity>
         <activity
-            android:name="com.illusivemen.patientprofile.SelectPatientProfile" >
+            android:name="com.illusivemen.patients.MyPatients" >
         </activity>
         <activity
-            android:name="com.illusivemen.patientprofile.UpdatePatientProfile" >
+            android:name="com.illusivemen.patients.UpdatePatientProfile" >
         </activity>
         <activity
             android:name="com.illusivemen.login.AdminLogIn" >
