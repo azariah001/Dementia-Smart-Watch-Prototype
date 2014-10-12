@@ -3,9 +3,9 @@ package com.illusivemen.smartwatchclient;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.illusivemen.db.DBConn;
 import com.illusivemen.login.PatientLogIn;
 import com.illusivemen.mapping.GoogleMapping;
-//import com.illusivemen.mapping.GoogleMapping.SaveTask;
 import com.illusivemen.memgame.MemoryGame;
 import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.service.LocationPush;
@@ -18,11 +18,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainMenu extends Activity {
@@ -82,29 +84,60 @@ public class MainMenu extends Activity {
 	}
 	
 	public void panicSOS(View view) {
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("SOS Beacon");
-	    builder.setMessage("Are you sure?");
-	    
-	    builder.setPositiveButton("ON", new DialogInterface.OnClickListener() {
-
-			public void onClick(DialogInterface dialog, int which) {            
-	        								
-	        								//Sets to panic mode
-	        								new UtilityClass().sendRequest();
-	        								dialog.dismiss(); } } );
-
-	    builder.setNegativeButton("OFF", new DialogInterface.OnClickListener() {
-
-	        @Override
-	        public void onClick(DialogInterface dialog, int which) {
-	        	
-	        								//Sets to chill mode
-
-											dialog.dismiss(); } } );
-
-	    AlertDialog alert = builder.create();
-	    alert.show();
+		builder.setTitle("Emergency Carer Alert");
+		builder.setMessage("Set Panic State?");
+		
+		builder.setPositiveButton("ON", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				//Sets to panic mode
+				new UtilityClass().sendRequest();
+				// push new location to database
+				new PanicTask().execute("1");
+				((Button) findViewById(R.id.btnPanic)).setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+				dialog.dismiss();
+			}
+		});
+		
+		builder.setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				//Sets to chill mode
+				new PanicTask().execute("0");
+				((Button) findViewById(R.id.btnPanic)).setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+				dialog.dismiss();
+			}
+		});
+		
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	/**
+	 * Background thread to set patient panic state.
+	 */
+	private class PanicTask extends AsyncTask<String, Void, Void> {
+		
+		private static final String PANIC_SET_SCRIPT = "/updatePatientState.php";
+		
+		@Override
+		protected Void doInBackground(String... params) {
+			
+			// store parameters
+			String[] parameters = {"patient_id=0",
+					"panic_state=" + params[0]};
+			
+			// post information
+			DBConn conn = new DBConn(PANIC_SET_SCRIPT);
+			conn.execute(parameters);
+			return null;
+		}
 	}
 	
 	// for testing purposes
