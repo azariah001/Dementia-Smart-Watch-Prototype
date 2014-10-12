@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@android:color/holo_blue_dark" >
 
     <TextView
         android:id="@+id/patientIdFieldTextView"
@@ -8,16 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/passwordFieldTextView"
-        android:text="@string/patient_id" />
-
-    <EditText
-        android:id="@+id/patientIdField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/patientIdFieldTextView"
-        android:layout_marginTop="19dp"
-        android:ems="10" />
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/patient_id"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/passwordFieldTextView"
@@ -25,26 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/patientIdField"
-        android:layout_marginTop="47dp"
-        android:text="@string/password" />
-
-    <EditText
-        android:id="@+id/passwordField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/patientIdFieldTextView"
-        android:layout_below="@+id/passwordFieldTextView"
-        android:layout_marginTop="22dp"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/passwordField"
-        android:layout_alignParentBottom="true"
-        android:text="@string/login" />
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/password"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/btnRetrieve"
@@ -52,6 +31,49 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@android:color/holo_orange_dark"
+        android:minWidth="100dp"
+        android:padding="10dp"
         android:text="@string/retrieve_id" />
-    
-    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/patientIdField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientIdFieldTextView"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:textColor="#FFFF00" />
+
+    <EditText
+        android:id="@+id/passwordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/passwordFieldTextView"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textColor="#FFFF00" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:background="@android:color/holo_orange_dark"
+        android:minWidth="100dp"
+        android:padding="10dp"
+        android:text="@string/login" />
+
+</RelativeLayout>

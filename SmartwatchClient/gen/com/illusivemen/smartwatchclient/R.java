@@ -426,22 +426,22 @@ containing a value of this type.
         public static final int address=0x7f090017;
         public static final int book_now=0x7f090010;
         public static final int btnBattery=0x7f090022;
-        public static final int btnLogin=0x7f09001c;
+        public static final int btnLogin=0x7f09001d;
         public static final int btnMap=0x7f09001f;
         public static final int btnPanic=0x7f090023;
         public static final int btnProfile=0x7f090020;
         public static final int btnReminder=0x7f090025;
-        public static final int btnRetrieve=0x7f09001d;
+        public static final int btnRetrieve=0x7f09001b;
         public static final int btnSetReminder=0x7f090014;
         public static final int btnSettings=0x7f090024;
         public static final int button1=0x7f090015;
         public static final int buyButton=0x7f09000a;
         public static final int buy_now=0x7f09000f;
         public static final int buy_with_google=0x7f09000e;
-        public static final int card_row1=0x7f090027;
-        public static final int card_row2=0x7f090028;
-        public static final int card_row3=0x7f090029;
-        public static final int card_row4=0x7f09002a;
+        public static final int card_row1=0x7f090029;
+        public static final int card_row2=0x7f09002a;
+        public static final int card_row3=0x7f09002b;
+        public static final int card_row4=0x7f09002c;
         public static final int card_rows=0x7f090026;
         public static final int classic=0x7f090011;
         public static final int emergencyContact=0x7f090036;
@@ -456,7 +456,7 @@ containing a value of this type.
         public static final int monochrome=0x7f090013;
         public static final int none=0x7f090000;
         public static final int normal=0x7f090001;
-        public static final int passwordField=0x7f09001b;
+        public static final int passwordField=0x7f09001c;
         public static final int passwordFieldTextView=0x7f090019;
         public static final int patientAddress=0x7f090032;
         public static final int patientAge=0x7f090030;
@@ -470,14 +470,14 @@ containing a value of this type.
         public static final int strict_sandbox=0x7f090009;
         public static final int terrain=0x7f090003;
         public static final int textClock1=0x7f090021;
-        public static final int textScore=0x7f09002b;
+        public static final int textScore=0x7f090027;
         public static final int textUserSettings=0x7f09001e;
         public static final int text_view_emergencyContact=0x7f090035;
         public static final int text_view_medicalInformation=0x7f090034;
         public static final int text_view_patientAdress=0x7f090031;
         public static final int text_view_patientAge=0x7f09002e;
         public static final int text_view_patientName=0x7f09002d;
-        public static final int valueScore=0x7f09002c;
+        public static final int valueScore=0x7f090028;
         public static final int wrap_content=0x7f09000d;
     }
     public static final class integer {

@@ -5,7 +5,6 @@ import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.login.AdminLogIn;
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.patients.MyPatients;
-import com.illusivemen.patients.UpdatePatientProfile;
 import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.service.NotificationService;
 
@@ -15,7 +14,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ToggleButton;
 
 public class MainMenu extends Activity {
 
@@ -26,8 +24,6 @@ public class MainMenu extends Activity {
 	public final static String PROFILE_SELECT = "ProfileSelect";
 	public final static String ADMIN_LOGIN = "AdminLogin";
 	
-	private boolean patientPanic = false;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,23 +54,6 @@ public class MainMenu extends Activity {
 	
 	public void showLocations(View view) {
 		startActivity(AdminGoogleMapping.makeIntent(MainMenu.this, TRACK_MESSAGE));
-	}
-	
-	//Dummy method, emulates the 
-	public void changePanic(View view) {
-		
-	    // Is the toggle on?
-	    boolean on = ((ToggleButton) view).isChecked();
-	    
-	    if (on) {
-	        patientPanic = true;
-	        
-	        //Open dialogBox, option to see patients current location
-
-	    } else {
-	        patientPanic = false;
-	    }
-		
 	}
 	
 	//IM-21 - Call SmartWatch

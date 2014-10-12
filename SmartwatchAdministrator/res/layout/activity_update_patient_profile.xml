@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="#000080" >
 
     <TextView
         android:id="@+id/text_view_patientName"
@@ -8,8 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="22dp"
-        android:text="@string/patientName" />
+        android:text="@string/patientName"
+        android:textColor="#00FF00" />
 
     <TextView
         android:id="@+id/text_view_patientAge"
@@ -17,8 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/patientName"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="22dp"
-        android:text="@string/patientAge" />
+        android:text="@string/patientAge"
+        android:textColor="#00FF00" />
 
     <EditText
         android:id="@+id/patientAge"
@@ -26,9 +31,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_patientAge"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textColor="#FFFF00" />
 
     <TextView
         android:id="@+id/text_view_patientAdress"
@@ -36,8 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/patientAge"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="22dp"
-        android:text="@string/patientAddress" />
+        android:text="@string/patientAddress"
+        android:textColor="#00FF00" />
 
     <EditText
         android:id="@+id/patientName"
@@ -45,9 +55,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_patientName"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="#FFFF00" />
 
     <EditText
         android:id="@+id/patientAddress"
@@ -55,9 +68,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_patientAdress"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPostalAddress" />
+        android:inputType="textPostalAddress"
+        android:textColor="#FFFF00" />
 
     <requestFocus />
 
@@ -67,9 +83,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_medicalInformation"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:textColor="#FFFF00" />
 
     <TextView
         android:id="@+id/text_view_medicalInformation"
@@ -77,8 +96,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/patientAddress"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="22dp"
-        android:text="@string/medicalInformation" />
+        android:text="@string/medicalInformation"
+        android:textColor="#00FF00" />
 
     <TextView
         android:id="@+id/text_view_emergencyContact"
@@ -86,8 +107,10 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/text_view_medicalInformation"
         android:layout_below="@+id/medicalInformation"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="22dp"
-        android:text="@string/emergencyContact" />
+        android:text="@string/emergencyContact"
+        android:textColor="#00FF00" />
 
     <EditText
         android:id="@+id/emergencyContact"
@@ -95,9 +118,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/text_view_emergencyContact"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:textColor="#FFFF00" />
 
     <Button
         android:id="@+id/saveButton"
@@ -106,6 +132,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/saveButton" />
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:background="#800000"
+        android:text="@string/saveButton"
+        android:textColor="#FFFF00" />
 
 </RelativeLayout>
