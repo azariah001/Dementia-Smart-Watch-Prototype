@@ -134,8 +134,12 @@ public class MainMenu extends Activity {
 		@Override
 		protected Void doInBackground(String... params) {
 			
+			// which patient
+			login = new LogIn();
+			String patientId = login.GetId(getApplicationContext());
+			
 			// store parameters
-			String[] parameters = {"patient_id=0",
+			String[] parameters = {"patient_id=" + patientId,
 					"panic_state=" + params[0]};
 			
 			// post information
