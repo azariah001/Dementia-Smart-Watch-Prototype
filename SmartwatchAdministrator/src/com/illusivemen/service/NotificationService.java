@@ -202,7 +202,7 @@ public class NotificationService extends Service implements OnLoopRetrievedListe
 						+ sound));
 		
 		// intent to show the position
-		Intent resultIntent = new Intent(this, AdminGoogleMapping.class);
+		Intent resultIntent = new Intent(this, AdminGoogleMapping.class).putExtra(AdminGoogleMapping.PATIENT_TO_TRACK, String.valueOf(patientId));
 		
 		// can ensure that navigating backward from intent Activity goes to home screen
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

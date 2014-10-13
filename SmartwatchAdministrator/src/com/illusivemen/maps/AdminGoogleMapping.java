@@ -48,7 +48,7 @@ import android.widget.Toast;
 public class AdminGoogleMapping extends Activity implements OnMapLongClickListener, OnInfoWindowClickListener, OnLoopRetrievedListener {
 	
 	public final static String PATIENT_TO_TRACK = "com.illusivemen.maps.EXTRAS_PAYLOAD_KEY";
-	private int patientBeingTracked;
+	private String patientBeingTracked;
 	
 	// options menu
 	private Menu menu;
@@ -97,12 +97,14 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_google_mapping);
 		
-		// TODO: this should be used for which patient to show first
+		// which patient to show first
 		try {
-			patientBeingTracked = Integer.parseInt(getIntent().getStringExtra(PATIENT_TO_TRACK));
+			// specified via intent takes precedence
+			patientBeingTracked = getIntent().getStringExtra(PATIENT_TO_TRACK);
 		} catch (NumberFormatException e) {
-			// this activity has been called badly
-			System.out.println("ACTIVITY STARTED WITH BAD PAYLOAD");
+			// use the application preference
+			currentPatient = new CurrentPatient();
+			patientBeingTracked = currentPatient.GetId(getApplicationContext());
 		}
 		
 		// used for parsing timestamps from mysql
@@ -235,9 +237,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	
 	private void subscribeForLocations() {
 		// retrieve patient location in loop
-		currentPatient = new CurrentPatient();
-		String patientId = currentPatient.GetId(getApplicationContext()); // the patient currently being watched IM-15
-		RetrieveLoopThread retrieveThread = new RetrieveLoopThread("/retrieveLastLocations.php", new String[]{"patient=" + patientId}, UPDATE_PERIOD);
+		RetrieveLoopThread retrieveThread = new RetrieveLoopThread("/retrieveLastLocations.php", 
+				new String[]{"patient=" + patientBeingTracked}, UPDATE_PERIOD);
 		retrieveThread.setListener(this);
 		retrieveThread.start();
 	}
