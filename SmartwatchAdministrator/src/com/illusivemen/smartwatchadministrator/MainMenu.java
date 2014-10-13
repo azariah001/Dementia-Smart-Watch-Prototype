@@ -3,7 +3,9 @@ package com.illusivemen.smartwatchadministrator;
 //import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.checkin.PatientCheckIn;
 import com.illusivemen.login.AdminLogIn;
+import com.illusivemen.login.LogIn;
 import com.illusivemen.maps.AdminGoogleMapping;
+import com.illusivemen.patients.CurrentPatient;
 import com.illusivemen.patients.MyPatients;
 import com.illusivemen.reminder.CalendarReminder;
 import com.illusivemen.service.NotificationService;
@@ -23,6 +25,10 @@ public class MainMenu extends Activity {
 	public final static String PATIENT_CHECKIN = "PatientCheckIn";
 	public final static String PROFILE_SELECT = "ProfileSelect";
 	public final static String ADMIN_LOGIN = "AdminLogin";
+	public final static String DEFAULT_CARER = "1";
+	public final static String DEFAULT_PATIENT = "0";
+	CurrentPatient currentPatient;
+	LogIn login;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,14 @@ public class MainMenu extends Activity {
 		
 		// start background service
 		this.startService(new Intent(this, NotificationService.class));
+		
+		// log in as the default carer at startup
+		login = new LogIn();
+		login.LogInToApp(getApplicationContext(), DEFAULT_CARER);
+		
+		// select the default patient at startup
+		currentPatient = new CurrentPatient();
+		currentPatient.selectPatient(getApplicationContext(), DEFAULT_PATIENT);
 	}
 
 	@Override

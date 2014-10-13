@@ -1,6 +1,7 @@
 package com.illusivemen.service;
 
 import com.illusivemen.db.DBConn;
+import com.illusivemen.login.LogIn;
 
 import android.app.Service;
 import android.content.Intent;
@@ -22,6 +23,7 @@ public class LocationPush extends Service {
 	private final static int GPS_TIMEOUT = 1000 * 8;
 	// script which stores locations in the database
 	private static final String LOCATION_DUMP_SCRIPT = "/saveNewLocation.php";
+	LogIn login;
 	
 	@Override
 	public void onCreate() {
@@ -104,8 +106,11 @@ public class LocationPush extends Service {
 		@Override
 		protected Void doInBackground(Location... params) {
 			
+			login = new LogIn();
+			String patientId = login.GetId(getApplicationContext());
+			
 			// store parameters
-			String[] parameters = {"patient=0",
+			String[] parameters = {"patient=" + patientId,
 					"lat=" + params[0].getLatitude(),
 					"lng=" + params[0].getLongitude(),
 					"acc=" + params[0].getAccuracy()};

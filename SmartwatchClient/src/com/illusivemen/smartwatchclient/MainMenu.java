@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.illusivemen.db.DBConn;
+import com.illusivemen.login.LogIn;
 import com.illusivemen.login.PatientLogIn;
 import com.illusivemen.mapping.GoogleMapping;
 import com.illusivemen.memgame.MemoryGame;
@@ -30,12 +31,13 @@ import android.widget.Toast;
 public class MainMenu extends Activity {
 
 	public final static String ACTIVITY_MESSAGE = "ClientStart";
-	private static final long CHECK_BATTERY_STATE = 250;
+	private static final long CHECK_BATTERY_STATE = 25000;
 	
 	public UtilityClass utility;
 	
 	private boolean lowBatteryAlert = false;
 	private float batteryPct;
+	LogIn login;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +45,12 @@ public class MainMenu extends Activity {
 		setContentView(R.layout.activity_main_menu);
 		
 		// start background service
-		this.startService(new Intent(this, LocationPush.class));
-		
+		this.startService(new Intent(this, LocationPush.class));		
 		new Timer().scheduleAtFixedRate(lowBattery, 0, CHECK_BATTERY_STATE);
+		// select the default patient at startup
+		login = new LogIn();
+		login.LogInToApp(getApplicationContext(), "0");
+		
 	}
 
 	@Override

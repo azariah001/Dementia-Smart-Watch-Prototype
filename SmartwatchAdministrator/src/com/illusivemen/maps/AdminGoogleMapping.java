@@ -24,6 +24,7 @@ import com.google.android.gms.location.Geofence;
 import com.illusivemen.db.DBConn;
 import com.illusivemen.db.OnLoopRetrievedListener;
 import com.illusivemen.db.RetrieveLoopThread;
+import com.illusivemen.patients.CurrentPatient;
 import com.illusivemen.smartwatchadministrator.R;
 
 import android.annotation.SuppressLint;
@@ -72,6 +73,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	ArrayList<GeofenceVisualisation> geofences = new ArrayList<GeofenceVisualisation>();
 	private static final int GEOFENCE_RADIUS = 30;
 	private HashMap<Marker, Integer[]> geofenceMarkerMap;
+	// the patient currently being watched
+	CurrentPatient currentPatient;
 	
 	
 	/**
@@ -232,7 +235,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 	
 	private void subscribeForLocations() {
 		// retrieve patient location in loop
-		RetrieveLoopThread retrieveThread = new RetrieveLoopThread("/retrieveLastLocations.php", new String[]{"patient=0"}, UPDATE_PERIOD);
+		currentPatient = new CurrentPatient();
+		String patientId = currentPatient.GetId(getApplicationContext()); // the patient currently being watched IM-15
+		RetrieveLoopThread retrieveThread = new RetrieveLoopThread("/retrieveLastLocations.php", new String[]{"patient=" + patientId}, UPDATE_PERIOD);
 		retrieveThread.setListener(this);
 		retrieveThread.start();
 	}
@@ -458,8 +463,11 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			// create visualisation before while connecting for a better feedback response
 			publishProgress();
 			
+			currentPatient = new CurrentPatient();
+			String patientId = currentPatient.GetId(getApplicationContext()); // the patient currently being watched IM-15
+			
 			// store parameters
-			String[] parameters = {"patient=0",
+			String[] parameters = {"patient=" + patientId,
 					"lat=" + lat,
 					"lng=" + lng,
 					"radius=" + GEOFENCE_RADIUS,
@@ -514,7 +522,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		@Override
 		protected String doInBackground(Void... params) {
 			// store parameters
-			String[] parameters = {"patientid=0"};
+			currentPatient = new CurrentPatient(); // the patient currently being watched IM-15
+			String patientId = currentPatient.GetId(getApplicationContext());
+			String[] parameters = {"patientid=" + patientId};
 			
 			// post information
 			DBConn conn = new DBConn("/retrieveGeofences.php");
