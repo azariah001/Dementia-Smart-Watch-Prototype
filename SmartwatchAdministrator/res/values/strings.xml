@@ -40,7 +40,7 @@
     <string name="patient_checkin_daily">Daily</string>
     <string name="patient_checkin_weekly">Weekly</string>
     <string name="patient_checkin_hourly">Hourly</string>
-    <string name="checkin_send_now">Send Now</string>
+    <string name="checkin_send_now">Send Request</string>
     <string name="patient_checkin_title">Patient Check-in</string><string name="patientName">Name:</string><string name="patientAge">Age:</string><string name="patientAddress">Address:</string><string name="medicalInformation">Medical Information:</string><string name="emergencyContact">Emergency Contact:</string>
     <string name="updateButton">Update</string>
     <string name="patient_profiles">Patient Profiles</string>
