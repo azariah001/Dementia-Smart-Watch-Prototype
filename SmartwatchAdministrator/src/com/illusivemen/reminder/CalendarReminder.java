@@ -27,6 +27,8 @@ public class CalendarReminder extends Activity {
 	private final String BEGINTIME = "beginTime";
 	private final String FREQUENCY = "rrule";
 	private final String TYPE = "vnd.android.cursor.item/event";
+	private final String RRULE = "FREQ=DAILY";
+	private final String PUT_EVENT = "/putPatientReminder.php";
 	
 	// Calendar variables 
 	private String title;
@@ -34,7 +36,6 @@ public class CalendarReminder extends Activity {
 	private String description;
 	private long longBeginTime;
 	private String beginTime;
-	private String rrule;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class CalendarReminder extends Activity {
 		return this.description;
 	}
 	
-	public void setbeginTime() {
+	public void setBeginTime() {
 		// Creates a Calendar
 		Calendar beginTime = Calendar.getInstance();
 		// Gets the Time and Date picker
@@ -122,20 +123,6 @@ public class CalendarReminder extends Activity {
 		return this.beginTime;
 	}
 	
-	public void setFrequency() {
-		// Gets the editable text
-		EditText frequency = (EditText) findViewById(R.id.frequency);
-		// Sets the frequency rule
-		this.rrule = "FREQ=DAILY;COUNT=" + frequency.getText();
-	}
-	
-	public String getFrequency() {
-		return this.rrule;
-	}
-	// Does not work
-	public void sendReminder() {
-	}
-	
 	public void setReminder(View view) {
 		new UpdatePatientReminderDB().execute();
 	}
@@ -144,22 +131,19 @@ public class CalendarReminder extends Activity {
 
 		@Override
 		protected String doInBackground(Void... params) {
+			// Sets the current values of the EditTexts
+			setOrganiser();
+			setReminderTitle();
+			setReminderDescription();
+			setBeginTime();
+			
 			// Store Parameters
-			String setTitle = "title=";
-			String setOrganiser = "organiser=";
-			String setBeginTime = "beginTime=";
-			String setDescription = "description=";
-			String setRrule = "rrule=";
-			String [] parameters = {setTitle + title,
-					setOrganiser + organiser,
-					setDescription + description,
-					setBeginTime + beginTime,
-					setRrule + rrule};
+			String [] parameters = {"title=" + title, "organiser=" + organiser, "description=" + description, "beginTime=" + beginTime, "rrule=" + RRULE};
 			
 			// Creates a database connection
 			DBConn conn;
 			// Posts information
-			conn = new DBConn("/putPatientReminder.php");
+			conn = new DBConn(PUT_EVENT);
 			conn.execute(parameters);
 			
 			return conn.getResult();

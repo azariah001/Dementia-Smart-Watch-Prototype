@@ -68,12 +68,10 @@ function getLastLocation($patient) {
 function getPatientProfile($patient_id) {
 	// retrieve patient profile
 	global $pdo;
-
-	//$patient_id = 2;
 	
 	$stmt = $pdo->prepare('SELECT `patient_name`, `patient_age`, `patient_address`, `medical_information`, `emergency_contact` '.
 		'FROM `'. TABLE_PROFILE .'` '.
-		'WHERE `patient_id` = ":patient_id" '.
+		'WHERE `patient_id` = :patient_id '.
 		'LIMIT 0,1');
 	$stmt->bindValue(':patient_id', $patient_id);
 	$stmt->execute(); 
@@ -280,19 +278,43 @@ function getPatientState($idpatient_profiles) {
 	return $state.','.$name;
 }
 
-function updatePatientState($data) {
+function updatePatientState($patient_id, $panic_state) {
 	
 	global $pdo;
 
 	$stmt = $pdo->prepare('UPDATE `'. DB_NAME .'`.`'. TABLE_PROFILE .'` '.
-		'SET `panic_state` = :panic_state ');
-	$stmt->bindValue(':panic_state', $data['panic_state']);
+		'SET `panic_state` = :panic_state '.
+		'WHERE `patient_id` = :patient_id');
+	$stmt->bindValue(':panic_state', $panic_state);
+	$stmt->bindValue(':patient_id', $patient_id);
 	$stmt->execute();
 }
 
 // Functions relating to Patient Reminders
 
 function getLatestReminderID() {
+	
+	global $pdo;
+	
+	// Variables to store the create and store the latest reminderID
+	$id_increment = 1;
+	
+	// Gets the last reminderID
+	
+	// Creates the Statement Handler
+	$stmt = $pdo->query("SELECT * FROM " . DB_NAME . "." . TABLE_REMINDER . " ORDER BY patient_reminders.reminderID ASC");
+	
+	// Setting the fetch mode
+	$stmt->setFetchMode(PDO::FETCH_ASSOC);
+	
+	// Increments the last used Patient ID and assigns that value to the latest Patient ID variable
+	while($row = $stmt->fetch()) {
+		$GLOBALS['latest_reminderID'] = $row['reminderID'];	
+	}
+}
+
+function setLatestReminderID() {
+	global $pdo;
 	
 	// Variables to store the create and store the latest reminderID
 	$id_increment = 1;
@@ -312,7 +334,8 @@ function getLatestReminderID() {
 }
 
 function putPatientReminder($data) {
-	getLatestReminderID();
+	
+	setLatestReminderID();
 	
 	global $pdo;
 	
@@ -321,20 +344,30 @@ function putPatientReminder($data) {
 	// Creates the Statement Handler to insert a new Patient reminder into the patient_reminders table
 	$stmt = $pdo->prepare("INSERT INTO `" . DB_NAME . "`.`" . TABLE_REMINDER . "`" 
 	. " (reminderID, title, organiser, beginTime, description, rrule) values (:reminderID, :title, :organiser, :beginTime, :description, :rrule)");
-	$dicks = 2;
+	$title = "title desu2";
+	$organiser = "richard desu2";
+	$beginTime = "3";
+	$description = "description desu2";
+	$rrule = "FREQ=DAILY";
 	// Assigns variables to each placeholder
-	$stmt->bindParam(':reminderID' , $dicks);
+	$stmt->bindParam(':reminderID' , $GLOBALS['latest_reminderID']);
 	$stmt->bindParam(':title'      , $data['title']);
 	$stmt->bindParam(':organiser'  , $data['organiser']);
 	$stmt->bindParam(':beginTime'  , $data['beginTime']);
 	$stmt->bindParam(':description', $data['description']);
-	$stmt->bindParam(':rrule'      , $data['rrule']);
+	$stmt->bindParam(':rrule'      , $data['RRULE']);
 	
 	// Executes the prepared statement
 	$status = $stmt->execute();
 }
 
 function getPatientReminder() {
+	
+	getLatestReminderID();
+	
+	global $pdo;
+	
+	//$dicks = 1;
 	// Creates the Statement Handler to get the latest reminderID from the patient_reminders table
 	$stmt = $pdo->prepare("SELECT * FROM " . TABLE_REMINDER . " WHERE reminderID = :reminderID");
 	
@@ -356,21 +389,22 @@ function getPatientReminder() {
 		$rrule       = $row['rrule'];
 	}
 	return $title . ',' . $organiser . ',' . $beginTime . ',' . $description . ',' . $rrule;
+	//return "TestTitle" . "," . "Richard" . "," . "3" . "," . "TestDescription" . "," . "FREQ=DAILY";
 }
 
-function updatePatientProfile($id, $name, $age, $address, $medical, $contact) {
-	// updates patient profile information - WIP
+function updatePatientProfile($patient_id, $patient_name, $patient_age, $patient_address, $medical_information, $emergency_contact) {
+	// updates patient profile information
     global $pdo;
 
     $stmt = $pdo->prepare('UPDATE `'. DB_NAME .'`.`'. TABLE_PROFILE .'` '.
 		'SET `patient_name` = :patient_name, `patient_age` = :patient_age, `patient_address` = :patient_address, `medical_information` = :medical_information, `emergency_contact` = :emergency_contact '.
-        'WHERE `idpatient_profiles` = :idpatient_profiles');
-    $stmt->bindValue(':idpatient_profiles', $id);
-	$stmt->bindValue(':patient_name', $name);
-	$stmt->bindValue(':patient_age', $age);
-	$stmt->bindValue(':patient_address', $address);
-	$stmt->bindValue(':medical_information', $medical);
-	$stmt->bindValue(':emergency_contact', $contact);
+        'WHERE `patient_id` = :patient_id');
+    $stmt->bindValue(':patient_id', $patient_id);
+	$stmt->bindValue(':patient_name', $patient_name);
+	$stmt->bindValue(':patient_age', $patient_age);
+	$stmt->bindValue(':patient_address', $patient_address);
+	$stmt->bindValue(':medical_information', $medical_information);
+	$stmt->bindValue(':emergency_contact', $emergency_contact);
     $stmt->execute();
 	
 	// feedback whether the update was successful
@@ -379,6 +413,24 @@ function updatePatientProfile($id, $name, $age, $address, $medical, $contact) {
 	} else {
 		return 0;
 	}
+}
+
+function retrieveMyPatients($carer_id) {
+	global $pdo;
+
+	$stmt = $pdo->prepare('SELECT `patient_id`, `patient_name` '.
+		'FROM `'. TABLE_PROFILE .'` '.
+		'WHERE `carer_id` = :carer_id');
+	$stmt->bindValue(':carer_id', $carer_id);
+	$stmt->execute(); 
+	$result = $stmt->fetchAll();
+
+	$patients = array();
+	foreach ($result as $row) {
+		$patients[] = $row['patient_id'] .','. $row['patient_name'];
+	}
+
+	return implode(';', $patients);
 }
 
 ?>

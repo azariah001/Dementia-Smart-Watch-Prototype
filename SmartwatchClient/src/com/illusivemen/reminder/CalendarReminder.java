@@ -24,6 +24,8 @@ public class CalendarReminder extends Activity {
 	private String description;
 	private String rrule;
 	
+	private String[] reminder;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,16 +72,16 @@ public class CalendarReminder extends Activity {
 		startActivity(reminder);
 	}
 	
-	public void getReminder() {
+	public void getReminder(View view) {
 		new RetrievePatientReminder().execute();
 	}
 	
-	private void setInfo(String[] reminder) {
-		title = reminder[1];
-		organiser = reminder[2];
-		beginTime = reminder[3];
-		description = reminder[4];
-		rrule = reminder[5];
+	private void setInfo() {
+		title = reminder[0];
+		organiser = reminder[1];
+		beginTime = reminder[2];
+		description = reminder[3];
+		rrule = reminder[4];
 		longBeginTime = Long.valueOf(beginTime);
 	}
 	/**
@@ -100,8 +102,10 @@ public class CalendarReminder extends Activity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			
-			String[] reminder = result.split(",");
-			setInfo(reminder);
+			reminder = new String[5];
+			
+			reminder = result.split(",");
+			setInfo();
 		}
 	}
 	

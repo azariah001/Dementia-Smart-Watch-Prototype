@@ -98,20 +98,6 @@
         android:text="@string/start_memory_game" />
 
     <Button
-        android:id="@+id/btnReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/btnSettings"
-        android:background="@android:color/holo_orange_dark"
-        android:minWidth="150dip"
-        android:onClick="setReminder"
-        android:padding="10dp"
-        android:text="Set Reminder" />
-
-    <Button
         android:id="@+id/btnLogin"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -123,5 +109,17 @@
         android:onClick="loginPrompt"
         android:padding="10dp"
         android:text="@string/login" />
+
+    <Button
+        android:id="@+id/btnReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnMap"
+        android:background="@android:color/holo_orange_dark"
+        android:minWidth="150dip"
+        android:onClick="showReminders"
+        android:padding="10dp"
+        android:text="Reminders" />
 
 </RelativeLayout>

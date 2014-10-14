@@ -188,8 +188,8 @@ public class MainMenu extends Activity {
 		startActivity(showSettings);
 	}
 	// opens reminder view
-	public void setReminder(View view) {
-		Intent setReminder = new Intent(this, CalendarReminder.class);
-		startActivity(setReminder);
+	public void showReminders(View view) {
+		Intent showReminders = new Intent(this, CalendarReminder.class);
+		startActivity(showReminders);
 	}
 }

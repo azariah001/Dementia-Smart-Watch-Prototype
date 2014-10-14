@@ -78,19 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.26" />
 
-        <TextView
-            android:id="@+id/txtFrequency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_frequency"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/frequency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10" />
-		<!-- Doesn't work -->
         <Button
             android:id="@+id/btnSetReminder"
             android:layout_width="match_parent"

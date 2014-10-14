@@ -17,7 +17,7 @@
         android:text="@string/btn_set_reminder" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnGetReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btnSetReminder"
