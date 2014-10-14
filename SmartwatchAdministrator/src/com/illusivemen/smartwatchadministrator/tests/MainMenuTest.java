@@ -1,120 +1,83 @@
 package com.illusivemen.smartwatchadministrator.tests;
 
+import com.illusivemen.login.AdminLogIn;
 import com.illusivemen.maps.AdminGoogleMapping;
 import com.illusivemen.smartwatchadministrator.MainMenu;
 import com.illusivemen.smartwatchadministrator.R;
+import com.robotium.solo.Solo;
 
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.widget.Button;
 
-public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
+public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenu> {
 
+	private Solo solo;
+	
 	public MainMenuTest() {
 		super(MainMenu.class);
 	}
 	
-	private Intent aLaunchIntent;
-	private MainMenu aMenu;
-	private Button btnTrack;
-	private Button btnCall;
-	
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-        
-        // create the activity
-        aLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), MainMenu.class);
-        startActivity(aLaunchIntent, null, null);
-        
-        // pointers for components
-        aMenu = getActivity();
-        btnTrack = (Button) aMenu.findViewById(R.id.btnTrack);
-        btnCall = (Button) aMenu.findViewById(R.id.callSmartWatch);
+		solo = new Solo(getInstrumentation(), getActivity());
 	}
 	
 	@Override
 	public void tearDown() {
-		
+		solo.finishOpenedActivities();
 	}
 	
 	/**
-     * Test if the test fixture has been set up correctly.
-     */
-    public void testPreconditions() {
-        assertNotNull("cMenu is null", aMenu);
-        assertNotNull("btnTrack is null", btnTrack);
-        assertNotNull("btnCall is null", btnCall);
-    }
-    
-    // All Tests Should Be Below This Point
-    
-    /**
-     * Test that the layout is correct.
-     */
-    public void testButtonText_openMap() {
-        final String expected =
-                aMenu.getString(R.string.patient_tracking);
-        final String actual = btnTrack.getText().toString();
-        assertEquals(expected, actual);
-    }
-	
-    
-    // -------------------------------- Map Activity Tests
-    
-    /**
-     * Test that the button opens the map activity.
-     */
-    @MediumTest
-    public void testActivityIntent_openMap() {
-	    btnTrack.performClick();
-	    final Intent launchIntent = getStartedActivityIntent();
-	    assertNotNull("MapActivity was null", launchIntent);
+	 * Test that the layout is correct.
+	 */
+	public void testPreconditions() {
+		Button btnTrack = (Button) solo.getButton("Patient Locations");
+		Button btnCall = (Button) solo.getButton("Call SmartWatch");
+		Button btnLogin = (Button) solo.getButton("Login");
+		assertNotNull("Login Button is null", btnLogin);
+		assertNotNull("Track Button is null", btnTrack);
+		assertNotNull("Call Button is null", btnCall);
 	}
-    
-    /**
-     * Test that closing the map activity doesn't close the entire application.
-     */
-    @MediumTest
+	
+	// All Tests Should Be Below This Point
+	
+	/**
+	 * Test that the title is correct.
+	 */
+	public void testButtonText_openMap() {
+		final String expected = solo.getString(R.string.app_name);
+		final String actual = getActivity().getTitle().toString();
+		assertEquals(expected, actual);
+	}
+	
+	/**
+	 * Test that the button opens the map activity.
+	 */
+	@MediumTest
+	public void testActivityIntent_openMap() {
+		solo.clickOnButton("Patient Locations");
+		assertTrue(solo.waitForActivity(AdminGoogleMapping.class.getSimpleName()));
+	}
+	
+	/**
+	 * Test that closing the map activity doesn't close the entire application.
+	 */
+	@MediumTest
 	public void testActivityLaunchReturns_openMap() {
-	    btnTrack.performClick();
-	    
-	    // if finish() is called, this will exit the entire application, not just the map activity
-	    assertFalse(isFinishCalled());
+		solo.clickOnButton("Patient Locations");
+		
+		// if finish() is called, this will exit the entire application, not just the map activity
+		assertFalse(solo.getCurrentActivity().isFinishing());
 	}
-    
-    /**
-     * Test that the intent payload is as expected.
-     */
-    @MediumTest
-    public void testActivityLaunch_openMap() {
-	    btnTrack.performClick();
-	    final Intent launchIntent = getStartedActivityIntent();
-	    final String payload =
-	            launchIntent.getStringExtra(AdminGoogleMapping.PATIENT_TO_TRACK);
-	    assertEquals("Payload is empty", MainMenu.TRACK_MESSAGE, payload);
-	}
-    
-    /**
-  	* Test that the layout is correct.
-  	*/     
-    public void testButtonText_callSmartWatch() {
-        final String expected =
-                aMenu.getString(R.string.call_smartwatch);
-        final String actual = btnCall.getText().toString();
-        assertEquals(expected, actual);
-    }
 	
-    /**
-    * Test that the button opens the call smart watch activity
-    */
-    @MediumTest
-	public void testActivityIntent_callSmartWatch() {
-	    btnCall.performClick();
-
-	    final Intent launchIntent = getStartedActivityIntent();
-	    assertNotNull("CallActivity was null", launchIntent);
+	/**
+	 * Test that the button opens the call smart watch activity
+	 */
+	@MediumTest
+	public void testActivityIntent_login() {
+		solo.clickOnButton("Login");
+		assertTrue(solo.waitForActivity(AdminLogIn.class.getSimpleName()));
 	}
 }

@@ -36,7 +36,7 @@
     <!-- Unit Testing -->
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.illusivemen.smartwatchclient" />
+        android:targetPackage="com.illusivemen.smartwatchadministrator" />
     
     <application
         android:allowBackup="true"

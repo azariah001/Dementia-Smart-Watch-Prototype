@@ -2,98 +2,78 @@ package com.illusivemen.smartwatchclient.tests;
 
 import com.illusivemen.mapping.GoogleMapping;
 import com.illusivemen.smartwatchclient.MainMenu;
+import com.illusivemen.smartwatchclient.PatientProfile;
 import com.illusivemen.smartwatchclient.R;
+import com.robotium.solo.Solo;
 
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.widget.Button;
 
 // change to instrumentatiton2
-public class MainMenuTest extends ActivityUnitTestCase<MainMenu> {
+public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenu> {
+	
+	private Solo solo;
 	
 	public MainMenuTest() {
 		super(MainMenu.class);
 	}
 	
-	private Intent cLaunchIntent;
-	private MainMenu cMenu;
-	private Button btnMap;
-	private Button btnProfile;
-	
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-        
-        // create the activity
-        cLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), MainMenu.class);
-        startActivity(cLaunchIntent, null, null);
-        
-        // pointers for components
-        cMenu = getActivity();
-        btnMap = (Button) cMenu.findViewById(R.id.btnMap);
-        btnProfile = (Button) cMenu.findViewById(R.id.btnProfile);
+		solo = new Solo(getInstrumentation(), getActivity());
 	}
 	
 	@Override
 	public void tearDown() {
-		
+		solo.finishOpenedActivities();
 	}
 	
 	/**
-     * Test if the test fixture has been set up correctly.
-     */
-    public void testPreconditions() {
-        assertNotNull("cMenu is null", cMenu);
-        assertNotNull("btnMap is null", btnMap);
-        assertNotNull("btnProfile is null", btnProfile);
-    }
-    
-    // All Tests Should Be Below This Point
-    
-    /**
-     * Test that the layout is correct.
-     */
-    public void testButtonText_openMap() {
-        final String expected =
-                cMenu.getString(R.string.show_location);
-        final String actual = btnMap.getText().toString();
-        assertEquals(expected, actual);
-    }
-	
-    @MediumTest
-	public void testActivityLaunch_openMap() {
-	    btnMap.performClick();
-
-	    final Intent launchIntent = getStartedActivityIntent();
-	    assertNotNull("MapActivity was null", launchIntent);
-	    // if finish() is called, this will exit the entire application, not just the activity
-	    assertFalse(isFinishCalled());
-	    
-	    final String payload =
-	            launchIntent.getStringExtra(GoogleMapping.MAP_PURPOSE);
-	    assertEquals("Payload is empty", MainMenu.ACTIVITY_MESSAGE, payload);
+	 * Test if the layout is correctl.
+	 */
+	public void testPreconditions() {
+		Button btnTrack = (Button) solo.getButton("My Location");
+		Button btnGame = (Button) solo.getButton("Memory Game");
+		Button btnLogin = (Button) solo.getButton("Login");
+		assertNotNull("Login Button is null", btnLogin);
+		assertNotNull("Track Button is null", btnTrack);
+		assertNotNull("Game Button is null", btnGame);
 	}
-    
-    /**
-    * Test that the layout is correct.
-    */     
-    public void testButtonText_openProfile() {
-        final String expected =
-                cMenu.getString(R.string.show_profile);
-        final String actual = btnProfile.getText().toString();
-        assertEquals(expected, actual);
-    }
 	
-    /**
-    * Test that the button opens the patient profile activity
-    */
-    @MediumTest
+	/**
+	 * Test that the title is correct.
+	 */
+	public void testButtonText_openMap() {
+		final String expected = solo.getString(R.string.app_name);
+		final String actual = getActivity().getTitle().toString();
+		assertEquals(expected, actual);
+	}
+	
+	@MediumTest
+	public void testActivityLaunch_openMap() {
+		solo.clickOnButton("My Location");
+		assertTrue(solo.waitForActivity(GoogleMapping.class.getSimpleName()));
+	}
+	
+	/**
+	 * Test that closing the map activity doesn't close the entire application.
+	 */
+	@MediumTest
+	public void testActivityLaunchReturns_openMap() {
+		solo.clickOnButton("My Location");
+		
+		// if finish() is called, this will exit the entire application, not just the map activity
+		assertFalse(solo.getCurrentActivity().isFinishing());
+	}
+	
+	/**
+	 * Test that the button opens the patient profile activity
+	 */
+	@MediumTest
 	public void testActivityIntent_openProfile() {
-	    btnProfile.performClick();
-
-	    final Intent launchIntent = getStartedActivityIntent();
-	    assertNotNull("ProfileActivity was null", launchIntent);
+		solo.clickOnButton("Patient Profile");
+		assertTrue(solo.waitForActivity(PatientProfile.class.getSimpleName()));
 	}
 }
