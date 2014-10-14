@@ -123,6 +123,7 @@ public class CalendarReminder extends Activity {
 		return this.beginTime;
 	}
 	
+	// Sets up connection and sends data from the application to the database
 	public void setReminder(View view) {
 		new UpdatePatientReminderDB().execute();
 	}
