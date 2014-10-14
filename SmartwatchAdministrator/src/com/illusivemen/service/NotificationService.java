@@ -21,6 +21,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 
 public class NotificationService extends Service implements OnLoopRetrievedListener {
 	
@@ -30,12 +31,15 @@ public class NotificationService extends Service implements OnLoopRetrievedListe
 	private final static boolean NO_REPEAT = false;
 	// how often to check for patients outsite their fences (millisec)
 	private static final int GEOFENCE_POLL_PERIOD = 10000;
+	// number of polls before notification is sent due to timeout
+	private static final int GEOFENCE_TIMEOUT = 2;
 	// patient position not updated alert threshold
 	private static final long POS_TIMEOUT = 5 * 60;
 	// access to the worker thread
 	RetrieveLoopThread geofenceRetrieveThread;
 	// geofence, timeout and panic state storage
 	private SparseBooleanArray geofenceStatus;
+	private SparseIntArray geofenceTimeout;
 	private SparseBooleanArray timeoutStatus;
 	private SparseBooleanArray panicStatus;
 	// database time format
@@ -49,6 +53,7 @@ public class NotificationService extends Service implements OnLoopRetrievedListe
 	@Override
 	public void onCreate() {
 		geofenceStatus = new SparseBooleanArray();
+		geofenceTimeout = new SparseIntArray();
 		timeoutStatus = new SparseBooleanArray();
 		panicStatus = new SparseBooleanArray();
 		
@@ -131,17 +136,34 @@ public class NotificationService extends Service implements OnLoopRetrievedListe
 			if (inGeofence != null && geofenceStatus.indexOfKey(patientId) < 0) {
 				// initial value
 				geofenceStatus.put(patientId, inGeofence);
-			} else if (inGeofence != null && geofenceStatus.get(patientId) != inGeofence) {
-				// patient has transitioned in/out of a geofence
+			} else if (inGeofence != null) {
+				// patient has at least one fence
+				boolean transitioned = geofenceStatus.get(patientId) != inGeofence;
 				
-				// update value
+				// update value but first reset timout counter if now within geofence
+				if (inGeofence && geofenceTimeout.indexOfKey(patientId) >= 0) {
+					geofenceTimeout.put(patientId, 0);
+				}
 				geofenceStatus.put(patientId, inGeofence);
 				
 				if (!inGeofence) {
-					// patient has left geofences, send a notification
-					sendNotification(patientName, patientId, 
-							"Geofence Transition", " is not in a geofence.",
-							R.raw.left_fence, NO_REPEAT);
+					if (geofenceTimeout.indexOfKey(patientId) < 0) {
+						if (transitioned) {
+							// patient that was in a geofence now isn't
+							geofenceTimeout.put(patientId, 0);
+						}
+					} else {
+						// increment timout value
+						geofenceTimeout.put(patientId, geofenceTimeout.get(patientId) + 1);
+					}
+					
+					if (geofenceTimeout.get(patientId) == GEOFENCE_TIMEOUT) {
+						// patient has left geofences for the period of timout cycles
+						sendNotification(patientName, patientId, 
+								"Geofence Transition", " is not in a geofence.",
+								R.raw.left_fence, NO_REPEAT);
+					}
+					
 				} else {
 					// TODO: possibly remove an existing notification
 				}
