@@ -28,6 +28,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+//testing
+
 public class MainMenu extends Activity {
 
 	public final static String ACTIVITY_MESSAGE = "ClientStart";
