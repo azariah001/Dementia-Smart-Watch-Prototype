@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/holo_blue_dark" >
+
+    <TextView
+        android:id="@+id/text_view_patientName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientName"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/text_view_patientAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientName"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientAge"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/patientAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_patientAge"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="number"
+        android:textColor="#FFFF00" />
+
+    <TextView
+        android:id="@+id/text_view_patientAdress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientAge"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/patientAddress"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/patientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_patientName"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textPersonName"
+        android:textColor="#FFFF00" />
+
+    <EditText
+        android:id="@+id/patientAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_patientAdress"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textPostalAddress"
+        android:textColor="#FFFF00" />
+
+    <requestFocus />
+
+    <EditText
+        android:id="@+id/medicalInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_medicalInformation"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textMultiLine"
+        android:textColor="#FFFF00" />
+
+    <TextView
+        android:id="@+id/text_view_medicalInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/patientAddress"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/medicalInformation"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/text_view_emergencyContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/text_view_medicalInformation"
+        android:layout_below="@+id/medicalInformation"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/emergencyContact"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/emergencyContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/text_view_emergencyContact"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="phone"
+        android:textColor="#FFFF00" />
+
+</RelativeLayout><!-- From: file:/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/src/main/res/layout/activity_patient_profile.xml -->

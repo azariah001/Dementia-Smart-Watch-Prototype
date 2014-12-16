@@ -1,0 +1,2 @@
+include ':smartwatchcommon_lib'
+include ':smartwatchAdministrator'

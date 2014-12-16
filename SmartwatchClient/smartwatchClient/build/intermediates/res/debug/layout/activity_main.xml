@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/textUserSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context=".MainSmartwatchSettingActivity" />
+
+</LinearLayout>
+<!-- From: file:/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/src/main/res/layout/activity_main.xml -->

@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 'Google Inc.:Google APIs (x86 System Image):19'
+    buildToolsVersion "21.1.1"
+
+    defaultConfig {
+        applicationId "com.illusivemen.smartwatchclient"
+        minSdkVersion 19
+        targetSdkVersion 19
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+
+        testApplicationId "com.example.illusivemen"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile project(':smartwatchcommon_lib')
+    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+    compile 'com.google.android.gms:play-services:+'
+    androidTestCompile 'com.android.support:support-v4:19.1.0'
+}

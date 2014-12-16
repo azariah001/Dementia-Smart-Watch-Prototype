@@ -1,0 +1,7 @@
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/classes/debug
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-d110f72d037ebc3c033e8fac610af350a82eb252.jar
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/pre-dexed/debug/classes-3ddc9dc0edd67c3b6ece9a5d8e657c652ed77e09.jar
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/pre-dexed/debug/robotium-solo-5.2.1-e60b6fdd438c31ad1883c04a229a0fce65378746.jar
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-c4005d050ee36ed56899033d8394cd5c3a561d55.jar
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/pre-dexed/debug/classes-2eeb1b9e8172f6f7677893269bcef8974a710a93.jar
+/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/build/intermediates/pre-dexed/debug/classes-52a957a7271fae43d81287f828cedb934c41977a.jar

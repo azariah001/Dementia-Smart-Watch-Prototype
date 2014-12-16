@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<item 
+	    android:id="@+id/menu_settings"
+	    android:orderInCategory="100"
+	    android:showAsAction="never"
+	    android:title="menu_settings wasn't defined"/>
+	    />
+    
+</menu>
+<!-- From: file:/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchClient/smartwatchClient/src/main/res/menu/settings.xml -->
