@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/pre-dexed/debug/classes-20c6fab132915e2df489b4806c1062c2bcdddaea.jar" />
+    </item>
+    <item
+        jar="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/pre-dexed/debug/classes-6293b0208c474415d85fd07d7961677843794916.jar" />
+    </item>
+    <item
+        jar="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/exploded-aar/SmartwatchAdministrator/smartwatchcommon_lib/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="c65e2d88419f2ccbefad0bfacf3c93ca337bce14">
+        <dex dex="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/pre-dexed/debug/classes-b1f2af83caff40fce3178eb29688dad88474cbae.jar" />
+    </item>
+    <item
+        jar="/home/azarel/adt-bundle-linux-x86_64/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
+        <dex dex="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-d110f72d037ebc3c033e8fac610af350a82eb252.jar" />
+    </item>
+    <item
+        jar="/home/azarel/.gradle/caches/modules-2/files-2.1/com.jayway.android.robotium/robotium-solo/5.2.1/56ab8d87d966a067ee3795ee137fbd51b6581ec9/robotium-solo-5.2.1.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="56ab8d87d966a067ee3795ee137fbd51b6581ec9">
+        <dex dex="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/pre-dexed/debug/robotium-solo-5.2.1-e60b6fdd438c31ad1883c04a229a0fce65378746.jar" />
+    </item>
+    <item
+        jar="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
+        <dex dex="/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchAdministrator/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-55edf75030a71071b30b255a5790b872712a3692.jar" />
+    </item>
+
+</items>

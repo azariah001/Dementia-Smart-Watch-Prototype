@@ -110,10 +110,12 @@ public class LocationPush extends Service {
 			String patientId = login.GetId(getApplicationContext());
 			
 			// store parameters
-			String[] parameters = {"patient=" + patientId,
+			String[] parameters = {
+                    "patient=" + patientId,
 					"lat=" + params[0].getLatitude(),
 					"lng=" + params[0].getLongitude(),
-					"acc=" + params[0].getAccuracy()};
+					"acc=" + params[0].getAccuracy()
+             };
 			
 			// post information
 			DBConn conn = new DBConn(LOCATION_DUMP_SCRIPT);

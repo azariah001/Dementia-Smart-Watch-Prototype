@@ -28,9 +28,10 @@ public class GeofenceVisualisation {
 	private float mRadius;
 	private long mExpirationDuration;
 	private int mTransitionType;
+    private int mActive;
 
 	/**
-	 * @param geofenceId The Geofence's request ID
+	 * param geofenceId The Geofence's request ID
 	 * @param latitude Latitude of the Geofence's center.
 	 * @param longitude Longitude of the Geofence's center.
 	 * @param radius Radius of the geofence circle.
@@ -53,6 +54,7 @@ public class GeofenceVisualisation {
 		this.mRadius = radius;
 		this.mExpirationDuration = expiration;
 		this.mTransitionType = transition;
+        this.mActive = 1;
 		
 		// draw a representation on the map
 		updateVisualisation();
@@ -76,6 +78,7 @@ public class GeofenceVisualisation {
 		this.mRadius = radius;
 		this.mExpirationDuration = expiration;
 		this.mTransitionType = transition;
+        this.mActive = 1;
 		
 		// draw temporary representation on the map
 		loadingVisualisation("Saving...");
@@ -118,7 +121,18 @@ public class GeofenceVisualisation {
 	public void initialise(String id) {
 		this.mId = id;
 		marker.setTitle("Geofence");
-		marker.setSnippet("Radius: " + mRadius + "m");
+
+        String isValid;
+
+        if (mActive == 1) {
+            isValid = "True";
+        } else if (mActive == 0) {
+            isValid = "False";
+        } else {
+            isValid = "Invalid";
+        }
+        marker.setSnippet("Radius: " + mRadius + "m\nActive: " + isValid);
+
 		circle.setFillColor(GEOFENCE_COLOUR);
 		
 		// update view
@@ -141,19 +155,30 @@ public class GeofenceVisualisation {
 	
 	/**
 	 * Change the location of the fence marker/circle on the map.
-	 * @param latlng the new position
+	 * param latlng the new position
 	 */
 	private void updateVisualisation() {
+        String isActive;
+        if (mActive == 1) {
+            isActive = "True";
+        } else if (mActive == 0) {
+            isActive = "False";
+        } else {
+            isActive = "Invalid";
+        }
 		
 		LatLng latlng = new LatLng(mLatitude, mLongitude);
 		
 		if (marker != null && circle != null) {
 			// update previous location
 			marker.setPosition(latlng);
-			marker.setSnippet("Radius: " + mRadius);
+
+            marker.setSnippet("Radius: " + mRadius + "m\nActive: " + isActive);
+
 			circle.setCenter(latlng);
 			circle.setRadius(mRadius);
 		} else {
+
 			// add initial marker/circle
 			marker = googleMap.addMarker(new MarkerOptions()
 					.position(latlng)
@@ -161,7 +186,7 @@ public class GeofenceVisualisation {
 					//.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.fence))
 					.anchor(0.5f, 0.5f)
-					.snippet("Radius: " + mRadius + "m"));
+					.snippet("Radius: " + mRadius + "m\nActive: " + isActive));
 			marker.showInfoWindow();
 			
 			circle = googleMap.addCircle(new CircleOptions()
@@ -184,6 +209,10 @@ public class GeofenceVisualisation {
 		// update the radius on the map
 		updateVisualisation();
 	}
+
+    public void setActive(int active) {
+        this.mActive = active;
+    }
 	
 	public void setPosition(LatLng newPosition) {
 		this.mLatitude = newPosition.latitude;
@@ -206,6 +235,9 @@ public class GeofenceVisualisation {
 	public float getRadius() {
 		return mRadius;
 	}
+    public int getActive() {
+        return mActive;
+    }
 	public long getExpirationDuration() {
 		return mExpirationDuration;
 	}

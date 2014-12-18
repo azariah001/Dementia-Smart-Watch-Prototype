@@ -511,7 +511,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 				// update visualisation now that the id is available from the database
 				newFence.initialise(result);
 				geofences.add(newFence);
-				geofenceMarkerMap.put(newFence.getMarker(), new Integer[]{Integer.valueOf(newFence.getId()), (int) newFence.getRadius()});
+				geofenceMarkerMap.put(newFence.getMarker(), new Integer[]{Integer.valueOf(newFence.getId()), (int) newFence.getRadius(), (int) newFence.getActive()});
 			}
 		}
 	}
@@ -558,7 +558,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 							Integer.valueOf(geofenceParams[6]));
 					newVisualisation.hideInfo();
 					geofences.add(newVisualisation);
-					geofenceMarkerMap.put(newVisualisation.getMarker(), new Integer[]{Integer.valueOf(newVisualisation.getId()), (int) newVisualisation.getRadius()});
+					geofenceMarkerMap.put(newVisualisation.getMarker(), new Integer[]{Integer.valueOf(newVisualisation.getId()), (int) newVisualisation.getRadius(), (int) newVisualisation.getActive()});
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("GEOFENCE FORMAT ERROR");
@@ -588,6 +588,12 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 			EditText editRadius = (EditText) findViewById(R.id.editRadius);
 			editRadius.setText("");
 			editRadius.append(String.valueOf(radius));
+
+            // set the current active status
+            int active = geofenceMarkerMap.get(marker)[2];
+            EditText editActive = (EditText) findViewById(R.id.editActive);
+            editActive.setText("");
+            editActive.append(String.valueOf(active));
 			
 			// show modification dialogue
 			findViewById(R.id.overlay).setVisibility(View.VISIBLE);;
@@ -625,11 +631,13 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		String target = String.valueOf(hiddenId.getText());
 		
 		EditText editRadius = (EditText) findViewById(R.id.editRadius);
+        EditText editActive = (EditText) findViewById(R.id.editActive);
 		int newRadius = Integer.valueOf(editRadius.getText().toString());
+        int newActive = Integer.valueOf(editActive.getText().toString());
 		
 		// update in database
 		new UpdateGeofenceDB().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 
-				new Integer[]{Integer.valueOf(target), newRadius});
+				new Integer[]{Integer.valueOf(target), newRadius, newActive});
 	}
 	
 	/**
@@ -639,19 +647,24 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		
 		int geofenceId;
 		int newRadius;
+        int newActive;
 		GeofenceVisualisation previousVisualisation;
 		
 		@Override
 		protected String doInBackground(Integer[]... params) {
 			geofenceId = params[0][0];
 			newRadius = params[0][1];
-			
+            newActive = params[0][2];
+
 			// provide progress feedback
 			publishProgress();
 			
 			// store parameters
-			String[] parameters = {"id=" + geofenceId,
-					"radius=" + newRadius};
+			String[] parameters = {
+                    "id=" + geofenceId,
+					"radius=" + newRadius,
+                    "active=" + newActive
+            };
 			
 			DBConn conn;
 			// post information
@@ -661,7 +674,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 				conn = new DBConn("/updateGeofence.php");
 			}
 			conn.execute(parameters);
-			
+
+            System.out.println(conn.getResult());
 			return conn.getResult();
 		}
 		
@@ -697,11 +711,12 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 					geofences.remove(previousVisualisation);
 				} else {
 					previousVisualisation.setRadius(newRadius);
+                    previousVisualisation.setActive(newActive);
 					previousVisualisation.initialise(String.valueOf(geofenceId));
 					
 					// update marker hash table for new radius
 					geofenceMarkerMap.remove(previousVisualisation.getMarker());
-					geofenceMarkerMap.put(previousVisualisation.getMarker(), new Integer[]{geofenceId, newRadius});
+					geofenceMarkerMap.put(previousVisualisation.getMarker(), new Integer[]{geofenceId, newRadius, newActive});
 				}
 			} else {
 				// delete/update fail

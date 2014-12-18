@@ -19,6 +19,7 @@
     <string name="geofence_add">Add Fence</string>
     <string name="geofence_modify">Modify Geofence</string>
     <string name="geofence_radius">Radius (metres):</string>
+    <string name="geofence_active">Active (1T/0F):</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>

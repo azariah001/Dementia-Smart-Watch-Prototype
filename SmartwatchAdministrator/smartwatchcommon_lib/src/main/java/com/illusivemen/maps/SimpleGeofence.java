@@ -10,6 +10,7 @@ public class SimpleGeofence {
 	private final float mRadius;
 	private long mExpirationDuration;
 	private int mTransitionType;
+    private int mActive;
 
 	/**
 	 * @param geofenceId The Geofence's request ID
@@ -19,13 +20,24 @@ public class SimpleGeofence {
 	 * @param expiration Geofence expiration duration
 	 * @param transition Type of Geofence transition.
 	 */
+    public SimpleGeofence(
+            String geofenceId,
+            double latitude,
+            double longitude,
+            float radius,
+            long expiration,
+            int transition) {
+        // Overloads the active value to int 1 (bool true) if not defined in function call.
+        this(geofenceId, latitude, longitude, radius, expiration, transition, 1);
+    }
 	public SimpleGeofence(
 			String geofenceId,
 			double latitude,
 			double longitude,
 			float radius,
 			long expiration,
-			int transition) {
+			int transition,
+            int active) {
 		// Set the instance fields from the constructor
 		this.mId = geofenceId;
 		this.mLatitude = latitude;
@@ -33,6 +45,7 @@ public class SimpleGeofence {
 		this.mRadius = radius;
 		this.mExpirationDuration = expiration;
 		this.mTransitionType = transition;
+        this.mActive = active;
 	}
 	
 	// Instance field getters
@@ -54,6 +67,7 @@ public class SimpleGeofence {
 	public int getTransitionType() {
 		return mTransitionType;
 	}
+    public int getActiveStatus() { return  mActive; }
 	
 	/**
 	 * Creates a Location Services Geofence object from a

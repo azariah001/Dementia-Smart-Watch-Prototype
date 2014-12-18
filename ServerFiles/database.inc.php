@@ -90,16 +90,23 @@ function saveGeofence($data) {
     // inserts geofences into database
     global $pdo;
 
+    if (isset($data['active'])) {
+        $active = $data['active'];
+    } else {
+        $active = 1;
+    }
+
     $stmt = $pdo->prepare('INSERT INTO `'. DB_NAME .'`.`'. TABLE_GEOFENCE .'` '.
-        '(`patient`, `lat`, `lng`, `radius`, `expiration`, `transition`) '.
+        '(`patient`, `lat`, `lng`, `radius`, `expiration`, `transition`, `active`) '.
         'VALUES '.
-        '(:patient, :lat, :lng, :radius, :expiration, :transition);');
+        '(:patient, :lat, :lng, :radius, :expiration, :transition, :active);');
     $stmt->bindValue(':patient', $data['patient']);
     $stmt->bindValue(':lat', $data['lat']);
     $stmt->bindValue(':lng', $data['lng']);
     $stmt->bindValue(':radius', $data['radius']);
     $stmt->bindValue(':expiration', $data['expiration']);
-	$stmt->bindValue(':transition', $data['transition']);
+    $stmt->bindValue(':transition', $data['transition']);
+    $stmt->bindValue(':active', $active);
     
     $stmt->execute();
 	// return the ID of the inserted row
@@ -123,15 +130,16 @@ function deleteGeofence($id) {
 	}
 }
 
-function updateGeofence($id, $radius) {
+function updateGeofence($id, $radius, $active) {
     // inserts geofences into database
     global $pdo;
 
     $stmt = $pdo->prepare('UPDATE `'. DB_NAME .'`.`'. TABLE_GEOFENCE .'` '.
-		'SET `radius` = :radius '.
+		'SET `radius` = :radius, `active` = :active '.
         'WHERE `id` = :id');
     $stmt->bindValue(':id', $id);
-	$stmt->bindValue(':radius', $radius);
+    $stmt->bindValue(':radius', $radius);
+    $stmt->bindValue(':active', $active);
     $stmt->execute();
 	
 	// feedback whether the update was successful
@@ -146,7 +154,7 @@ function retrieveGeofences($patientid) {
 	// retrieve geofence parameters for patientid
 	global $pdo;
 	
-	$stmt = $pdo->prepare('SELECT `id`, `patient`, `lat`, `lng`, `radius`, `expiration`, `transition` '.
+	$stmt = $pdo->prepare('SELECT `id`, `patient`, `lat`, `lng`, `radius`, `expiration`, `transition`, `active` '.
 		'FROM `'. TABLE_GEOFENCE .'` '.
 		'WHERE `patient` = ":patientid"');
 	$stmt->bindValue(':patientid', $patientid);
@@ -155,7 +163,7 @@ function retrieveGeofences($patientid) {
 	
 	$fences = array();
 	foreach ($result as $row) {
-		$fences[] = $row['id'] .','. $row['patient'] .','. $row['lat'] .','. $row['lng'] .','. $row['radius'] .','. $row['expiration'] .','. $row['transition'];
+		$fences[] = $row['id'] .','. $row['patient'] .','. $row['lat'] .','. $row['lng'] .','. $row['radius'] .','. $row['expiration'] .','. $row['transition'] .','. $row['active'];
 	}
 	
 	return implode(';', $fences);
@@ -167,12 +175,20 @@ function closestGeofences($patients) {
 	
 	$stmt = $pdo->prepare(
 
+
+/*
+ * gf == geofences
+ * p  == patient_profiles
+ * g  == gps_data
+ */
+
 'SELECT `distances`.* FROM (
     
     SELECT `my_patients`.*,
         `gf`.`lat` AS `gf_lat`,
         `gf`.`lng` AS `gf_lng`,
         `gf`.`radius` AS `gf_radius`,
+        `gf`.`active` AS `active`,
         6371000 * 2 * ASIN(SQRT(
             POWER(SIN((`my_patients`.`current_lat`- `gf`.`lat`) * pi()/180 / 2), 2)
                 + COS(`my_patients`.`current_lat` * pi()/180) * COS(`gf`.`lat` * pi()/180) 
@@ -255,7 +271,7 @@ GROUP BY  `distances`.`id`');
 	
 	$patients = array();
 	foreach ($result as $row) {
-		$patients[] = $row['name'] .','. $row['id'] .','. $row['effective_distance'] .','. $row['timestamp'] .','. $row['panic'];
+		$patients[] = $row['name'] .','. $row['id'] .','. $row['effective_distance'] .','. $row['timestamp'] .','. $row['panic'] .','. $row['active'];
 	}
 	
 	return implode(';', $patients);
@@ -344,10 +360,10 @@ function putPatientReminder($data) {
 	// Creates the Statement Handler to insert a new Patient reminder into the patient_reminders table
 	$stmt = $pdo->prepare("INSERT INTO `" . DB_NAME . "`.`" . TABLE_REMINDER . "`" 
 	. " (reminderID, title, organiser, beginTime, description, rrule) values (:reminderID, :title, :organiser, :beginTime, :description, :rrule)");
-	$title = "title desu2";
-	$organiser = "richard desu2";
+	$title = "Do Code Reviews!";
+	$organiser = "Richard Lai";
 	$beginTime = "3";
-	$description = "description desu2";
+	$description = "Go through recent commits and review code";
 	$rrule = "FREQ=DAILY";
 	// Assigns variables to each placeholder
 	$stmt->bindParam(':reminderID' , $GLOBALS['latest_reminderID']);
@@ -420,7 +436,8 @@ function retrieveMyPatients($carer_id) {
 
 	$stmt = $pdo->prepare('SELECT `patient_id`, `patient_name` '.
 		'FROM `'. TABLE_PROFILE .'` '.
-		'WHERE `carer_id` = :carer_id');
+		'WHERE `carer_id` = :carer_id '.
+		'ORDER BY `patient_id`');
 	$stmt->bindValue(':carer_id', $carer_id);
 	$stmt->execute(); 
 	$result = $stmt->fetchAll();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/azarel/Documents/Agile-Software-Dev-Working-Directory/SmartwatchAdministrator/smartwatchcommon_lib/src/main/res/values-v14/styles.xml -->
+    <!-- From: file:/home/azarel/Documents/Agile-Software-Dev-Working-Directory/GitHub%20Repo/Dementia-Smart-Watch-Prototype/SmartwatchAdministrator/smartwatchcommon_lib/src/main/res/values-v14/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->

@@ -73,7 +73,7 @@ public class DBConn {
 			
 		} catch (IOException e) {
 			// general network error
-			System.out.println("DB Network Error");
+			System.out.println("DB Network Error: " + e);
 			
 		} finally {
 			// close order opposite to open order
