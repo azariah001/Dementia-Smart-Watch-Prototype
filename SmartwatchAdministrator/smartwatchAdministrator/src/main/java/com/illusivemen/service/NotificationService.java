@@ -146,7 +146,7 @@ public class NotificationService extends Service implements OnLoopRetrievedListe
 				}
 				geofenceStatus.put(patientId, inGeofence);
 				
-				if (!inGeofence) {
+				if (!inGeofence && (Integer.valueOf(details[5]) == 1)) {
 					if (geofenceTimeout.indexOfKey(patientId) < 0) {
 						if (transitioned) {
 							// patient that was in a geofence now isn't

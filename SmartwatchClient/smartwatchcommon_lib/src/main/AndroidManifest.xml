@@ -8,9 +8,9 @@
         android:targetSdkVersion="19" />
 	
     <!-- Unit Testing -->
-    <instrumentation
+    <!--<instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.illusivemen.smartwatchclient" />
+        android:targetPackage="com.illusivemen.smartwatchclient" />-->
 
     <uses-permission
         android:name="android.permission.RECORD_AUDIO" />

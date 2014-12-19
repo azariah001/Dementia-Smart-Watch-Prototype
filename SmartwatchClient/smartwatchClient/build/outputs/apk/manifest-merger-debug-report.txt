@@ -78,16 +78,9 @@ ADDED from AndroidManifest.xml:31:5
 		ADDED from AndroidManifest.xml:33:9
 	android:glEsVersion
 		ADDED from AndroidManifest.xml:32:9
-instrumentation#android.test.InstrumentationTestRunner
-ADDED from AndroidManifest.xml:36:5
-MERGED from SmartwatchClient:smartwatchcommon_lib:unspecified:12:5
-	android:targetPackage
-		ADDED from AndroidManifest.xml:38:9
-	android:name
-		ADDED from AndroidManifest.xml:37:9
 application
 ADDED from AndroidManifest.xml:40:5
-MERGED from SmartwatchClient:smartwatchcommon_lib:unspecified:18:5
+MERGED from SmartwatchClient:smartwatchcommon_lib:unspecified:20:5
 MERGED from com.android.support:support-v4:21.0.0:16:5
 MERGED from com.google.android.gms:play-services:6.5.87:20:5
 MERGED from com.android.support:support-v4:21.0.0:16:5
@@ -152,7 +145,7 @@ MERGED from com.google.android.gms:play-services:6.5.87:21:9
 		ADDED from AndroidManifest.xml:72:13
 uses-library#android.test.runner
 ADDED from AndroidManifest.xml:75:9
-MERGED from SmartwatchClient:smartwatchcommon_lib:unspecified:25:9
+MERGED from SmartwatchClient:smartwatchcommon_lib:unspecified:27:9
 	android:name
 		ADDED from AndroidManifest.xml:75:23
 activity#com.illusivemen.smartwatchclient.PatientProfile
@@ -204,6 +197,6 @@ ADDED from AndroidManifest.xml:108:9
 	android:name
 		ADDED from AndroidManifest.xml:109:13
 uses-permission#android.permission.RECORD_AUDIO
-ADDED from SmartwatchClient:smartwatchcommon_lib:unspecified:16:5
+ADDED from SmartwatchClient:smartwatchcommon_lib:unspecified:18:5
 	android:name
-		ADDED from SmartwatchClient:smartwatchcommon_lib:unspecified:16:22
+		ADDED from SmartwatchClient:smartwatchcommon_lib:unspecified:18:22

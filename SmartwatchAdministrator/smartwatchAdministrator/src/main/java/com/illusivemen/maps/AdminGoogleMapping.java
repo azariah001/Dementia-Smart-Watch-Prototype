@@ -454,6 +454,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 		
 		Double lat = null;
 		Double lng = null;
+        int active = 1;
 		GeofenceVisualisation newFence;
 		
 		@Override
@@ -473,7 +474,9 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 					"lng=" + lng,
 					"radius=" + GEOFENCE_RADIUS,
 					"expiration=" + Geofence.NEVER_EXPIRE,
-					"transition=" + Geofence.GEOFENCE_TRANSITION_EXIT};
+					"transition=" + Geofence.GEOFENCE_TRANSITION_EXIT,
+                    "active=" + active
+            };
 			
 			// post information
 			DBConn conn = new DBConn("/saveNewGeofence.php");
@@ -494,7 +497,8 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 					Geofence.NEVER_EXPIRE,
 					// This geofence records only entry transitions
 					// to have enter/exit try adding?
-					Geofence.GEOFENCE_TRANSITION_ENTER);
+					Geofence.GEOFENCE_TRANSITION_ENTER,
+                    active);
 		}
 		
 		@Override
@@ -511,7 +515,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 				// update visualisation now that the id is available from the database
 				newFence.initialise(result);
 				geofences.add(newFence);
-				geofenceMarkerMap.put(newFence.getMarker(), new Integer[]{Integer.valueOf(newFence.getId()), (int) newFence.getRadius(), (int) newFence.getActive()});
+				geofenceMarkerMap.put(newFence.getMarker(), new Integer[]{Integer.valueOf(newFence.getId()), (int) newFence.getRadius(), newFence.getActive()});
 			}
 		}
 	}
@@ -555,10 +559,11 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
 							Double.valueOf(geofenceParams[3]),
 							Float.valueOf(geofenceParams[4]),
 							Long.valueOf(geofenceParams[5]),
-							Integer.valueOf(geofenceParams[6]));
+							Integer.valueOf(geofenceParams[6]),
+                            Integer.valueOf(geofenceParams[7]));
 					newVisualisation.hideInfo();
 					geofences.add(newVisualisation);
-					geofenceMarkerMap.put(newVisualisation.getMarker(), new Integer[]{Integer.valueOf(newVisualisation.getId()), (int) newVisualisation.getRadius(), (int) newVisualisation.getActive()});
+					geofenceMarkerMap.put(newVisualisation.getMarker(), new Integer[]{Integer.valueOf(newVisualisation.getId()), (int) newVisualisation.getRadius(), newVisualisation.getActive()});
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("GEOFENCE FORMAT ERROR");
@@ -596,7 +601,7 @@ public class AdminGoogleMapping extends Activity implements OnMapLongClickListen
             editActive.append(String.valueOf(active));
 			
 			// show modification dialogue
-			findViewById(R.id.overlay).setVisibility(View.VISIBLE);;
+			findViewById(R.id.overlay).setVisibility(View.VISIBLE);
 		}
 	}
 	

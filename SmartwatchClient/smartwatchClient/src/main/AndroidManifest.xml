@@ -14,8 +14,8 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="21" />
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -33,9 +33,9 @@
         android:required="true" />
 
     <!-- Unit Testing -->
-    <instrumentation
+    <!--<instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.illusivemen.smartwatchclient" />
+        android:targetPackage="com.illusivemen.smartwatchclient" />-->
     
     <application
         android:allowBackup="true"
@@ -72,7 +72,7 @@
             android:value="@integer/google_play_services_version" />
         
         <!-- Unit Testing -->
-        <uses-library android:name="android.test.runner" />
+        <!--<uses-library android:name="android.test.runner" />-->
 
         <activity
             android:name=".PatientProfile"

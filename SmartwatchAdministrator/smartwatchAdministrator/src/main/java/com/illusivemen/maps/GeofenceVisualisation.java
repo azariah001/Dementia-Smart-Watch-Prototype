@@ -45,7 +45,8 @@ public class GeofenceVisualisation {
 			double longitude,
 			float radius,
 			long expiration,
-			int transition) {
+			int transition,
+            int active) {
 		this.googleMap = googleMap;
 		// set the instance fields from the constructor
 		this.mId = id;
@@ -54,7 +55,7 @@ public class GeofenceVisualisation {
 		this.mRadius = radius;
 		this.mExpirationDuration = expiration;
 		this.mTransitionType = transition;
-        this.mActive = 1;
+        this.mActive = active;
 		
 		// draw a representation on the map
 		updateVisualisation();
@@ -70,7 +71,8 @@ public class GeofenceVisualisation {
 			double longitude,
 			float radius,
 			long expiration,
-			int transition) {
+			int transition,
+            int active) {
 		this.googleMap = googleMap;
 		// set the instance fields from the constructor
 		this.mLatitude = latitude;
@@ -78,7 +80,7 @@ public class GeofenceVisualisation {
 		this.mRadius = radius;
 		this.mExpirationDuration = expiration;
 		this.mTransitionType = transition;
-        this.mActive = 1;
+        this.mActive = active;
 		
 		// draw temporary representation on the map
 		loadingVisualisation("Saving...");
